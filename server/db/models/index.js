@@ -1,7 +1,7 @@
 const User = require('./User')
 const Product = require('./Product')
 const Order = require('./Order')
-const CartProduct = require('./CartProduct')
+const CartProduct = require('./CartLineItem')
 const Review = require('./Review')
 
 /**

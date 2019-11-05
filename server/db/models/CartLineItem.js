@@ -1,10 +1,10 @@
 const Sequelize = require('Sequelize')
 const db = require('../db')
 
-const CartProduct = db.define('cartproduct', {
+const CartLineItem = db.define('cartlineitem', {
   quantity: {
     type: Sequelize.FLOAT
   }
 })
 
-module.exports = CartProduct
+module.exports = CartLineItem

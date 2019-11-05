@@ -1,15 +1,15 @@
 const router = require('express').Router()
-const CartProduct = require('../db/models/cartproduct')
+const CartLineItem = require('../db/models/CartLineItem')
 const User = require('../db/models/user')
 const Product = require('../db/models/product')
 
 //GET
 router.get('/', async (req, res, next) => {
   try {
-    const cartproduct = await CartProduct.findAll({
+    const CartLineItem = await CartLineItem.findAll({
       include: {model: User, Product}
     })
-    res.json(cartproduct)
+    res.json(CartLineItem)
   } catch (error) {
     next(error)
   }
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     //const cart = await Cart.create(req.body);
-    CartProduct.addProject(req.body)
+    CartLineItem.addProject(req.body)
     res.json(req.body)
   } catch (error) {
     next(error)
@@ -31,7 +31,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const product = Product.findById(req.params.id)
     //await Cart.destroy({ where: { id: id } });
-    CartProduct.removeProduct(product)
+    CartLineItem.removeProduct(product)
     res.sendStatus(200)
   } catch (err) {
     next(err)

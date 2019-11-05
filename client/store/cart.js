@@ -54,7 +54,7 @@ export const destroyProductInCart = product => {
 //reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_CART:
+    case SET_CARTPRODUCTS:
       return {...state, cart: action.products}
     case ADD_TO_CART:
       return {...state, cart: [...state.cart, action.product]}
