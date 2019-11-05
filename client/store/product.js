@@ -7,8 +7,8 @@ import axios from 'axios';
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const getProducts = products => ({ type: GET_PRODUCTS, products });
 
-export const fetchProducts = dispatch => {
-  return async () => {
+export const fetchProducts = () => {
+  return async dispatch => {
     try {
       const res = await axios.get('/api/products'); //looked cute, might change later
       dispatch(getProducts(res.data));
