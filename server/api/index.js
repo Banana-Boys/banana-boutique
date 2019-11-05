@@ -1,14 +1,14 @@
 const router = require("express").Router();
 module.exports = router;
 
-// const Review = require("../db/models/review");
-// const Cart = require("../db/models/cart");
-// const User = require("../db/models/user");
+router.use("/reviews", require("../api/reviews"));
+router.use("/cart", require("../api/cart"));
 
-// //mount on api
-// router.use("/reviews", require("../api/reviews"));
-// router.use("/cart", require("../api/cart"));
-// router.use("/users", require("../api/users"));
+router.use("/users", require("./users"));
+
+router.use("/products", require("./products"));
+
+router.use("/orders", require("./orders"));
 
 router.use((req, res, next) => {
   const error = new Error("Not Found");
