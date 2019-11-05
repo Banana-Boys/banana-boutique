@@ -1,11 +1,12 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
-//import Product from './product'
-//import User from './user'
+import Product from "./product";
+import User from "./user";
 
 const Review = db.define("review", {
   title: {
-    type: Sequelize.String,
+    type: Sequelize.STRING,
+    required: true,
     allowNull: false
   },
   body: {
@@ -17,7 +18,7 @@ const Review = db.define("review", {
   }
 });
 
-//Review.belongsTo(User, {through: 'UserItem'})
-//Product.hasMany(Review, {through: 'ProductItem'})
+Review.belongsTo(User, { as: "UserReview" });
+Product.hasMany(Review, { as: "ProductReview" });
 
-export default Review;
+module.exports = Review;

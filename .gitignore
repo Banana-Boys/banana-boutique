@@ -1,7 +1,2 @@
 .DS_Store
-<<<<<<< HEAD
-node_modules
-bundle.js
-=======
 node_modules/
->>>>>>> 42e9658ca6934385b9a2a270b97f62c05b631c5f
