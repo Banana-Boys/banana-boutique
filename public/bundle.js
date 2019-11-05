@@ -585,14 +585,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
  //action types
 
-var SET_CART = 'SET_CART';
+var SET_CARTPRODUCTS = 'SET_CARTPRODUCTS';
 var ADD_TO_CART = 'ADD_TO_CART';
 var REMOVE_FROM_CART = 'REMOVE_FROM_CART'; //action creators
 
-var setCart = function setCart(cart) {
+var setCartProducts = function setCartProducts(products) {
   return {
-    type: SET_CART,
-    cart: cart
+    type: SET_CARTPRODUCTS,
+    products: products
   };
 };
 
@@ -631,12 +631,12 @@ var fetchCart = function fetchCart() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/cart');
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/cartproduct');
 
               case 3:
                 _ref2 = _context.sent;
                 data = _ref2.data;
-                return _context.abrupt("return", dispatch(setCart(data)));
+                return _context.abrupt("return", dispatch(setCartProducts(data)));
 
               case 8:
                 _context.prev = 8;
@@ -672,7 +672,7 @@ var postCart = function postCart(product) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/cart', product);
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/cartproduct', product);
 
               case 3:
                 _ref4 = _context2.sent;
@@ -711,7 +711,7 @@ var destroyProductInCart = function destroyProductInCart(product) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/api/cart/".concat(product.id), product);
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/api/cartproduct/".concat(product.id), product);
 
               case 3:
                 return _context3.abrupt("return", dispatch(removeProduct(product)));
@@ -741,9 +741,9 @@ var destroyProductInCart = function destroyProductInCart(product) {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case SET_CART:
+    case SET_CARTPRODUCTS:
       return _objectSpread({}, state, {
-        cart: action.cart
+        cart: action.products
       });
 
     case ADD_TO_CART:
