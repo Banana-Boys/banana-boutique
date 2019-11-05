@@ -33,10 +33,10 @@ export const fetchReviews = () => {
   };
 };
 
-export const fetchReview = review => {
+export const fetchReview = reviewid => {
   async dispatch => {
     try {
-      const { data } = await axios.get(`/api/reviews/${review.id}`);
+      const { data } = await axios.get(`/api/reviews/${reviewid}`);
       return dispatch(setReview(data));
     } catch (error) {
       console.error(error);
