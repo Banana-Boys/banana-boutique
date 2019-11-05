@@ -1,22 +1,22 @@
-const router = require("express").Router();
-const Review = require("../db/models/review"); //review
-const User = require("../db/models/user");
-const Product = require("../db/models/product");
+const router = require('express').Router()
+const Review = require('../db/models/review') //review
+const User = require('../db/models/user')
+const Product = require('../db/models/product')
 
 //GET
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const reviews = await Review.findAll({
-      include: { model: User, Product }
-    });
-    res.json(reviews);
+      include: {model: User, Product}
+    })
+    res.json(reviews)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 //GET by id
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const review = await Review.find({
       where: {
@@ -26,49 +26,49 @@ router.get("/:id", async (req, res, next) => {
         model: User,
         Product
       }
-    });
-    res.json(review);
+    })
+    res.json(review)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 //POST product
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const review = await Review.create(req.body);
-    res.json(review);
+    const review = await Review.create(req.body)
+    res.json(review)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 // DELETE product
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
-    const id = req.params.id;
-    await Review.destroy({ where: { id: id } });
-    res.sendStatus(200);
+    const id = req.params.id
+    await Review.destroy({where: {id: id}})
+    res.sendStatus(200)
   } catch (err) {
-    next(err);
+    next(err)
   }
-});
+})
 
 //UPDATE product by id
-router.put("/:id", async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const review = await Review.find({
       where: {
         id: req.params.id
       }
-    });
-    await review.update(req.body);
-    res.json(review);
+    })
+    await review.update(req.body)
+    res.json(review)
   } catch (error) {
-    console.log(error);
-    next(error);
+    console.log(error)
+    next(error)
   }
-});
+})
 
 // router.put("/:productid/:reviewid", async (req, res, next) => {
 //   try {
@@ -100,4 +100,4 @@ router.put("/:id", async (req, res, next) => {
 //   }
 // });
 
-module.exports = router;
+module.exports = router
