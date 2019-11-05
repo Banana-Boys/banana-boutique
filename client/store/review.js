@@ -59,7 +59,7 @@ export const destroyReview = review => {
   return async dispatch => {
     try {
       await axios.delete(`/api/reviews/${review.id}`);
-      dispatch(removeReview(review));
+      return dispatch(removeReview(review));
     } catch (error) {
       console.log(error);
     }

@@ -44,7 +44,7 @@ export const destroyProductInCart = product => {
   return async dispatch => {
     try {
       await axios.delete(`/api/cart/${product.id}`, product);
-      dispatch(removeProduct(product));
+      return dispatch(removeProduct(product));
     } catch (error) {
       console.log(error);
     }
