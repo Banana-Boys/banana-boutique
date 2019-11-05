@@ -1,2 +1,8 @@
+node_modules
+public/bundle.js
+public/bundle.js.map
+package.json
+secrets.js
 .DS_Store
-node_modules/
+npm-debug.log
+yarn-error.log
