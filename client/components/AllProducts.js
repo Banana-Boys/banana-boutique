@@ -1,8 +1,8 @@
-import react from 'react';
+import react from "react";
 
 class AllProducts extends react.Component {
   render() {
-    return 'hello world';
+    return "hello world";
   }
 }
 

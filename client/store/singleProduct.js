@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const GET_PRODUCT = 'GET_PRODUCT';
+const GET_PRODUCT = "GET_PRODUCT";
 const getProduct = product => ({ type: GET_PRODUCT, product });
 
 export const fetchProduct = dispatch => {

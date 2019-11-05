@@ -4,8 +4,8 @@ const db = require("../db");
 
 const User = db.define("user", {
   role: {
-    type: Sequelize.ENUM(['user', 'guest', 'admin']),
-    defaultValue: 'guest'
+    type: Sequelize.ENUM(["user", "guest", "admin"]),
+    defaultValue: "guest"
   },
   name: {
     type: Sequelize.STRING,
@@ -131,6 +131,6 @@ User.beforeBulkCreate(users => {
   users.forEach(setPhone);
 });
 
-User.hasOne(Address, {as: 'defaultShipping'})
-User.hasOne(Address, {as: 'defaultBilling'})
-User.hasMany(Address, {as: 'addresses'})
+User.hasOne(Address, { as: "defaultShipping" });
+User.hasOne(Address, { as: "defaultBilling" });
+User.hasMany(Address, { as: "addresses" });
