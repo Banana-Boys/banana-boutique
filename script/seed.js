@@ -29,10 +29,12 @@ async function seed() {
   ])
 
   let i = 1000
+
   while (i > 0) {
-    Product.create({
+    await Product.create({
       name: faker.commerce.product(),
-      price: faker.commerce.price()
+      price: faker.commerce.price(),
+      description: faker.commerce.productAdjective()
     })
     i--
   }
