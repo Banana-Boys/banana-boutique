@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 const router = require("express").Router();
 const User = require("../db/models/user");
 module.exports = router;
+=======
+const router = require('express').Router()
+const User = require('../db/models/User')
+module.exports = router
+>>>>>>> a3bd2b498d9945ae6a2233674b2b729695726a7d
 
 router.post("/login", async (req, res, next) => {
   try {

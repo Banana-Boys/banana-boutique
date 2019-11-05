@@ -132,6 +132,16 @@ User.beforeBulkCreate(users => {
   users.forEach(setPhone);
 });
 
+<<<<<<< HEAD
 User.hasOne(Address, { as: "defaultShipping" });
 User.hasOne(Address, { as: "defaultBilling" });
 User.hasMany(Address, { as: "addresses" });
+=======
+// User.hasOne(Address, { as: "defaultShipping" });
+// User.hasOne(Address, { as: "defaultBilling" });
+// User.hasMany(Address, { as: "addresses" });
+// User.hasMany(Review);
+// User.hasOne(Cart);
+// User.hasMany(Wishlist);
+// User.hasMany(Order);
+>>>>>>> a3bd2b498d9945ae6a2233674b2b729695726a7d
