@@ -1,9 +1,9 @@
-import react from "react";
+import react from 'react'
 
 class AllOrders extends react.Component {
   render() {
-    return "hello world";
+    return 'hello world'
   }
 }
 
-export default AllOrders;
+export default AllOrders

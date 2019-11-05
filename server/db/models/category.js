@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-const db = require('./db');
+const Sequelize = require('sequelize')
+const db = require('../db')
 
 const Category = db.define('category', {
   name: {
@@ -9,7 +9,7 @@ const Category = db.define('category', {
   selected: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  },
+  }
 })
 
 //associaton: product has many categories

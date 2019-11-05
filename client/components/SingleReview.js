@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { destroyReview, updateReview, fetchReview } from "../store/review";
+import React, {Component} from 'react'
+import {destroyReview, updateReview, fetchReview} from '../store/review'
 
 export class SingleReview extends Component {
   constructor() {
-    super();
+    super()
   }
 
   componentDidMount() {
-    this.props.getSingleReview(this.props.match.params.id);
+    this.props.getSingleReview(this.props.match.params.id)
   }
 
   render() {
@@ -15,19 +15,19 @@ export class SingleReview extends Component {
       <div>
         <div />
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   review: state.review
-});
+})
 
 const mapDispatchToProps = dispatch => ({
   getSingleReview: reviewid => dispatch(fetchReview(reviewid)),
   deleteReview: review => dispatch(destroyReview(review)),
   updateReview: review => dispatch(updateReview(review))
-});
+})
 
 //export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
-export default Reviews;
+export default Reviews
