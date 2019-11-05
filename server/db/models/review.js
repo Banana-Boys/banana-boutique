@@ -1,7 +1,5 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
-import Product from "./product";
-import User from "./user";
 
 const Review = db.define("review", {
   title: {
@@ -17,8 +15,5 @@ const Review = db.define("review", {
     type: Sequelize.ENUM("1", "2", "3", "4", "5")
   }
 });
-
-Review.belongsTo(User, { as: "UserReview" });
-Product.hasMany(Review, { as: "ProductReview" });
 
 module.exports = Review;
