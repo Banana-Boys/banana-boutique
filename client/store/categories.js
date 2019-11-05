@@ -14,7 +14,7 @@ const defaultCategories = []
 /**
  * ACTION CREATORS
  */
-const getCategories = () => ({type: GET_CATEGORIES, categories})
+const getCategories = categories => ({type: GET_CATEGORIES, categories})
 // const selectedCategories = (categories) => ({type: SELECT_CATEGORIES, categories})
 
 /**
@@ -25,7 +25,7 @@ export const featchAllCategories = () => async dispatch => {
   try {
     const response = await axios.get('/categories')
     dispatch(getCategories(response.data))
-  } catch (err){
+  } catch (err) {
     console.error(err)
   }
 }
