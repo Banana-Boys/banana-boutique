@@ -11,6 +11,9 @@ const Review = db.define("review", {
   body: {
     type: Sequelize.TEXT,
     allowNull: false
+  },
+  rating: {
+    type: Sequelize.ENUM("1", "2", "3", "4", "5")
   }
 });
 
