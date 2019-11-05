@@ -1,4 +1,7 @@
 const User = require("./user");
+const Product = require("./product");
+const Review = require("./review");
+const Cart = require("./cart");
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -19,5 +22,8 @@ const User = require("./user");
 //Cart.belongsTo(User, {through: 'UserItem'})
 //Cart.hasMany(Product, {through: 'ProductItem'})
 module.exports = {
-  User
+  User,
+  Product,
+  Review,
+  Cart
 };
