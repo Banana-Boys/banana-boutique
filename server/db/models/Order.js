@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require('sequelize')
+const db = require('../db')
 
-const Order = db.define("order", {
+const Order = db.define('order', {
   //   fk reference to productId(s) and/or bundleId(s) through OrderProduct
   //   Will store line item quantity and price in OrderProduct
   //   fk reference to shippingAddress
@@ -14,23 +14,21 @@ const Order = db.define("order", {
     allowNull: false
   },
   status: {
-    type: Sequelize.ENUM(["created", "processing", "cancelled", "completed"]),
-    defaultValue: "created"
+    type: Sequelize.ENUM(['created', 'processing', 'cancelled', 'completed']),
+    defaultValue: 'created'
   },
   shippingTax: {
     type: Sequelize.FLOAT
   }
   // Subtotal will be calculated as a function of the line items, promotion, and shipping tax as an instance method
-});
+})
 
-module.exports = Order;
+module.exports = Order
 
 /**
  * instanceMethods
  */
-Order.prototype.getSubtotal = function() {
-  return;
-};
+Order.prototype.getSubtotal = function() {}
 
 // Order.hasOne(Address, { as: "shippingAddress" });
 // Order.hasOne(Address, { as: "billingAddress" });
