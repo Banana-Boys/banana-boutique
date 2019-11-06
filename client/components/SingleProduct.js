@@ -6,13 +6,23 @@ import Reviews from './Reviews'
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      quantity: '1'
+    }
     this.handleDelete = this.handleDelete.bind(this)
     this.handleEdit = this.handleEdit.bind(this)
     this.handleAddToCart = this.handleAddToCart.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchProduct(this.props.match.params.id)
+  }
+
+  async handleChange(event) {
+    await this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   handleDelete() {
@@ -25,16 +35,22 @@ class SingleProduct extends React.Component {
 
   handleAddToCart() {
     const productId = this.props.singleProduct.id
-    this.props.sendAddCartLineItem(productId, 1, this.props.history)
+    this.props.sendAddCartLineItem(
+      productId,
+      +this.state.quantity,
+      this.props.history
+    )
   }
 
   render() {
     const product = this.props.singleProduct || {}
     const quantitySelect = []
     let i = 1
+
+    // quantity select dropdown options
     while (i <= product.inventory) {
-      quantitySelect.push(<option>{i}</option>)
-      i--
+      quantitySelect.push(<option key={i}>{i}</option>)
+      i++
     }
 
     return (
@@ -42,7 +58,14 @@ class SingleProduct extends React.Component {
         <h1>{product.name}</h1>
         <img src={product.imageUrl || '/images/default-banana.jpg'} />
         <p>{product.description}</p>
-        {/* <select id="quantity">{quantitySelect}</select> */}
+        <select
+          id="quantity"
+          name="quantity"
+          value={this.state.quantity}
+          onChange={this.handleChange}
+        >
+          {quantitySelect}
+        </select>
         <button type="button" onClick={this.handleDelete}>
           Delete
         </button>
