@@ -57,20 +57,20 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  defaultBillingAddressId: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'addresses',
-      key: 'id'
-    }
-  },
-  defaultShippingAddressId: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'addresses',
-      key: 'id'
-    }
-  },
+  // defaultBillingAddressId: {
+  //   type: Sequelize.INTEGER,
+  //   references: {
+  //     model: 'addresses',
+  //     key: 'id'
+  //   }
+  // },
+  // defaultShippingAddressId: {
+  //   type: Sequelize.INTEGER,
+  //   references: {
+  //     model: 'addresses',
+  //     key: 'id'
+  //   }
+  // },
   imageUrl: {
     type: Sequelize.STRING
   }
@@ -111,12 +111,14 @@ const setSaltAndPassword = user => {
 }
 
 const setPhone = user => {
-  const numbers = '1234567890'
-  let phone = ''
-  for (let char of user.phone) {
-    phone += numbers.includes(char) ? char : ''
+  if (user.phone) {
+    const numbers = '1234567890'
+    let phone = ''
+    for (let char of user.phone) {
+      phone += numbers.includes(char) ? char : ''
+    }
+    user.phone = phone
   }
-  user.phone = phone
 }
 
 User.beforeCreate(user => {

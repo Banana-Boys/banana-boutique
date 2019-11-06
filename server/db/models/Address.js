@@ -1,8 +1,8 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-const util = require("../../../util");
+const Sequelize = require('sequelize')
+const db = require('../db')
+const util = require('../../../util')
 
-const Address = db.define("address", {
+const Address = db.define('address', {
   address1: {
     type: Sequelize.STRING,
     allowNull: false
@@ -25,6 +25,6 @@ const Address = db.define("address", {
     type: Sequelize.STRING,
     allowNull: false
   }
-});
+})
 
-module.exports = Address;
+module.exports = Address
