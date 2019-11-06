@@ -6,6 +6,7 @@ const SET_REVIEW = 'SET_REVIEW'
 const ADD_REVIEW = 'ADD_REVIEW'
 const REMOVE_REVIEW = 'REMOVE_REVIEW'
 const UPDATE_REVIEW = 'UPDATE_REVIEW'
+const RATINGS_AVERAGE = 'RATINGS_AVERAGE'
 
 //action creators
 const setReviews = reviews => ({type: SET_REVIEWS, reviews})
@@ -13,6 +14,7 @@ const setReview = review => ({type: SET_REVIEW, review})
 const addReview = review => ({type: ADD_REVIEW, review})
 const removeReview = review => ({type: REMOVE_REVIEW, review})
 const updateRev = review => ({type: UPDATE_REVIEW, review})
+const ratingsAVG = rating => ({type: RATINGS_AVERAGE, rating})
 
 //thunks
 export const fetchReviews = () => {
@@ -20,6 +22,17 @@ export const fetchReviews = () => {
     try {
       const {data} = await axios.get('/api/reviews')
       return dispatch(setReviews(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const fetchReviewsRatingsAverage = () => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get('/api/reviews/ratingsaverage')
+      return dispatch(ratingsAVG(data))
     } catch (error) {
       console.error(error)
     }

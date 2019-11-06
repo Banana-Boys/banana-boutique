@@ -47,6 +47,17 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id, {
+      include: [Review, Category]
+    })
+    res.json(product)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // DELETE product
 router.delete('/:id', async (req, res, next) => {
   try {
