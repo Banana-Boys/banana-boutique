@@ -197,25 +197,24 @@ function (_Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                console.log('this.props.categories: ', this.props);
-                _context.next = 4;
+                _context.next = 3;
                 return this.props.loadCategories();
 
-              case 4:
-                _context.next = 9;
+              case 3:
+                _context.next = 8;
                 break;
 
-              case 6:
-                _context.prev = 6;
+              case 5:
+                _context.prev = 5;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 6]]);
+        }, _callee, this, [[0, 5]]);
       }));
 
       function componentDidMount() {
@@ -229,7 +228,6 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log('this.props.categories', this.props.categories);
       var categories = this.props.categories; // categories = [{name: 'fresh produce', id: 1}, {name: 'other', id: 2}]
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, categories.map(function (category) {
@@ -995,22 +993,21 @@ var fetchAllCategories = function fetchAllCategories() {
 
               case 3:
                 response = _context.sent;
-                console.log('response from fetchAllCategories:', response);
                 dispatch(getCategories(response.data));
-                _context.next = 11;
+                _context.next = 10;
                 break;
 
-              case 8:
-                _context.prev = 8;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 7]]);
       }));
 
       return function (_x) {

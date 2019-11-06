@@ -5,7 +5,6 @@ import {fetchAllCategories} from '../store/categories'
 export class Categories extends Component {
   async componentDidMount() {
     try {
-      console.log('this.props.categories: ', this.props)
       await this.props.loadCategories()
     } catch (error) {
       console.error(error)
@@ -24,7 +23,6 @@ export class Categories extends Component {
   }
 
   render() {
-    console.log('this.props.categories', this.props.categories)
     let categories = this.props.categories
     // categories = [{name: 'fresh produce', id: 1}, {name: 'other', id: 2}]
 
