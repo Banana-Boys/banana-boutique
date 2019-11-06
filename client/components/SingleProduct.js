@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProduct, removeProduct} from '../store/singleProduct'
 import {sendAddCartLineItem} from '../store/cart'
+import Reviews from './Reviews'
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
@@ -43,6 +44,7 @@ class SingleProduct extends React.Component {
         <button type="button" onClick={this.handleAddToCart}>
           Add to Cart
         </button>
+        <Reviews />
       </div>
     )
   }
