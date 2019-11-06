@@ -1,7 +1,7 @@
 'use strict'
 const faker = require('faker')
 const {db} = require('../server/db')
-const {User, Product, Category} = require('../server/db/models')
+const {User, Product, Category, Review} = require('../server/db/models')
 
 async function seed() {
   const NUM_PRODUCTS = 100
@@ -47,13 +47,56 @@ async function seed() {
       name: faker.commerce.productMaterial()
     })
   ])
+
+  // CREATE USER WITH REVIEWS
+  const userWithReviews = await User.create({
+    name: 'Lindsey',
+    email: 'lindsey@email.com',
+    password: '123',
+    role: 'user'
+  })
+
+  const productWithReviews = await Product.create({
+    name: 'Blandana',
+    price: 1000,
+    description: 'Not the greatest, but will get the job done.',
+    categoryId: categories[0].id,
+    inventory: 5
+  })
+
+  const anotherProductWithReviews = await Product.create({
+    name: 'Wowana',
+    price: 10000,
+    description: 'Perhaps the greatest banana ever found.',
+    categoryId: categories[0].id,
+    inventory: 5
+  })
+
+  const reviews = await Promise.all([
+    Review.create({
+      title: 'To Bland',
+      body: 'This banana was way too bland, would not recommend.',
+      rating: '2',
+      userId: userWithReviews.id,
+      productId: productWithReviews.id
+    }),
+    Review.create({
+      title: 'So Guuuud',
+      body: 'This banana was prime.',
+      rating: '5',
+      userId: userWithReviews.id,
+      productWithReviews: anotherProductWithReviews.id
+    })
+  ])
+
   // PRODUCTS
   let i = NUM_PRODUCTS
   while (i > 0) {
     const product = await Product.create({
       name: faker.commerce.product(),
-      price: faker.commerce.price(),
-      description: faker.commerce.productAdjective()
+      price: 1000,
+      description: faker.commerce.productAdjective(),
+      inventory: 5
     })
     let index = Math.floor(Math.random() * categories.length)
     await product.setCategories([categories[index]])
