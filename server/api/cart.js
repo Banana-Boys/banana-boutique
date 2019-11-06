@@ -62,16 +62,39 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// // DELETE product
-// router.delete('/:id', async (req, res, next) => {
-//   try {
-//     const product = Product.findById(req.params.id)
-//     //await Cart.destroy({ where: { id: id } });
-//     CartLineItem.removeProduct(product)
-//     res.sendStatus(200)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+// DELETE product
+router.delete('/:id', async (req, res, next) => {
+  const productId = req.params.id
+  try {
+    req.session.cart = req.session.cart.filter(
+      cartLineItem => cartLineItem.productId !== productId
+    )
+    req.session.save()
+    await CartLineItem.delete({where: {productId}})
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// UPDATE product
+router.put('/:id', async (req, res, next) => {
+  const productId = req.params.id
+  const {quantity} = req.body
+  try {
+    req.session.cart = [
+      ...req.session.cart.filter(
+        cartLineItem => cartLineItem.productId !== productId
+      ),
+      {productId, quantity}
+    ]
+    req.session.save()
+    const cartLineItem = await CartLineItem.findOne({where: {productId}})
+    await cartLineItem.update({quantity})
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
 
 module.exports = router
