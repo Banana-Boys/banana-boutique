@@ -24,14 +24,11 @@ export class Categories extends Component {
 
   render() {
     let categories = this.props.categories
-    // categories = [{name: 'fresh produce', id: 1}, {name: 'other', id: 2}]
 
     return (
       <div>
         {categories.map(category => (
           <div key={category.id} className="category">
-            {/* <form className="filter">
-            <label htmlFor="category-selected" /> */}
             <input
               name="category-selected"
               type="checkbox"
@@ -39,7 +36,6 @@ export class Categories extends Component {
               value={category.selected}
             />
             {category.name}
-            {/* </form> */}
           </div>
         ))}
       </div>
