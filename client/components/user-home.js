@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Categories from './Categories'
+import AllProducts from './AllProducts'
 
 /**
  * COMPONENT
@@ -35,6 +36,7 @@ export const UserHome = props => {
         </div>
         <div>
           <Categories />
+          <AllProducts />
         </div>
       </div>
     </div>
