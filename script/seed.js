@@ -1,12 +1,16 @@
 'use strict'
 const faker = require('faker')
 const {db} = require('../server/db')
-const {User, Product} = require('../server/db/models')
+const {User, Product, Category} = require('../server/db/models')
 
 async function seed() {
+  const NUM_PRODUCTS = 100
+  const NUM_CATEGORIES = 4
+
   await db.sync({force: true})
   console.log('db synced!')
 
+  // USER SEED
   const users = await Promise.all([
     User.create({
       name: 'Michael',
@@ -28,14 +32,31 @@ async function seed() {
     })
   ])
 
-  let i = 100
-
+  // CATEGORIES
+  const categories = await Promise.all([
+    Category.create({
+      name: faker.commerce.productMaterial()
+    }),
+    Category.create({
+      name: faker.commerce.productMaterial()
+    }),
+    Category.create({
+      name: faker.commerce.productMaterial()
+    }),
+    Category.create({
+      name: faker.commerce.productMaterial()
+    })
+  ])
+  // PRODUCTS
+  let i = NUM_PRODUCTS
   while (i > 0) {
-    await Product.create({
+    const product = await Product.create({
       name: faker.commerce.product(),
       price: faker.commerce.price(),
       description: faker.commerce.productAdjective()
     })
+    let index = Math.floor(Math.random() * categories.length)
+    await product.setCategories([categories[index]])
     i--
   }
 

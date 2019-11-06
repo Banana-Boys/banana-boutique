@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Categories from './Categories'
 
 /**
  * COMPONENT
@@ -20,6 +21,22 @@ export const UserHome = props => {
       <h5>Wishlists: </h5>
       <h5>Orders: </h5>
       <h5>Reviews: </h5>
+      <div>
+        <div>
+          <input
+            type="text"
+            className="input"
+            id="search"
+            placeholder="Search..."
+          />
+          <button type="submit" className="button">
+            Search{' '}
+          </button>
+        </div>
+        <div>
+          <Categories />
+        </div>
+      </div>
     </div>
   )
 }

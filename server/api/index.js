@@ -2,7 +2,6 @@ const router = require('express').Router()
 module.exports = router
 
 router.use('/reviews', require('../api/reviews'))
-
 router.use('/cartlineitem', require('./cartlineitem'))
 
 router.use('/users', require('./users'))

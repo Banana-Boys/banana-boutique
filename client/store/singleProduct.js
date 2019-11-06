@@ -16,7 +16,7 @@ export const fetchProduct = productId => {
 
 export const createProduct = (body, history) => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/products/new`, body)
+    const {data} = await axios.post(`/api/products`, body)
     history.push(`products/${data.id}`)
   } catch (error) {
     console.log(error)
