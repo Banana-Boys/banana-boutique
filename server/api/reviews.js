@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Review = require('../db/models/review') //review
+const Review = require('../db/models/Review') //review
 const User = require('../db/models/user')
 const Product = require('../db/models/product')
 
