@@ -80,12 +80,13 @@ export default (state = initialState, action) => {
       return action.cart
     case ADD_CART_LINE_ITEM: {
       const sameProduct = state.find(
-        cartLineItem => cartLineItem.id === action.cartLineItem.id
+        cartLineItem => cartLineItem.productId === action.cartLineItem.productId
       )
       if (sameProduct) {
         return [
           ...state.filter(
-            cartLineItem => cartLineItem.id !== action.cartLineItem.id
+            cartLineItem =>
+              cartLineItem.productId !== action.cartLineItem.productId
           ),
           {
             ...action.cartLineItem,
