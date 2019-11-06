@@ -3,16 +3,28 @@ import {connect} from 'react-redux'
 import {fetchProduct, removeProduct} from '../store/singleProduct'
 import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
+import priceConvert from '../../utilFrontEnd/priceConvert'
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      quantity: '1'
+    }
     this.handleDelete = this.handleDelete.bind(this)
     this.handleEdit = this.handleEdit.bind(this)
     this.handleAddToCart = this.handleAddToCart.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.priceConvert = priceConvert
   }
 
   componentDidMount() {
     this.props.fetchProduct(this.props.match.params.id)
+  }
+
+  async handleChange(event) {
+    await this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
   handleDelete() {
@@ -25,17 +37,41 @@ class SingleProduct extends React.Component {
 
   handleAddToCart() {
     const productId = this.props.singleProduct.id
-    this.props.sendAddCartLineItem(productId, 1, this.props.history)
+    this.props.sendAddCartLineItem(
+      productId,
+      +this.state.quantity,
+      this.props.history
+    )
   }
 
   render() {
     const product = this.props.singleProduct || {}
-    const reviewss = this.props.singleProduct.reviews || []
+    const reviews = product.reviews || []
+    const categories = product.categories || []
+    const quantitySelect = []
+    let i = 1
+
+    // quantity select dropdown options
+    while (i <= product.inventory) {
+      quantitySelect.push(<option key={i}>{i}</option>)
+      i++
+    }
+
     return (
       <div id="product">
         <h1>{product.name}</h1>
-        <img src={product.imageUrl || '/images/default-banana.jpg'} />
-
+        <p>{categories.reduce((str, ele) => str + ' ' + ele.name, '')}</p>
+        <img src={product.imageUrl} />
+        <p>{product.description}</p>
+        <p>${this.priceConvert(product.price)}</p>
+        <select
+          id="quantity"
+          name="quantity"
+          value={this.state.quantity}
+          onChange={this.handleChange}
+        >
+          {quantitySelect}
+        </select>
         <button type="button" onClick={this.handleDelete}>
           Delete
         </button>
@@ -45,12 +81,14 @@ class SingleProduct extends React.Component {
         <button type="button" onClick={this.handleAddToCart}>
           Add to Cart
         </button>
-        <h4>Number of ratings: {reviewss.length}</h4>
+        <h4>Number of ratings: {reviews.length}</h4>
         <h4>
           Avg Rating:
-          {console.log(reviewss.length)}
+          {reviews.reduce((pv, cv) => {
+            return pv + cv
+          }, 0) / reviews.length}
         </h4>
-        <Reviews reviews={reviewss} />
+        <Reviews reviews={reviews} />
       </div>
     )
   }
