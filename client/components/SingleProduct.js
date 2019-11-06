@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchProduct, deleteProduct} from '../store/singleProduct'
+import {fetchProduct, removeProduct} from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class SingleProduct extends React.Component {
   }
 
   handleDelete() {
-    this.props.deleteProduct(this.props.singleProduct.id, this.props.history)
+    this.props.removeProduct(this.props.singleProduct.id, this.props.history)
   }
 
   handleEdit() {
@@ -40,6 +40,6 @@ class SingleProduct extends React.Component {
 }
 
 const mapStateToProps = ({singleProduct}) => ({singleProduct})
-const mapDispatchToProps = {fetchProduct, deleteProduct}
+const mapDispatchToProps = {fetchProduct, removeProduct}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
