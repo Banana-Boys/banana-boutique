@@ -1,45 +1,58 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllCategories} from '../store/categories'
+import {fetchFilteredProducts} from '../store/products'
 
 export class Categories extends Component {
+  constructor(props) {
+    super(props)
+    this.state = this.buildInitialState()
+  }
+
+  buildInitialState() {
+    return {
+      checkedCategories: []
+    }
+  }
+
   async componentDidMount() {
     try {
       await this.props.loadCategories()
+      await this.props.updateProducts()
+      this.setState()
     } catch (error) {
       console.error(error)
     }
   }
 
   updateCategorySelected = event => {
-    const categoryId = event.target.id
-    const selected = event.target.value
-    const stateUpdate = this.state.products.filter(product => {
-      if (selected === true && product.id === categoryId) {
-        return product
-      }
-    })
-    this.setState(stateUpdate)
+    let catId = Number(event.target.value)
+    let index = this.state.checkedCategories.indexOf(catId)
+
+    if (index >= 0) {
+      this.state.checkedCategories.splice(index, 1)
+    } else {
+      this.state.checkedCategories.push(catId)
+    }
+    console.log('this.state:', this.state)
+
+    this.props.updateProducts(this.state.checkedCategories)
   }
 
   render() {
     let categories = this.props.categories
-    // categories = [{name: 'fresh produce', id: 1}, {name: 'other', id: 2}]
 
     return (
       <div>
         {categories.map(category => (
           <div key={category.id} className="category">
-            {/* <form className="filter">
-            <label htmlFor="category-selected" /> */}
             <input
               name="category-selected"
               type="checkbox"
               onChange={this.updateCategorySelected}
-              value={category.selected}
+              value={category.id}
             />
             {category.name}
-            {/* </form> */}
           </div>
         ))}
       </div>
@@ -55,8 +68,8 @@ const mapState = (state, props) => {
 }
 
 const mapDispatch = dispatch => ({
-  loadCategories: () => dispatch(fetchAllCategories())
-  // updateCategories: (id, selected) => dispatch(updateSelectedCategory(id, selected))
+  loadCategories: () => dispatch(fetchAllCategories()),
+  updateProducts: categoryIds => dispatch(fetchFilteredProducts(categoryIds))
 })
 
 export default connect(mapState, mapDispatch)(Categories)
