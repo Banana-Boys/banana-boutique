@@ -1,6 +1,6 @@
 'use strict'
 const faker = require('faker')
-const db = require('../server/db')
+const {db} = require('../server/db')
 const {User, Product} = require('../server/db/models')
 
 async function seed() {
