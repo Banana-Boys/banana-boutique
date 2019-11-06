@@ -1080,7 +1080,7 @@ var featchAllCategories = function featchAllCategories() {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, fetchReviews, fetchReview, postReview, destroyReview, updateReview, fetchCart, postCart, destroyProductInCart, fetchProducts, fetchProduct, createProduct, fetchAllOrders, fetchUserOrders, fetchOrder, featchAllCategories */
+/*! exports provided: default, me, auth, logout, fetchReviews, fetchReview, postReview, destroyReview, updateReview, fetchCart, postCart, destroyProductInCart, fetchProducts, fetchAllOrders, fetchUserOrders, fetchOrder, featchAllCategories, fetchProduct, createProduct */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1895,22 +1895,21 @@ var createProduct = function createProduct(body, history) {
               case 3:
                 _ref3 = _context2.sent;
                 data = _ref3.data;
-                dispatch(getProduct(data));
                 history.push("products/".concat(data.id));
-                _context2.next = 12;
+                _context2.next = 11;
                 break;
 
-              case 9:
-                _context2.prev = 9;
+              case 8:
+                _context2.prev = 8;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0);
 
-              case 12:
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 9]]);
+        }, _callee2, null, [[0, 8]]);
       }));
 
       return function (_x2) {
@@ -45655,7 +45654,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
