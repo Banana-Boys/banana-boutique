@@ -1,10 +1,16 @@
 import react from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store/product'
+import Product from './Product'
 
-class AllProducts extends react.Component {
+export class AllProducts extends react.Component {
   render() {
-    return 'hello world'
+    const products = this.props.products
+    console.log('here')
+    if (!products) {
+      return <div>NO PROJECTS!</div>
+    }
+    return <div>{products.map(product => <Product product={product} />)}</div>
   }
 }
 
