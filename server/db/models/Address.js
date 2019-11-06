@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const util = require('../../../util')
+const util = require('../../../utilBackEnd/util')
 
 const Address = db.define('address', {
   address1: {

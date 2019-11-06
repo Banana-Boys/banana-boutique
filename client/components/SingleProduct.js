@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProduct, removeProduct} from '../store/singleProduct'
 import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
+import priceConvert from '../../utilFrontEnd/priceConvert'
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
@@ -13,6 +14,7 @@ class SingleProduct extends React.Component {
     this.handleEdit = this.handleEdit.bind(this)
     this.handleAddToCart = this.handleAddToCart.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.priceConvert = priceConvert
   }
 
   componentDidMount() {
@@ -40,12 +42,6 @@ class SingleProduct extends React.Component {
       +this.state.quantity,
       this.props.history
     )
-  }
-
-  // converts int into string with decimal
-  priceConvert(price = 9999) {
-    let string = price.toString()
-    return string.slice(0, -2) + '.' + string.slice(-2)
   }
 
   render() {
