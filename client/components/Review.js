@@ -5,9 +5,9 @@ const Review = props => {
   return (
     <div>
       <div>
-        <h1>{review.rating}</h1>
-        <h1>{review.title}</h1>
-        <h2>{review.body}</h2>
+        <h5>Rating: {review.rating}</h5>
+        <h5>Title: {review.title}</h5>
+        <h5>{review.body}</h5>
       </div>
     </div>
   )

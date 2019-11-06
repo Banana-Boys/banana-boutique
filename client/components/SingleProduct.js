@@ -88,7 +88,7 @@ class SingleProduct extends React.Component {
             return pv + cv
           }, 0) / reviews.length}
         </h4>
-        <Reviews />
+        <Reviews reviews={reviews} />
       </div>
     )
   }

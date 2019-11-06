@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postReview, destroyReview, updateReview} from '../store/review'
+import Review from './Review'
 
 export class Reviews extends Component {
   constructor() {
@@ -8,16 +9,9 @@ export class Reviews extends Component {
   }
 
   render() {
-    //const reviews = this.props.reviews
-    console.log(this.props)
-    console.log('Review Component')
-    return (
-      <div>
-        {/*
-            reviews.map(rev=>{<Review review={rev}>})
-            */}
-      </div>
-    )
+    const reviews = this.props.reviews || []
+    console.log('reviews', reviews)
+    return <div>{reviews.map(rev => <Review key={rev.id} review={rev} />)}</div>
   }
 }
 

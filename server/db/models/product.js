@@ -24,11 +24,11 @@ const Product = db.define('product', {
     allowNull: false
   },
   numratings: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     defaultValue: 0
   },
   ratingsaverage: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     defaultValue: 0
   }
 })
