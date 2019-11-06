@@ -22,15 +22,15 @@ const Product = db.define('product', {
   inventory: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  numratings: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0
+  },
+  ratingsaverage: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0
   }
-  // ratingsAverage: {
-  //   type: Sequelize.FLOAT,
-  //   defaultValue: 0
-  // },
-  // numRatings: {
-  //   type: Sequelize.FLOAT,
-  //   defaultValue: 0
-  // }
 })
 
 module.exports = Product
