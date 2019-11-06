@@ -13,11 +13,26 @@ User.hasMany(Address, {as: 'addresses'})
 User.hasMany(Review)
 User.hasMany(CartLineItem)
 User.hasMany(Order)
+User.belongsToMany(Product, {as: 'ProductsUserReviewed', through: 'Review'})
+User.belongsToMany(Product, {as: 'ProductsInUserCart', through: 'CartLineItem'})
+User.belongsToMany(Product, {
+  as: 'ProductsInUserOrder',
+  through: 'OrderLineItem'
+})
 
-Product.hasMany(Category, {through: 'ProductCategory'})
+Product.belongsToMany(Category, {through: 'ProductCategory'})
 Product.hasMany(Review)
 Product.hasMany(OrderLineItem)
 Product.hasMany(CartLineItem)
+Product.belongsToMany(User, {as: 'UsersWhoReviewedProduct', through: 'Review'})
+Product.belongsToMany(User, {
+  as: 'UsersWithProductInCart',
+  through: 'CartLineItem'
+})
+Product.belongsToMany(User, {
+  as: 'UsersWithProductInOrder',
+  through: 'OrderLineItem'
+})
 
 Order.belongsTo(User, {as: 'buyer'})
 Order.belongsTo(User, {as: 'receiver'})
@@ -25,7 +40,7 @@ Order.hasMany(OrderLineItem)
 Order.hasOne(Address, {as: 'shipping'})
 Order.hasOne(Address, {as: 'billing'})
 
-Category.hasMany(Product, {through: 'ProductCategory'})
+Category.belongsToMany(Product, {through: 'ProductCategory'})
 
 Review.belongsTo(User)
 Review.belongsTo(Product)
