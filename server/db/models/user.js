@@ -57,20 +57,20 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  defaultBillingAddressId: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'addresses',
-      key: 'id'
-    }
-  },
-  defaultShippingAddressId: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'addresses',
-      key: 'id'
-    }
-  },
+  // defaultBillingAddressId: {
+  //   type: Sequelize.INTEGER,
+  //   references: {
+  //     model: 'addresses',
+  //     key: 'id'
+  //   }
+  // },
+  // defaultShippingAddressId: {
+  //   type: Sequelize.INTEGER,
+  //   references: {
+  //     model: 'addresses',
+  //     key: 'id'
+  //   }
+  // },
   imageUrl: {
     type: Sequelize.STRING
   }
