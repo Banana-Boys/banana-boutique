@@ -22,33 +22,30 @@ export const fetchProduct = productId => {
   }
 }
 
+export const createProduct = (body, history) => async dispatch => {
+  try {
+    const {data} = await axios.post('/api/products', body)
+    history.push(`/products/${data.id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const editProduct = (id, body, history) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/products/${id}`, body)
+    console.log(data)
+    history.push(`/products/${data.id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const removeProduct = productId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/products/${productId}`) //looked cute, might change later
       return dispatch(deleteProduct(data))
-    } catch (err) {
-      console.log(err)
-    }
-  }
-}
-
-export const createProduct = (body, history) => {
-  return async dispatch => {
-    try {
-      const {data} = await axios.post('/api/products', body)
-      history.push(`/products/${data.id}`)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
-export const updateProduct = product => {
-  return async dispatch => {
-    try {
-      const {data} = await axios.get(`/api/products/${product.id}`, product)
-      return dispatch(updootProduct(data))
     } catch (err) {
       console.log(err)
     }
