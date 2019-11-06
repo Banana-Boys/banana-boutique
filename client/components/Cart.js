@@ -21,4 +21,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 //export default connect(mapStatetProps, mapDispatchToProps)(Cart)
-export default Review
+export default Cart

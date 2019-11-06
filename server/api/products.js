@@ -23,6 +23,7 @@ router.post('/', async (req, res, next) => {
     res.status(201).json(productWithCategories)
   } catch (error) {
     console.log(error)
+    next(error)
   }
 })
 
@@ -33,6 +34,17 @@ router.get('/', async (req, res, next) => {
       include: [Review, Category]
     })
     res.json(products)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id, {
+      include: [Review, Category]
+    })
+    res.json(product)
   } catch (error) {
     next(error)
   }
@@ -85,6 +97,7 @@ router.put('/:id', async (req, res, next) => {
     res.status(200).json(productWithCategories)
   } catch (error) {
     console.log(error)
+    next(error)
   }
 })
 

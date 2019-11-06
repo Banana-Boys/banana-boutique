@@ -6,6 +6,7 @@ const SET_REVIEW = 'SET_REVIEW'
 const ADD_REVIEW = 'ADD_REVIEW'
 const REMOVE_REVIEW = 'REMOVE_REVIEW'
 const UPDATE_REVIEW = 'UPDATE_REVIEW'
+const RATINGS_AVERAGE = 'RATINGS_AVERAGE'
 
 //action creators
 const setReviews = reviews => ({type: SET_REVIEWS, reviews})
@@ -13,20 +14,25 @@ const setReview = review => ({type: SET_REVIEW, review})
 const addReview = review => ({type: ADD_REVIEW, review})
 const removeReview = review => ({type: REMOVE_REVIEW, review})
 const updateRev = review => ({type: UPDATE_REVIEW, review})
-
-//intialState
-const initialState = {
-  reviews: [],
-  review: {}
-}
+const ratingsAVG = rating => ({type: RATINGS_AVERAGE, rating})
 
 //thunks
-
 export const fetchReviews = () => {
   return async dispatch => {
     try {
       const {data} = await axios.get('/api/reviews')
       return dispatch(setReviews(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const fetchReviewsRatingsAverage = () => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get('/api/reviews/ratingsaverage')
+      return dispatch(ratingsAVG(data))
     } catch (error) {
       console.error(error)
     }
@@ -78,20 +84,17 @@ export const updateReview = review => {
 }
 
 //reducer
-export default (state = initialState, action) => {
+export default (reviews = [], action) => {
   switch (action.type) {
     case SET_REVIEWS:
-      return {...state, reviews: action.reviews}
+      return [action.reviews]
     case SET_REVIEW:
-      return {...state, review: action.review}
+      return action.review
     case ADD_REVIEW:
-      return {...state, reviews: [...state.reviews, action.review]}
+      return [...reviews, action.review]
     case REMOVE_REVIEW:
-      return {
-        ...state,
-        reviews: [...state.reviews.filter(rev => rev !== action.review)]
-      }
+      return [...reviews.filter(rev => rev !== action.review)]
     default:
-      return state
+      return reviews
   }
 }

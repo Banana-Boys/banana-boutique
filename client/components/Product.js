@@ -5,7 +5,9 @@ const Product = props => {
 
   return (
     <div>
-      <div>{product.imageUrl}</div>
+      <div>
+        <img src={product.imageUrl} />
+      </div>
       <div>
         <h1>{product.name}</h1>
         <h2>{product.description}</h2>
