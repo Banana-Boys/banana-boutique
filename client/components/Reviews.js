@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {postReview, destroyReview, updateReview} from '../store/review'
 
 export class Reviews extends Component {
@@ -8,6 +9,8 @@ export class Reviews extends Component {
 
   render() {
     //const reviews = this.props.reviews
+    console.log(this.props)
+    console.log('Review Component')
     return (
       <div>
         {/*
@@ -19,7 +22,7 @@ export class Reviews extends Component {
 }
 
 const mapStateToProps = state => ({
-  reviews: state.reviews
+  revs: state.reviews
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -28,5 +31,8 @@ const mapDispatchToProps = dispatch => ({
   updateReview: review => dispatch(updateReview(review))
 })
 
-//export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
-export default Reviews
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
+//export default Reviews
+
+//add number of reviews per product
+//add average of ratings per product
