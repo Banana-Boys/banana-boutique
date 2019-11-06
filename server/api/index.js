@@ -1,8 +1,9 @@
 const router = require('express').Router()
 module.exports = router
 
-router.use('/reviews', require('../api/reviews'))
-router.use('/cartlineitem', require('./cartlineitem'))
+router.use('/reviews', require('./reviews'))
+
+router.use('/cart', require('./cart'))
 
 router.use('/users', require('./users'))
 
