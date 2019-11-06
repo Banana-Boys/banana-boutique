@@ -24,9 +24,9 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/allproducts" component={AllProducts} />
         <Switch>
           <Route path="/home" component={UserHome} />
+          <Route path="/allproducts" component={AllProducts} />
           <Route path="/products/new" component={NewProductForm} />
           <Route path="/products/:id" component={SingleProduct} />
           {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
@@ -35,11 +35,13 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/allproducts" component={AllProducts} />
+            <Route path="/products/new" component={NewProductForm} />
+            <Route path="/products/:id" component={SingleProduct} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
-        <Route component={AllProducts} />
       </Switch>
     )
   }
