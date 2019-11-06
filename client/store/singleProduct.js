@@ -16,7 +16,17 @@ export const fetchProduct = productId => {
 
 export const createProduct = (body, history) => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/products`, body)
+    const {data} = await axios.post('/api/products', body)
+    history.push(`/products/${data.id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const editProduct = (id, body, history) => async dispatch => {
+  try {
+    const {data} = await axios.put(`/api/products/${id}`, body)
+    console.log(data)
     history.push(`/products/${data.id}`)
   } catch (error) {
     console.log(error)

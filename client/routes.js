@@ -6,6 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import NewProductForm from './components/NewProductForm'
 import SingleProduct from './components/SingleProduct'
+import EditProductForm from './components/EditProductForm'
 
 /**
  * COMPONENT
@@ -25,6 +26,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Switch>
           <Route path="/products/new" component={NewProductForm} />
+          <Route path="/products/:id/edit" component={EditProductForm} />
           <Route path="/products/:id" component={SingleProduct} />
           {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
         </Switch>
