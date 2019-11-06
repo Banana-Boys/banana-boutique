@@ -1,9 +1,19 @@
-import react from "react";
+import react from 'react'
+import {connect} from 'react-redux'
+import {fetchProducts} from '../store/product'
 
 class AllProducts extends react.Component {
   render() {
-    return "hello world";
+    return 'hello world'
   }
 }
 
-export default AllProducts;
+const mapStateToProps = state => ({
+  products: state.products
+})
+
+const mapDispatchToProps = dispatch => ({
+  loadProducts: () => dispatch(fetchProducts())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)

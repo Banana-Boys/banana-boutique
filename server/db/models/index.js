@@ -7,12 +7,12 @@ const Address = require('./Address')
 const OrderLineItem = require('./OrderLineItem')
 const Review = require('./Review')
 
-User.hasOne(Address, { as: "defaultShipping" });
-User.hasOne(Address, { as: "defaultBilling" });
-User.hasMany(Address, { as: "addresses" });
-User.hasMany(Review);
-User.hasMany(CartLineItem);
-User.hasMany(Order);
+User.hasOne(Address, {as: 'defaultShipping'})
+User.hasOne(Address, {as: 'defaultBilling'})
+User.hasMany(Address, {as: 'addresses'})
+User.hasMany(Review)
+User.hasMany(CartLineItem)
+User.hasMany(Order)
 
 Product.hasMany(Category, {through: 'ProductCategory'})
 Product.hasMany(Review)
@@ -29,7 +29,6 @@ Category.hasMany(Product, {through: 'ProductCategory'})
 
 Review.belongsTo(User)
 Review.belongsTo(Product)
-
 
 /**
  * If we had any associations to make, this would be a great place to put them!
