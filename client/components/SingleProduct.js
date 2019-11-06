@@ -87,6 +87,7 @@ class SingleProduct extends React.Component {
           {reviews.reduce((pv, cv) => {
             return pv + cv
           }, 0) / reviews.length}
+          {console.log('nan')}
         </h4>
         <Reviews reviews={reviews} />
       </div>
