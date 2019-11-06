@@ -46,7 +46,7 @@ class SingleProduct extends React.Component {
         </button>
         <h4>Number of ratings: {product.reviews.length}</h4>
         <h4>
-          Avg Rating:{' '}
+          Avg Rating:
           {product.reviews.reduce(function(pv, cv) {
             return pv + cv
           }, 0) / product.reviews.length}
