@@ -23,6 +23,15 @@ export const createProduct = (body, history) => async dispatch => {
   }
 }
 
+export const deleteProduct = (productId, history) => async dispatch => {
+  try {
+    await axios.delete(`/api/products/${productId}`)
+    history.push(`/products`)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 /**
  * REDUCER
  */
