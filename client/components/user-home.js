@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import Categories from './Categories'
-import AllProducts from './AllProducts'
 
 /**
  * COMPONENT
@@ -16,29 +14,12 @@ export const UserHome = props => {
       <img src={imageUrl} />
       <h5>Email: {email}</h5>
       <h5>Phone #: {phone}</h5>
-      <h5>Phone #: {phone}</h5>
       <h5>Billing Address: </h5>
       <h5>Shipping Address: </h5>
+      <h5>Addresses: </h5>
       <h5>Wishlists: </h5>
       <h5>Orders: </h5>
       <h5>Reviews: </h5>
-      <div>
-        <div>
-          <input
-            type="text"
-            className="input"
-            id="search"
-            placeholder="Search..."
-          />
-          <button type="submit" className="button">
-            Search{' '}
-          </button>
-        </div>
-        <div>
-          <Categories />
-          <AllProducts />
-        </div>
-      </div>
     </div>
   )
 }
@@ -54,9 +35,9 @@ const mapState = state => {
 
 export default connect(mapState)(UserHome)
 
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+// /**
+//  * PROP TYPES
+//  */
+// UserHome.propTypes = {
+//   email: PropTypes.string
+// }
