@@ -28,7 +28,7 @@ async function seed() {
     })
   ])
 
-  let i = 10000
+  let i = 100
 
   while (i > 0) {
     await Product.create({
