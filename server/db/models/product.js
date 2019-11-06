@@ -23,6 +23,14 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     allowNull: false
   }
+  // ratingsAverage: {
+  //   type: Sequelize.FLOAT,
+  //   defaultValue: 0
+  // },
+  // numRatings: {
+  //   type: Sequelize.FLOAT,
+  //   defaultValue: 0
+  // }
 })
 
 module.exports = Product
