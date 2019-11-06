@@ -315,50 +315,9 @@ Navbar.propTypes = {
   !*** ./client/components/user-home.js ***!
   \****************************************/
 /*! exports provided: UserHome, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserHome", function() { return UserHome; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-
-
-/**
- * COMPONENT
- */
-
-var UserHome = function UserHome(props) {
-  var name = props.name,
-      email = props.email,
-      phone = props.phone,
-      imageUrl = props.imageUrl;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: imageUrl
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Email: ", email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Phone #: ", phone), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Phone #: ", phone), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Billing Address: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Shipping Address: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Wishlists: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Orders: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Reviews: "));
-};
-/**
- * CONTAINER
- */
-
-var mapState = function mapState(state) {
-  return {
-    email: state.user.email
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(UserHome));
-/**
- * PROP TYPES
- */
-
-UserHome.propTypes = {
-  email: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
-};
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/ferdeleon/Fullstack1909/banana-boutique/client/components/user-home.js: Unexpected token (44:2)\n\n\u001b[0m \u001b[90m 42 | \u001b[39m\u001b[90m */\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 43 | \u001b[39m\u001b[36mconst\u001b[39m mapState \u001b[33m=\u001b[39m state \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 44 | \u001b[39m  \u001b[36mreturn\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 45 | \u001b[39m    email\u001b[33m:\u001b[39m state\u001b[33m.\u001b[39muser\u001b[33m.\u001b[39memail\u001b[0m\n\u001b[0m \u001b[90m 46 | \u001b[39m  }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 47 | \u001b[39m}\u001b[33m;\u001b[39m\u001b[0m\n    at Object.raise (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:6325:17)\n    at Object.unexpected (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:7642:16)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8841:20)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3601:20)\n    at Object.parseExprSubscripts (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseExpression (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8135:23)\n    at Object.jsxParseExpressionContainer (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3452:30)\n    at Object.jsxParseElementAt (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3546:36)\n    at Object.jsxParseElement (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3589:17)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3596:19)\n    at Object.parseExprSubscripts (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseParenAndDistinguishExpression (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8978:28)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8762:21)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3601:20)\n    at Object.parseExprSubscripts (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseExpression (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8135:23)\n    at Object.parseReturnStatement (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:10198:28)\n    at Object.parseStatementContent (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:9877:21)");
 
 /***/ }),
 
@@ -1001,7 +960,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * ACTION TYPES
  */
 
-var GET_ORDERS = "GET_ORDERS";
+var GET_ORDERS = 'GET_ORDERS';
 
 var getOrders = function getOrders(orders) {
   return {
@@ -1025,7 +984,7 @@ var fetchAllOrders = function fetchAllOrders() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/orders");
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/orders');
 
               case 3:
                 _ref2 = _context.sent;
@@ -1138,7 +1097,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * ACTION TYPES
  */
 
-var GET_PRODUCTS = "GET_PRODUCTS";
+var GET_PRODUCTS = 'GET_PRODUCTS';
 
 var getProducts = function getProducts(products) {
   return {
@@ -1160,7 +1119,7 @@ var fetchProducts = function fetchProducts(dispatch) {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products");
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products');
 
             case 3:
               res = _context.sent;
@@ -1536,7 +1495,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-var GET_ORDER = "GET_ORDER";
+var GET_ORDER = 'GET_ORDER';
 
 var getOrder = function getOrder(order) {
   return {

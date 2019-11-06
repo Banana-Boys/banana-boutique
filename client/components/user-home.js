@@ -1,12 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React from 'react'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import Categories from './Categories'
 
 /**
  * COMPONENT
  */
 export const UserHome = props => {
-  const { name, email, phone, imageUrl } = props;
+  const {name, email, phone, imageUrl} = props
 
   return (
     <div>
@@ -20,9 +21,18 @@ export const UserHome = props => {
       <h5>Wishlists: </h5>
       <h5>Orders: </h5>
       <h5>Reviews: </h5>
+      <div>
+        <div>
+          <input type="text" className="input" placeholder="Search..." />
+          <ul>...</ul>
+        </div>
+        <div>
+          <Categories />
+        </div>
+      </div>
     </div>
-  );
-};
+  )
+}
 
 /**
  * CONTAINER
@@ -30,14 +40,14 @@ export const UserHome = props => {
 const mapState = state => {
   return {
     email: state.user.email
-  };
-};
+  }
+}
 
-export default connect(mapState)(UserHome);
+export default connect(mapState)(UserHome)
 
 /**
  * PROP TYPES
  */
 UserHome.propTypes = {
   email: PropTypes.string
-};
+}
