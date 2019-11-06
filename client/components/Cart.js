@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {destroyProductInCart} from '../store/cart'
+import {fetchCart, destroyProductInCart} from '../store/cart'
 import {connect} from 'react-redux'
+import axios from 'axios'
 
 export class Cart extends Component {
   constructor() {
@@ -9,12 +10,20 @@ export class Cart extends Component {
       cartItems: []
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     //get all cart items given ids
+    await this.props.fetchCart()
+
+    const cartItems = this.props.cart.map(async item => {
+      const {data} = await axios.get(`/api/products/${item.productId}`)
+      return data
+    })
+    this.setState({cartItems: await Promise.all(cartItems)})
   }
 
   render() {
-    return <div>{this.state.cartItems.map(item => item.name)}</div>
+    const cartItems = this.state.cartItems
+    return <div id="cart">{cartItems.map(item => item.name)}</div>
   }
 }
 
@@ -25,7 +34,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  removeProduct: product => dispatch(destroyProductInCart(product))
+  removeProduct: product => dispatch(destroyProductInCart(product)),
+  fetchCart: () => dispatch(fetchCart())
 })
 
 //export default connect(mapStatetProps, mapDispatchToProps)(Cart)

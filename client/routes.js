@@ -8,7 +8,7 @@ import {me} from './store'
 import NewProductForm from './components/NewProductForm'
 import SingleProduct from './components/SingleProduct'
 import EditProductForm from './components/EditProductForm'
-
+import Cart from './components/Cart'
 /**
  * COMPONENT
  */
@@ -31,6 +31,7 @@ class Routes extends Component {
           <Route path="/products/new" component={NewProductForm} />
           <Route path="/products/:id/edit" component={EditProductForm} />
           <Route path="/products/:id" component={SingleProduct} />
+          <Route path="/cart" component={Cart} />
           {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
         </Switch>
         {isLoggedIn && (
