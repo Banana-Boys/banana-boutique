@@ -50,7 +50,9 @@ export const removeProduct = productId => {
   }
 }
 
-//reducer
+/**
+ * REDUCER
+ */
 export default (singleProduct = {}, action) => {
   switch (action.type) {
     case GET_PRODUCT:
