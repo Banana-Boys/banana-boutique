@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 
 const Review = props => {
-  const review = props.review;
+  const review = props.review
   return (
     <div>
       <div />
     </div>
-  );
-};
+  )
+}
 
-export default Review;
+export default Review
