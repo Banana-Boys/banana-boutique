@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {destroyProductInCart} from '../store/cart'
+import {connect} from 'net'
 
 export class Cart extends Component {
   render() {
@@ -21,4 +22,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 //export default connect(mapStatetProps, mapDispatchToProps)(Cart)
-export default Review
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
