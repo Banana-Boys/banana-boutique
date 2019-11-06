@@ -30,7 +30,6 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
-    console.log(product)
     return (
       <div id="product">
         <h1>{product.name}</h1>
@@ -47,7 +46,7 @@ class SingleProduct extends React.Component {
         </button>
         <h4>Number of ratings: {product.reviews.length}</h4>
         <h4>
-          Avg Rating:{' '}
+          Avg Rating:
           {product.reviews.reduce(function(pv, cv) {
             return pv + cv
           }, 0) / product.reviews.length}
