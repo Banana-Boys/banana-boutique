@@ -33,6 +33,17 @@ export const removeProduct = productId => {
   }
 }
 
+export const createProduct = (body, history) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/products', body)
+      history.push(`/products/${data.id}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const updateProduct = product => {
   return async dispatch => {
     try {
