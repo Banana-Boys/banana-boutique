@@ -5,10 +5,6 @@ const Category = db.define('category', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
-  },
-  selected: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
   }
 })
 
