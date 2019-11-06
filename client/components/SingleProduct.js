@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProduct, removeProduct} from '../store/singleProduct'
-//import {sendAddCartLineItem} from '../store/cart'
+import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -25,11 +25,12 @@ class SingleProduct extends React.Component {
 
   handleAddToCart() {
     const productId = this.props.singleProduct.id
-    //this.props.sendAddCartLineItem(productId, 1, this.props.history)
+    this.props.sendAddCartLineItem(productId, 1, this.props.history)
   }
 
   render() {
     const product = this.props.singleProduct || {}
+    const reviewss = this.props.singleProduct.reviews || []
     return (
       <div id="product">
         <h1>{product.name}</h1>
@@ -44,20 +45,18 @@ class SingleProduct extends React.Component {
         <button type="button" onClick={this.handleAddToCart}>
           Add to Cart
         </button>
-        <h4>Number of ratings: {product.reviews.length}</h4>
+        <h4>Number of ratings: {reviewss.length}</h4>
         <h4>
           Avg Rating:
-          {product.reviews.reduce(function(pv, cv) {
-            return pv + cv
-          }, 0) / product.reviews.length}
+          {console.log(reviewss.length)}
         </h4>
-        <Reviews />
+        <Reviews reviews={reviewss} />
       </div>
     )
   }
 }
 
 const mapStateToProps = ({singleProduct, user}) => ({singleProduct, user})
-const mapDispatchToProps = {fetchProduct, removeProduct} //sendAddCartLineItem}
+const mapDispatchToProps = {fetchProduct, removeProduct, sendAddCartLineItem}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
