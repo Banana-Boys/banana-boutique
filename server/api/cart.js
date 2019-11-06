@@ -70,7 +70,7 @@ router.delete('/:id', async (req, res, next) => {
       cartLineItem => cartLineItem.productId !== productId
     )
     req.session.save()
-    await CartLineItem.delete({where: {productId}})
+    if (req.user) await CartLineItem.delete({where: {productId}})
     res.sendStatus(204)
   } catch (err) {
     next(err)
@@ -89,8 +89,10 @@ router.put('/:id', async (req, res, next) => {
       {productId, quantity}
     ]
     req.session.save()
-    const cartLineItem = await CartLineItem.findOne({where: {productId}})
-    await cartLineItem.update({quantity})
+    if (req.user) {
+      const cartLineItem = await CartLineItem.findOne({where: {productId}})
+      await cartLineItem.update({quantity})
+    }
     res.sendStatus(204)
   } catch (err) {
     next(err)
