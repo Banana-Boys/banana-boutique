@@ -14,14 +14,7 @@ const addReview = review => ({type: ADD_REVIEW, review})
 const removeReview = review => ({type: REMOVE_REVIEW, review})
 const updateRev = review => ({type: UPDATE_REVIEW, review})
 
-//intialState
-const initialState = {
-  reviews: [],
-  review: {}
-}
-
 //thunks
-
 export const fetchReviews = () => {
   return async dispatch => {
     try {
@@ -78,20 +71,17 @@ export const updateReview = review => {
 }
 
 //reducer
-export default (state = initialState, action) => {
+export default (reviews = [], action) => {
   switch (action.type) {
     case SET_REVIEWS:
-      return {...state, reviews: action.reviews}
+      return [action.reviews]
     case SET_REVIEW:
-      return {...state, review: action.review}
+      return action.review
     case ADD_REVIEW:
-      return {...state, reviews: [...state.reviews, action.review]}
+      return [...reviews, action.review]
     case REMOVE_REVIEW:
-      return {
-        ...state,
-        reviews: [...state.reviews.filter(rev => rev !== action.review)]
-      }
+      return [...reviews.filter(rev => rev !== action.review)]
     default:
-      return state
+      return reviews
   }
 }

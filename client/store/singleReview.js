@@ -42,18 +42,13 @@ export const updateReview = review => {
 }
 
 //reducer
-export default (state = initialState, action) => {
+export default (review = {}, action) => {
   switch (action.type) {
-    case SET_REVIEWS:
-      return {...state, reviews: action.reviews}
     case SET_REVIEW:
-      return {...state, review: action.review}
+      return action.review
     case REMOVE_REVIEW:
-      return {
-        ...state,
-        reviews: [...state.reviews.filter(rev => rev !== action.review)]
-      }
+      return review
     default:
-      return state
+      return review
   }
 }
