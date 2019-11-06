@@ -80,7 +80,7 @@ class NewProductForm extends React.Component {
         <div className="form-group">
           <label htmlFor="categories">Categories:</label>
           <select multiple name="categories" onChange={this.handleChange}>
-            {this.categories.map(category => (
+            {this.props.categories.map(category => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>
