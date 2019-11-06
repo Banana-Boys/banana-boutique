@@ -42,6 +42,7 @@ class SingleProduct extends React.Component {
     )
   }
 
+  // converts int into string with decimal
   priceConvert(price = 9999) {
     let string = price.toString()
     return string.slice(0, -2) + '.' + string.slice(-2)
@@ -49,6 +50,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
+    const categories = product.categories || []
     const quantitySelect = []
     let i = 1
 
@@ -61,7 +63,8 @@ class SingleProduct extends React.Component {
     return (
       <div id="product">
         <h1>{product.name}</h1>
-        <img src={product.imageUrl || '/images/default-banana.jpg'} />
+        <p>{categories.reduce((str, ele) => str + ' ' + ele.name, '')}</p>
+        <img src={product.imageUrl} />
         <p>{product.description}</p>
         <p>${this.priceConvert(product.price)}</p>
         <select
