@@ -3,19 +3,18 @@ import {connect} from 'react-redux'
 import {fetchProduct} from '../store/singleProduct'
 
 class SingleProduct extends react.Component {
-  async componentDidMount() {
-    const productId = 1 //this.match.params or something
-    await this.props.loadProduct(productId)
+  constructor(props) {
+    super(props)
   }
 
-  render() {
-    return 'hello world'
+  componentDidMount() {
+    this.props.fetchProduct(this.match.params.id)
   }
+
+  render() {}
 }
 
-const mapStateToProps = state => ({product: state.singleProduct})
-const mapDispatchToProps = dispatch => ({
-  loadProduct: productId => dispatch(fetchProduct(productId))
-})
+const mapStateToProps = ({singleProduct}) => ({singleProduct})
+const mapDispatchToProps = {fetchProduct}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
