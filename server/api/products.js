@@ -11,7 +11,6 @@ router.post('/', async (req, res, next) => {
       price,
       inventory
     })
-    console.log(product)
     await Promise.all(
       categories.map(async categoryId => {
         const category = await Category.findByPk(categoryId)
@@ -19,9 +18,8 @@ router.post('/', async (req, res, next) => {
       })
     )
     const productWithCategories = await Product.findByPk(product.id, {
-      include: [Category]
+      include: [Review, Category]
     })
-    console.log(productWithCategories)
     res.status(201).json(productWithCategories)
   } catch (error) {
     console.log(error)
@@ -39,11 +37,8 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findOne({
-      where: {
-        id: req.params.id
-      },
-      include: [Review]
+    const product = await Product.findByPk(req.params.id, {
+      include: [Review, Category]
     })
     res.json(product)
   } catch (error) {
@@ -62,20 +57,32 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
-// //UPDATE product by id
-// router.put('/:id', async (req, res, next) => {
-//   try {
-//     const product = await Product.find({
-//       where: {
-//         id: req.params.id
-//       }
-//     })
-//     await product.update(req.body)
-//     res.json(product)
-//   } catch (error) {
-//     console.log(error)
-//     next(error)
-//   }
-// })
+//UPDATE product by id
+router.put('/:id', async (req, res, next) => {
+  try {
+    const {name, description, imageUrl, price, inventory, categories} = req.body
+    const product = await Product.findByPk(req.params.id)
+    await product.update({
+      name,
+      description,
+      imageUrl,
+      price,
+      inventory
+    })
+    await product.setCategories([])
+    await Promise.all(
+      categories.map(async categoryId => {
+        const category = await Category.findByPk(categoryId)
+        await product.addCategory(category)
+      })
+    )
+    const productWithCategories = await Product.findByPk(product.id, {
+      include: [Review, Category]
+    })
+    res.status(200).json(productWithCategories)
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 module.exports = router
