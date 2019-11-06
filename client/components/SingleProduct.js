@@ -30,7 +30,6 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
-    console.log(product)
     return (
       <div id="product">
         <h1>{product.name}</h1>

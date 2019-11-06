@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 //action types
-// const SET_CARTPRODUCTS = 'SET_CARTPRODUCTS'
+const SET_CART = 'SET_CART'
 const ADD_CART_LINE_ITEM = 'ADD_CART_LINE_ITEM'
 // const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 
 //action creators
-// const setCartProducts = products => ({type: SET_CARTPRODUCTS, products})
+const setCart = cart => ({type: SET_CART, cart})
 const addCartLineItem = cartLineItem => ({
   type: ADD_CART_LINE_ITEM,
   cartLineItem
@@ -14,22 +14,20 @@ const addCartLineItem = cartLineItem => ({
 // const removeProduct = product => ({type: REMOVE_FROM_CART, product})
 
 //intialState
-const initialState = {
-  cart: []
-}
+const initialState = []
 
 //thunks
 
-// export const fetchCart = () => {
-//   return async dispatch => {
-//     try {
-//       const {data} = await axios.get('/api/cartproduct')
-//       return dispatch(setCartProducts(data))
-//     } catch (error) {
-//       console.error(error)
-//     }
-//   }
-// }
+export const fetchCart = () => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get('/api/cart')
+      return dispatch(setCart(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 export const sendAddCartLineItem = (productId, quantity, history) => {
   return async dispatch => {
@@ -62,10 +60,18 @@ export const sendAddCartLineItem = (productId, quantity, history) => {
 //reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case SET_CARTPRODUCTS:
-    //   return {...state, cart: action.products}
+    case SET_CART:
+      return action.cart
     case ADD_CART_LINE_ITEM:
-      return [...state, action.cartLineItem]
+      return state.map(
+        cartLineItem =>
+          cartLineItem.productId === action.cartLineItem.productId
+            ? {
+                ...cartLineItem,
+                quantity: cartLineItem.quantity + action.cartLineItem.quantity
+              }
+            : cartLineItem
+      )
     // case REMOVE_FROM_CART:
     //   return {
     //     ...state,
