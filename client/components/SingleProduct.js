@@ -30,11 +30,19 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
-    console.log(product)
+    const quantitySelect = []
+    let i = 1
+    while (i <= product.inventory) {
+      quantitySelect.push(<option>{i}</option>)
+      i--
+    }
+
     return (
       <div id="product">
         <h1>{product.name}</h1>
         <img src={product.imageUrl || '/images/default-banana.jpg'} />
+        <p>{product.description}</p>
+        {/* <select id="quantity">{quantitySelect}</select> */}
         <button type="button" onClick={this.handleDelete}>
           Delete
         </button>
