@@ -1,20 +1,27 @@
 import React, {Component} from 'react'
 import {destroyProductInCart} from '../store/cart'
-import {connect} from 'net'
+import {connect} from 'react-redux'
 
 export class Cart extends Component {
+  constructor() {
+    super()
+    this.state = {
+      cartItems: []
+    }
+  }
+  componentDidMount() {
+    //get all cart items given ids
+  }
+
   render() {
-    //const products = this.props.products
-    return (
-      <div>
-        <div />
-      </div>
-    )
+    return <div>{this.state.cartItems.map(item => item.name)}</div>
   }
 }
 
 const mapStateToProps = state => ({
-  products: state.products
+  products: state.products,
+  cart: state.cart,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
