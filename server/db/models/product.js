@@ -16,7 +16,7 @@ const Product = db.define('product', {
   price: {
     type: Sequelize.FLOAT
   },
-  quantity: {
+  inventory: {
     type: Sequelize.INTEGER
   }
 })

@@ -1,16 +1,36 @@
 const router = require('express').Router()
-const Product = require('../db/models/product')
-const User = require('../db/models/user')
-const Review = require('../db/models/review')
+const {Product, Category, User, Review} = require('../db')
+
+router.post('/', async (req, res, next) => {
+  try {
+    const {name, description, imageUrl, price, inventory, categories} = req.body
+    const product = await Product.create({
+      name,
+      description,
+      imageUrl,
+      price,
+      inventory
+    })
+    console.log(product)
+    await Promise.all(
+      categories.map(async categoryId => {
+        const category = await Category.findByPk(categoryId)
+        await product.addCategory(category)
+      })
+    )
+    const productWithCategories = await Product.findByPk(product.id, {
+      include: [Category]
+    })
+    console.log(productWithCategories)
+    res.status(201).json(productWithCategories)
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 router.get('/', (req, res, next) => {
   try {
-    const products = Product.findAll({
-      include: {
-        model: User,
-        Review
-      }
-    })
+    const products = Product.findAll()
     res.json(products)
   } catch (error) {
     next(error)
@@ -23,20 +43,8 @@ router.get('/:id', async (req, res, next) => {
       where: {
         id: req.params.id
       },
-      include: {
-        model: User,
-        Review
-      }
+      include: [Review]
     })
-    res.json(product)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.post('/', async (req, res, next) => {
-  try {
-    const product = await Product.create(req.body)
     res.json(product)
   } catch (error) {
     next(error)
@@ -54,20 +62,20 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
-//UPDATE product by id
-router.put('/:id', async (req, res, next) => {
-  try {
-    const product = await Product.find({
-      where: {
-        id: req.params.id
-      }
-    })
-    await product.update(req.body)
-    res.json(product)
-  } catch (error) {
-    console.log(error)
-    next(error)
-  }
-})
+// //UPDATE product by id
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     const product = await Product.find({
+//       where: {
+//         id: req.params.id
+//       }
+//     })
+//     await product.update(req.body)
+//     res.json(product)
+//   } catch (error) {
+//     console.log(error)
+//     next(error)
+//   }
+// })
 
 module.exports = router
