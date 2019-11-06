@@ -8,7 +8,7 @@ const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 //action creator
 const getProduct = product => ({type: GET_PRODUCT, product})
 const deleteProduct = product => ({type: DELETE_PRODUCT, product})
-const updootProduct = product => ({type: UPDATE_PRODUCT, product})
+const updateProduct = product => ({type: UPDATE_PRODUCT, product})
 
 //thunk
 export const fetchProduct = productId => {
@@ -60,7 +60,7 @@ export default (singleProduct = {}, action) => {
     case GET_PRODUCT:
       return action.product
     case DELETE_PRODUCT:
-      return singleProduct
+      return {}
     case UPDATE_PRODUCT:
       return action.product
     default:
