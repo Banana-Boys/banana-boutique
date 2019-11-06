@@ -23,6 +23,7 @@ router.post('/', async (req, res, next) => {
     res.status(201).json(productWithCategories)
   } catch (error) {
     console.log(error)
+    next(error)
   }
 })
 
@@ -83,6 +84,7 @@ router.put('/:id', async (req, res, next) => {
     res.status(200).json(productWithCategories)
   } catch (error) {
     console.log(error)
+    next(error)
   }
 })
 

@@ -3,12 +3,10 @@ import axios from 'axios'
 //action type
 const GET_PRODUCT = 'GET_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
-const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 //action creator
 const getProduct = product => ({type: GET_PRODUCT, product})
 const deleteProduct = product => ({type: DELETE_PRODUCT, product})
-const updootProduct = product => ({type: UPDATE_PRODUCT, product})
 
 //thunk
 export const fetchProduct = productId => {
@@ -59,8 +57,6 @@ export default (singleProduct = {}, action) => {
       return action.product
     case DELETE_PRODUCT:
       return singleProduct
-    case UPDATE_PRODUCT:
-      return action.product
     default:
       return singleProduct
   }
