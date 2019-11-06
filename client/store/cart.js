@@ -62,16 +62,25 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CART:
       return action.cart
-    case ADD_CART_LINE_ITEM:
-      return state.map(
-        cartLineItem =>
-          cartLineItem.productId === action.cartLineItem.productId
-            ? {
-                ...cartLineItem,
-                quantity: cartLineItem.quantity + action.cartLineItem.quantity
-              }
-            : cartLineItem
+    case ADD_CART_LINE_ITEM: {
+      const sameProduct = state.find(
+        cartLineItem => cartLineItem.productId === action.cartLineItem.productId
       )
+      if (sameProduct) {
+        return [
+          ...state.filter(
+            cartLineItem =>
+              cartLineItem.productId !== action.cartLineItem.productId
+          ),
+          {
+            ...action.cartLineItem,
+            quantity: action.cartLineItem.quantity + sameProduct.quantity
+          }
+        ]
+      } else {
+        return [...state, action.cartLineItem]
+      }
+    }
     // case REMOVE_FROM_CART:
     //   return {
     //     ...state,

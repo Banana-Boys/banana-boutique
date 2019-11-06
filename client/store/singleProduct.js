@@ -13,7 +13,7 @@ export const fetchProduct = productId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/products/${productId}`) //looked cute, might change later
-      return dispatch(getProduct(data))
+      dispatch(getProduct(data))
     } catch (err) {
       console.log(err)
     }
@@ -39,11 +39,12 @@ export const editProduct = (id, body, history) => async dispatch => {
   }
 }
 
-export const removeProduct = productId => {
+export const removeProduct = (productId, history) => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/products/${productId}`) //looked cute, might change later
-      return dispatch(deleteProduct(data))
+      await axios.delete(`/api/products/${productId}`) //looked cute, might change later
+      history.push(`/products`)
+      dispatch(deleteProduct(productId))
     } catch (err) {
       console.log(err)
     }
