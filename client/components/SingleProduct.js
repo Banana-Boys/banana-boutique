@@ -42,6 +42,11 @@ class SingleProduct extends React.Component {
     )
   }
 
+  priceConvert(price = 9999) {
+    let string = price.toString()
+    return string.slice(0, -2) + '.' + string.slice(-2)
+  }
+
   render() {
     const product = this.props.singleProduct || {}
     const quantitySelect = []
@@ -58,6 +63,7 @@ class SingleProduct extends React.Component {
         <h1>{product.name}</h1>
         <img src={product.imageUrl || '/images/default-banana.jpg'} />
         <p>{product.description}</p>
+        <p>${this.priceConvert(product.price)}</p>
         <select
           id="quantity"
           name="quantity"
