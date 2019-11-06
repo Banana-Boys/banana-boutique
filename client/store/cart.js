@@ -3,7 +3,8 @@ import axios from 'axios'
 //action types
 const SET_CART = 'SET_CART'
 const ADD_CART_LINE_ITEM = 'ADD_CART_LINE_ITEM'
-// const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+const REMOVE_CART_LINE_ITEM = 'REMOVE_CART_LINE_ITEM'
+const EDIT_CART_LINE_ITEM = 'EDIT_CART_LINE_ITEM'
 
 //action creators
 const setCart = cart => ({type: SET_CART, cart})
@@ -11,7 +12,15 @@ const addCartLineItem = cartLineItem => ({
   type: ADD_CART_LINE_ITEM,
   cartLineItem
 })
-// const removeProduct = product => ({type: REMOVE_FROM_CART, product})
+const removeCartLineItem = productId => ({
+  type: REMOVE_CART_LINE_ITEM,
+  productId
+})
+const editCartLineItem = (productId, quantity) => ({
+  type: EDIT_CART_LINE_ITEM,
+  productId,
+  quantity
+})
 
 //intialState
 const initialState = []
@@ -33,12 +42,8 @@ export const sendAddCartLineItem = (productId, quantity, history) => {
   return async dispatch => {
     try {
       const cartLineItem = {productId, quantity}
-      dispatch(addCartLineItem(cartLineItem))
       await axios.post('/api/cart', cartLineItem)
-      // const product = await axios.get(`/api/products/${productId}`)
-      // const user = userId ? await axios.get(`/api/users/${userId}`) : null
-      // const {data} = await axios.post('/api/cart', {productI})
-      // return dispatch(addToCart(data))
+      dispatch(addCartLineItem(cartLineItem))
       history.push('/cart')
     } catch (error) {
       console.error(error)
@@ -46,16 +51,27 @@ export const sendAddCartLineItem = (productId, quantity, history) => {
   }
 }
 
-// export const destroyProductInCart = product => {
-//   return async dispatch => {
-//     try {
-//       await axios.delete(`/api/cartproduct/${product.id}`, product)
-//       return dispatch(removeProduct(product))
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
-// }
+export const sendRemoveCartLineItem = productId => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/cart/${productId}`)
+      dispatch(removeCartLineItem(productId))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const sendEditCartLineItem = (productId, quantity) => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/cart/${productId}`, {quantity})
+      dispatch(editCartLineItem(productId, quantity))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 //reducer
 export default (state = initialState, action) => {
@@ -81,11 +97,17 @@ export default (state = initialState, action) => {
         return [...state, action.cartLineItem]
       }
     }
-    // case REMOVE_FROM_CART:
-    //   return {
-    //     ...state,
-    //     cart: [...state.cart.filter(prod => prod !== action.product)]
-    //   }
+    case REMOVE_CART_LINE_ITEM:
+      return state.filter(
+        cartLineItem => cartLineItem.productId !== action.productId
+      )
+    case EDIT_CART_LINE_ITEM:
+      return [
+        ...state.filter(
+          cartLineItem => cartLineItem.productId !== action.productId
+        ),
+        {productId: action.productId, quantity: action.quantity}
+      ]
     default:
       return state
   }
