@@ -18,8 +18,6 @@ export class AllProducts extends Component {
 
   render() {
     const products = this.props.products
-    console.log(this.props)
-    console.log('here')
     if (!products) {
       return <div>NO PROJECTS!</div>
     }

@@ -28,8 +28,22 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll()
-    console.log(products)
+    console.log('req.query.categoryIds:', req.query.categoryIds)
+    const products = await Product.findAll({
+      include: [Review, Category]
+    })
+    res.json(products)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/', async (req, res, next) => {
+  try {
+    console.log('req.body:', req.body)
+    const products = await Product.findAll({
+      include: [Review, Category]
+    })
     res.json(products)
   } catch (error) {
     next(error)
