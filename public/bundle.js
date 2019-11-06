@@ -111,6 +111,164 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./client/components/Categories.js":
+/*!*****************************************!*\
+  !*** ./client/components/Categories.js ***!
+  \*****************************************/
+/*! exports provided: Categories, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Categories", function() { return Categories; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_categories__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/categories */ "./client/store/categories.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var Categories =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Categories, _Component);
+
+  function Categories() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Categories);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Categories)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "updateCategorySelected", function (event) {
+      var categoryId = event.target.id;
+      var selected = event.target.value;
+
+      var stateUpdate = _this.state.products.filter(function (product) {
+        if (selected === true && product.id === categoryId) {
+          return product;
+        }
+      });
+
+      _this.setState(stateUpdate);
+    });
+
+    return _this;
+  }
+
+  _createClass(Categories, [{
+    key: "componentDidMount",
+    value: function () {
+      var _componentDidMount = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                console.log('this.props.categories: ', this.props);
+                _context.next = 4;
+                return this.props.loadCategories();
+
+              case 4:
+                _context.next = 9;
+                break;
+
+              case 6:
+                _context.prev = 6;
+                _context.t0 = _context["catch"](0);
+                console.error(_context.t0);
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 6]]);
+      }));
+
+      function componentDidMount() {
+        return _componentDidMount.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      console.log('this.props.categories', this.props.categories);
+      var categories = this.props.categories; // categories = [{name: 'fresh produce', id: 1}, {name: 'other', id: 2}]
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, categories.map(function (category) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: category.id,
+          className: "category"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          name: "category-selected",
+          type: "checkbox",
+          onChange: _this2.updateCategorySelected,
+          value: category.selected
+        }), category.name);
+      }));
+    }
+  }]);
+
+  return Categories;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapState = function mapState(state, props) {
+  return {
+    products: state.products,
+    categories: state.categories
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    loadCategories: function loadCategories() {
+      return dispatch(Object(_store_categories__WEBPACK_IMPORTED_MODULE_2__["fetchAllCategories"])());
+    } // updateCategories: (id, selected) => dispatch(updateSelectedCategory(id, selected))
+
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState, mapDispatch)(Categories));
+
+/***/ }),
+
 /***/ "./client/components/auth-form.js":
 /*!****************************************!*\
   !*** ./client/components/auth-form.js ***!
@@ -171,16 +329,16 @@ var AuthForm = function AuthForm(props) {
 
 var mapLogin = function mapLogin(state) {
   return {
-    name: "login",
-    displayName: "Login",
+    name: 'login',
+    displayName: 'Login',
     error: state.user.error
   };
 };
 
 var mapSignup = function mapSignup(state) {
   return {
-    name: "signup",
-    displayName: "Sign Up",
+    name: 'signup',
+    displayName: 'Sign Up',
     error: state.user.error
   };
 };
@@ -315,9 +473,60 @@ Navbar.propTypes = {
   !*** ./client/components/user-home.js ***!
   \****************************************/
 /*! exports provided: UserHome, default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/ferdeleon/Fullstack1909/banana-boutique/client/components/user-home.js: Unexpected token (44:2)\n\n\u001b[0m \u001b[90m 42 | \u001b[39m\u001b[90m */\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 43 | \u001b[39m\u001b[36mconst\u001b[39m mapState \u001b[33m=\u001b[39m state \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 44 | \u001b[39m  \u001b[36mreturn\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 45 | \u001b[39m    email\u001b[33m:\u001b[39m state\u001b[33m.\u001b[39muser\u001b[33m.\u001b[39memail\u001b[0m\n\u001b[0m \u001b[90m 46 | \u001b[39m  }\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 47 | \u001b[39m}\u001b[33m;\u001b[39m\u001b[0m\n    at Object.raise (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:6325:17)\n    at Object.unexpected (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:7642:16)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8841:20)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3601:20)\n    at Object.parseExprSubscripts (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseExpression (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8135:23)\n    at Object.jsxParseExpressionContainer (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3452:30)\n    at Object.jsxParseElementAt (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3546:36)\n    at Object.jsxParseElement (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3589:17)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3596:19)\n    at Object.parseExprSubscripts (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseParenAndDistinguishExpression (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8978:28)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8762:21)\n    at Object.parseExprAtom (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:3601:20)\n    at Object.parseExprSubscripts (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Object.parseMaybeUnary (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Object.parseExprOps (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Object.parseMaybeConditional (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Object.parseMaybeAssign (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Object.parseExpression (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:8135:23)\n    at Object.parseReturnStatement (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:10198:28)\n    at Object.parseStatementContent (/Users/ferdeleon/Fullstack1909/banana-boutique/node_modules/@babel/parser/lib/index.js:9877:21)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserHome", function() { return UserHome; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Categories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Categories */ "./client/components/Categories.js");
+
+
+
+
+/**
+ * COMPONENT
+ */
+
+var UserHome = function UserHome(props) {
+  var name = props.name,
+      email = props.email,
+      phone = props.phone,
+      imageUrl = props.imageUrl;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: imageUrl
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Email: ", email), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Phone #: ", phone), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Phone #: ", phone), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Billing Address: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Shipping Address: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Wishlists: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Orders: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Reviews: "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "input",
+    id: "search",
+    placeholder: "Search..."
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit",
+    className: "button"
+  }, "Search", ' ')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories__WEBPACK_IMPORTED_MODULE_3__["default"], null))));
+};
+/**
+ * CONTAINER
+ */
+
+var mapState = function mapState(state) {
+  return {
+    email: state.user.email
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(UserHome));
+/**
+ * PROP TYPES
+ */
+
+UserHome.propTypes = {
+  email: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+};
 
 /***/ }),
 
@@ -369,7 +578,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
   store: _store__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Router"], {
   history: _history__WEBPACK_IMPORTED_MODULE_4__["default"]
-}, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_6__["default"], null))), document.getElementById("app"));
+}, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_app__WEBPACK_IMPORTED_MODULE_6__["default"], null))), document.getElementById('app'));
 
 /***/ }),
 
@@ -503,8 +712,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_0__);
 
 var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_0___default()(window.location.origin);
-socket.on("connect", function () {
-  console.log("Connected!");
+socket.on('connect', function () {
+  console.log('Connected!');
 });
 /* harmony default export */ __webpack_exports__["default"] = (socket);
 
@@ -728,12 +937,12 @@ var destroyProductInCart = function destroyProductInCart(product) {
 /*!************************************!*\
   !*** ./client/store/categories.js ***!
   \************************************/
-/*! exports provided: featchAllCategories, default */
+/*! exports provided: fetchAllCategories, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "featchAllCategories", function() { return featchAllCategories; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllCategories", function() { return fetchAllCategories; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -768,7 +977,7 @@ var getCategories = function getCategories(categories) {
  */
 
 
-var featchAllCategories = function featchAllCategories() {
+var fetchAllCategories = function fetchAllCategories() {
   return (
     /*#__PURE__*/
     function () {
@@ -786,21 +995,22 @@ var featchAllCategories = function featchAllCategories() {
 
               case 3:
                 response = _context.sent;
+                console.log('response from fetchAllCategories:', response);
                 dispatch(getCategories(response.data));
-                _context.next = 10;
+                _context.next = 11;
                 break;
 
-              case 7:
-                _context.prev = 7;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee, null, [[0, 8]]);
       }));
 
       return function (_x) {
@@ -847,7 +1057,7 @@ var featchAllCategories = function featchAllCategories() {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: default, me, auth, logout, fetchReviews, fetchReview, postReview, destroyReview, updateReview, fetchCart, postCart, destroyProductInCart, fetchProducts, fetchProduct, fetchAllOrders, fetchUserOrders, fetchOrder, featchAllCategories */
+/*! exports provided: default, me, auth, logout, fetchReviews, fetchReview, postReview, destroyReview, updateReview, fetchCart, postCart, destroyProductInCart, fetchProducts, fetchProduct, fetchAllOrders, fetchUserOrders, fetchOrder, fetchAllCategories */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -898,7 +1108,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fetchOrder", function() { return _singleOrder__WEBPACK_IMPORTED_MODULE_10__["fetchOrder"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "featchAllCategories", function() { return _categories__WEBPACK_IMPORTED_MODULE_11__["featchAllCategories"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fetchAllCategories", function() { return _categories__WEBPACK_IMPORTED_MODULE_11__["fetchAllCategories"]; });
 
 
 
@@ -1106,40 +1316,46 @@ var getProducts = function getProducts(products) {
   };
 };
 
-var fetchProducts = function fetchProducts(dispatch) {
+var fetchProducts = function fetchProducts() {
   return (
     /*#__PURE__*/
-    _asyncToGenerator(
-    /*#__PURE__*/
-    regeneratorRuntime.mark(function _callee() {
-      var res;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products');
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(dispatch) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products');
 
-            case 3:
-              res = _context.sent;
-              //looked cute, might change later
-              dispatch(getProducts(res.data));
-              _context.next = 10;
-              break;
+              case 3:
+                res = _context.sent;
+                //looked cute, might change later
+                dispatch(getProducts(res.data));
+                _context.next = 10;
+                break;
 
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](0);
-              console.log(_context.t0);
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
 
-            case 10:
-            case "end":
-              return _context.stop();
+              case 10:
+              case "end":
+                return _context.stop();
+            }
           }
-        }
-      }, _callee, null, [[0, 7]]);
-    }))
+        }, _callee, null, [[0, 7]]);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }()
   );
 };
 /**
@@ -1582,7 +1798,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-var GET_PRODUCT = "GET_PRODUCT";
+var GET_PRODUCT = 'GET_PRODUCT';
 
 var getProduct = function getProduct(product) {
   return {
@@ -1591,13 +1807,13 @@ var getProduct = function getProduct(product) {
   };
 };
 
-var fetchProduct = function fetchProduct(dispatch) {
+var fetchProduct = function fetchProduct(productId) {
   return (
     /*#__PURE__*/
     function () {
       var _ref = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(productId) {
+      regeneratorRuntime.mark(function _callee(dispatch) {
         var res;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -1638,7 +1854,7 @@ var fetchProduct = function fetchProduct(dispatch) {
  */
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var product = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var singleProduct = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
@@ -1646,7 +1862,7 @@ var fetchProduct = function fetchProduct(dispatch) {
       return action.product;
 
     default:
-      return product;
+      return singleProduct;
   }
 });
 
@@ -1677,8 +1893,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * ACTION TYPES
  */
 
-var GET_USER = "GET_USER";
-var REMOVE_USER = "REMOVE_USER";
+var GET_USER = 'GET_USER';
+var REMOVE_USER = 'REMOVE_USER';
 /**
  * INITIAL STATE
  */
@@ -1719,7 +1935,7 @@ var me = function me() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/auth/me");
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/auth/me');
 
               case 3:
                 res = _context.sent;
@@ -1780,7 +1996,7 @@ var auth = function auth(email, password, method) {
               case 9:
                 try {
                   dispatch(getUser(res.data));
-                  _history__WEBPACK_IMPORTED_MODULE_1__["default"].push("/home");
+                  _history__WEBPACK_IMPORTED_MODULE_1__["default"].push('/home');
                 } catch (dispatchOrHistoryErr) {
                   console.error(dispatchOrHistoryErr);
                 }
@@ -1812,11 +2028,11 @@ var logout = function logout() {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/auth/logout");
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/auth/logout');
 
               case 3:
                 dispatch(removeUser());
-                _history__WEBPACK_IMPORTED_MODULE_1__["default"].push("/login");
+                _history__WEBPACK_IMPORTED_MODULE_1__["default"].push('/login');
                 _context3.next = 10;
                 break;
 

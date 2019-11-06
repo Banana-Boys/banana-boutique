@@ -21,9 +21,10 @@ const getCategories = categories => ({type: GET_CATEGORIES, categories})
  * THUNK CREATORS
  */
 
-export const featchAllCategories = () => async dispatch => {
+export const fetchAllCategories = () => async dispatch => {
   try {
     const response = await axios.get('/api/categories')
+    console.log('response from fetchAllCategories:', response)
     dispatch(getCategories(response.data))
   } catch (err) {
     console.error(err)

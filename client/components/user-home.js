@@ -23,8 +23,15 @@ export const UserHome = props => {
       <h5>Reviews: </h5>
       <div>
         <div>
-          <input type="text" className="input" placeholder="Search..." />
-          <ul>...</ul>
+          <input
+            type="text"
+            className="input"
+            id="search"
+            placeholder="Search..."
+          />
+          <button type="submit" className="button">
+            Search{' '}
+          </button>
         </div>
         <div>
           <Categories />

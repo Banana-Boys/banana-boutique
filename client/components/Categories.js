@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchAllCategories, updateSelectedCategory} from '../store/categories'
+import {fetchAllCategories} from '../store/categories'
 
 export class Categories extends Component {
   async componentDidMount() {
     try {
+      console.log('this.props.categories: ', this.props)
       await this.props.loadCategories()
     } catch (error) {
       console.error(error)
@@ -23,22 +24,24 @@ export class Categories extends Component {
   }
 
   render() {
+    console.log('this.props.categories', this.props.categories)
     let categories = this.props.categories
+    // categories = [{name: 'fresh produce', id: 1}, {name: 'other', id: 2}]
 
     return (
       <div>
         {categories.map(category => (
           <div key={category.id} className="category">
-            <form className="filter">
-              <label htmlFor="category-selected" />
-              <input
-                name="category-selected"
-                type="checkbox"
-                onChange={this.updateCategorySelected}
-                value={category.selected}
-              />
-              {category.name}
-            </form>
+            {/* <form className="filter">
+            <label htmlFor="category-selected" /> */}
+            <input
+              name="category-selected"
+              type="checkbox"
+              onChange={this.updateCategorySelected}
+              value={category.selected}
+            />
+            {category.name}
+            {/* </form> */}
           </div>
         ))}
       </div>
@@ -48,7 +51,8 @@ export class Categories extends Component {
 
 const mapState = (state, props) => {
   return {
-    products: state.products
+    products: state.products,
+    categories: state.categories
   }
 }
 
