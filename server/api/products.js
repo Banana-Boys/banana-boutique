@@ -29,9 +29,18 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll()
-    console.log(products)
-    res.json(products)
+    if (req.query.itemIds) {
+      const products = await Promise.all(
+        req.query.itemIds.map(id => {
+          return Product.findByPk(id)
+        })
+      )
+      res.json(products)
+    } else {
+      const products = await Product.findAll()
+      console.log(products)
+      res.json(products)
+    }
   } catch (error) {
     next(error)
   }

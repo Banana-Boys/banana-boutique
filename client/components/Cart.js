@@ -11,16 +11,25 @@ export class Cart extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.fetchCart()
+  }
+
   async componentWillReceiveProps(newProps) {
-    const cartItems = newProps.cart.map(item => {
-      const res = axios.get(`/api/products/${item.productId}`)
-      return res
-    })
-    const items = await Promise.all(cartItems)
-    this.setState({cartItems: items.map(ele => ele.data)})
+    console.log('props')
+    if (newProps.cart && newProps.cart.length > 0) {
+      const itemIds = newProps.cart.map(item => item.productId)
+      const {data} = await axios.get('/api/products', {
+        params: {
+          itemIds
+        }
+      })
+      this.setState({cartItems: data})
+    }
   }
 
   render() {
+    console.log('render')
     const cartItems = this.state.cartItems
     return <div id="cart">{cartItems.map(item => item.name)}</div>
   }
