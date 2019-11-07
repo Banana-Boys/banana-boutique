@@ -4,6 +4,7 @@ import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Categories from './Categories'
 import {Grid, Image, Container} from 'semantic-ui-react'
+import Search from './Search'
 
 export class AllProducts extends Component {
   constructor() {
@@ -26,15 +27,7 @@ export class AllProducts extends Component {
     return (
       <Container>
         <div>
-          <input
-            type="text"
-            className="input"
-            id="search"
-            placeholder="Search..."
-          />
-          <button type="submit" className="button">
-            Search{' '}
-          </button>
+          <Search />
         </div>
         <div>
           <Categories />

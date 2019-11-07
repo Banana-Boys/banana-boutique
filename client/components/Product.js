@@ -4,6 +4,10 @@ import {Grid, Image, Container} from 'semantic-ui-react'
 
 const Product = props => {
   let product = props.product
+  // console.log('product in Product.js:', product)
+  if (!product) {
+    return <div>NO PRODUCT FOUND!</div>
+  }
 
   return (
     <Grid>

@@ -4,7 +4,7 @@ import {fetchProduct, removeProduct} from '../store/singleProduct'
 import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 import priceConvert from '../../utilFrontEnd/priceConvert'
-import {fetchProductReviews} from '../store/review'
+import {fetchProductReviews} from '../store/reviews'
 import {Button, Container, Header} from 'semantic-ui-react'
 
 class SingleProduct extends React.Component {
@@ -50,70 +50,61 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
-    const reviews = product.reviews || []
     const categories = product.categories || []
     const quantitySelect = []
-    const sumofratings = reviews.reduce(function(a, b) {
-      return b.rating == null ? a : a + b.rating
-    }, 0)
-    const avgrating = sumofratings / reviews.length
-    let i = 1
 
     // quantity select dropdown options
+    let i = 1
     while (i <= product.inventory) {
       quantitySelect.push(<option key={i}>{i}</option>)
       i++
     }
 
     return (
-      <Container id="product">
-        <Container>
-          <img src={product.imageUrl} />
-        </Container>
-        <Container>
-          <Header as="h1">{product.name}</Header>
-          <p>${this.priceConvert(product.price)}</p>
-          <select
-            id="quantity"
-            name="quantity"
-            value={this.state.quantity}
-            onChange={this.handleChange}
-          >
-            <p>{product.description}</p>
-            <p>{categories.reduce((str, ele) => str + ' ' + ele.name, '')}</p>
-            {quantitySelect}
-          </select>
-          <Button type="button" onClick={this.handleDelete}>
-            Delete
-          </Button>
-          <Button type="button" onClick={this.handleEdit}>
-            Edit
-          </Button>
-          {product.inventory ? (
-            <Button type="button" onClick={this.handleAddToCart}>
-              Add to Cart
-            </Button>
-          ) : (
-            <Button type="button" disabled>
-              Add to Cart
-            </Button>
-          )}
-        </Container>
+      <div id="product">
+        <h1>{product.name}</h1>
+        <p>{categories.reduce((str, ele) => str + ' ' + ele.name, '')}</p>
+        <img src={product.imageUrl} />
+        <p>{product.description}</p>
+        <p>${this.priceConvert(product.price)}</p>
+        <select
+          id="quantity"
+          name="quantity"
+          value={this.state.quantity}
+          onChange={this.handleChange}
+        >
+          {quantitySelect}
+        </select>
+        <button type="button" onClick={this.handleDelete}>
+          Delete Product
+        </button>
+        <button type="button" onClick={this.handleEdit}>
+          Edit Product
+        </button>
+        <button
+          disabled={!product.inventory}
+          type="button"
+          onClick={this.handleAddToCart}
+        >
+          Add Product to Cart
+        </button>
 
-        <Container>
-          <h4>Number of ratings: {reviews.length}</h4>
-          <h4>Avg Rating: {avgrating}</h4>
-          <Reviews revs={reviews} />
-        </Container>
-      </Container>
+        <h4>Number of ratings: {product.numratings}</h4>
+        <h4>
+          Avg Rating:{' '}
+          {isNaN(product.sumratings / product.numratings)
+            ? 'No ratings'
+            : (product.sumratings / product.numratings).toFixed(1)}
+        </h4>
+        <Reviews />
+      </div>
     )
   }
 }
 
-const mapStateToProps = ({singleProduct, user, review}) => ({
+const mapStateToProps = ({singleProduct, user}) => ({
   singleProduct,
-  user,
-  review
+  user
 })
 const mapDispatchToProps = {
   fetchProduct,

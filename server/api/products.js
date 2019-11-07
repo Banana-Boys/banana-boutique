@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
 const Sequelize = require('sequelize')
@@ -32,22 +33,32 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     let products = []
-    if (req.query.itemIds) {
-      products = await Promise.all(
-        req.query.itemIds.map(id => {
-          return Product.findByPk(id)
+    if (!req.query.categoryIds && !req.query.searchTerms) {
+      if (req.query.itemIds) {
+        products = await Promise.all(
+          req.query.itemIds.map(id => {
+            return Product.findByPk(id)
+          })
+        )
+      } else {
+        products = await Product.findAll({
+          include: [Category]
         })
-      )
-    } else if (!req.query.categoryIds) {
+      }
+    } else if (req.query.categoryIds && !req.query.searchTerms) {
       products = await Product.findAll({
-        include: [Review, Category]
+        include: [Category]
       })
     } else {
       products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
         include: [
-          {model: Review},
           {
-            model: Category,
+            model: Product,
             where: {
               id: {
                 [Op.or]: req.query.categoryIds
@@ -110,6 +121,70 @@ router.put('/:id', async (req, res, next) => {
     res.status(200).json(productWithCategories)
   } catch (error) {
     console.log(error)
+    next(error)
+  }
+})
+
+router.post('/:id/reviews', async (req, res, next) => {
+  try {
+    let review = await Review.create(req.body)
+    await review.setUser(req.user.id)
+    await review.setProduct(req.params.id)
+    review = await Review.findByPk(review.id, {
+      include: [{model: User, attributes: ['id', 'name']}]
+    })
+    const product = await Product.findByPk(req.params.id)
+    await product.update({
+      numratings: product.numratings + 1,
+      sumratings: product.sumratings + Number(review.rating)
+    })
+    res.status(201).json(review)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:productId/reviews/:reviewId', async (req, res, next) => {
+  try {
+    const review = await Review.findByPk(req.params.reviewId)
+    const product = await Product.findByPk(req.params.productId)
+    await review.destroy()
+    await product.update({
+      numratings: product.numratings - 1,
+      sumratings: product.sumratings - Number(review.rating)
+    })
+    res.sendStatus(201)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:productId/reviews', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.productId)
+    const reviews = await product.getReviews({
+      include: [{model: User, attributes: ['name', 'id']}]
+    })
+    res.status(201).json(reviews)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:productId/reviews/:reviewId', async (req, res, next) => {
+  try {
+    let review = await Review.findByPk(req.params.reviewId)
+    const product = await Product.findByPk(req.params.productId)
+    const newSumRatings =
+      product.sumratings - Number(review.rating) + Number(req.body.rating)
+    console.log(newSumRatings)
+    await review.update(req.body)
+    await product.update({sumratings: newSumRatings})
+    review = await Review.findByPk(req.params.reviewId, {
+      include: [{model: User, attributes: ['name', 'id']}]
+    })
+    res.status(201).json(review)
+  } catch (error) {
     next(error)
   }
 })
