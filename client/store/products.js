@@ -17,7 +17,6 @@ export const fetchProducts = () => {
   return async dispatch => {
     try {
       const {data} = await axios.get('/api/products') //looked cute, might change later
-      console.log(data)
       return dispatch(getProducts(data))
     } catch (err) {
       console.log(err)
@@ -27,7 +26,6 @@ export const fetchProducts = () => {
 
 export const fetchFilteredProducts = categoryIds => async dispatch => {
   try {
-    console.log(categoryIds)
     const response = await axios.get('/api/products', {
       params: {categoryIds: categoryIds}
     })
@@ -69,12 +67,6 @@ export default (products = [], action) => {
     case DELETE_PRODUCT:
       return [...products.filter(i => i !== action.product)]
     case SELECT_PRODUCTS:
-      // return state.categories.map(category => {
-      //   if (category.id === action.category.id){
-      //     category.selected = true
-      //   }
-      //   return category
-      // })
       return action.products
     default:
       return products

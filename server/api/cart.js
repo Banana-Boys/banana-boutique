@@ -65,15 +65,18 @@ router.post('/', async (req, res, next) => {
 // DELETE product
 router.delete('/:id', async (req, res, next) => {
   const productId = req.params.id
-  const userId = req.user.id
+
   try {
     req.session.cart = req.session.cart.filter(
       cartLineItem => cartLineItem.productId !== +productId
     )
     req.session.save()
-    await CartLineItem.destroy({
-      where: {productId, userId}
-    })
+    if (req.user) {
+      const userId = req.user.id
+      await CartLineItem.destroy({
+        where: {productId, userId}
+      })
+    }
     res.sendStatus(204)
   } catch (err) {
     next(err)
@@ -84,7 +87,6 @@ router.delete('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   const productId = +req.params.id
   const {quantity} = req.body
-  const userId = +req.user.id
   try {
     req.session.cart = [
       ...req.session.cart.filter(
@@ -93,12 +95,12 @@ router.put('/:id', async (req, res, next) => {
       {productId, quantity}
     ]
     req.session.save()
-    console.log(await CartLineItem.findAll())
-    const cartLineItem = await CartLineItem.findOne({
-      where: {productId, userId}
-    })
-    console.log(cartLineItem)
-    await cartLineItem.update({quantity})
+    if (req.user) {
+      const cartLineItem = await CartLineItem.findOne({
+        where: {productId, userId: +req.user.id}
+      })
+      await cartLineItem.update({quantity})
+    }
     res.sendStatus(204)
   } catch (err) {
     next(err)

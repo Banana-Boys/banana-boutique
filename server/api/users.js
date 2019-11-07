@@ -15,3 +15,23 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id)
+    await user.update(req.body)
+    const newUser = await User.findByPk(req.params.id)
+    res.status(200).json(newUser)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await User.destroy({where: {id: req.params.id}})
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
