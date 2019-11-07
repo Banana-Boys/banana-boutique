@@ -5,6 +5,7 @@ import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {fetchProductReviews} from '../store/reviews'
+import {Button, Container, Header} from 'semantic-ui-react'
 
 class SingleProduct extends React.Component {
   constructor(props) {
