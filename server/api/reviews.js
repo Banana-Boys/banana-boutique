@@ -42,8 +42,6 @@ router.get('/product/:id', async (req, res, next) => {
         Product
       }
     })
-
-    console.log(reviews)
     res.json(reviews)
   } catch (error) {
     next(error)
@@ -55,7 +53,7 @@ router.get('/user/:id', async (req, res, next) => {
     // console.log('reqbody', req.params.id)
     // const user = await User.findById(req.params.id)
     // console.log('user', user)
-    console.log('test')
+    //console.log('test')
     //res.json(user)
   } catch (error) {
     next(error)
