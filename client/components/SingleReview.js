@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {destroyReview, updateReview, fetchReview} from '../store/review'
+import {destroyReview, updateReview, fetchReview} from '../store/reviews'
 
 export class SingleReview extends Component {
   constructor() {
@@ -20,7 +20,7 @@ export class SingleReview extends Component {
 }
 
 const mapStateToProps = state => ({
-  review: state.review
+  reviews: state.reviews
 })
 
 const mapDispatchToProps = dispatch => ({

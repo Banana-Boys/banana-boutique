@@ -1,26 +1,26 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const Review = props => {
   const review = props.review
-  //console.log('review', props)
-  //const user = props.fetchUser(review.userId)
-  //console.log(user)
   return (
     <div>
       <div>
+        <p>Rating: {review.rating}</p>
+        <p>Title: {review.title}</p>
+        <p>Description: {review.body}</p>
+        <p>Author: {review.user.name}</p>
         <button
           type="button"
           onClick={() => {
-            props.deleteReview(review)
+            props.destroyReview(review.productId, review.id)
           }}
         >
-          Delete
+          Delete Review
         </button>
-        <button type="button">Edit</button>
-        <h5>Rating: {review.rating}</h5>
-        <h5>Title: {review.title}</h5>
-        <h5>Description: {review.body}</h5>
-        {/* <h6>Author: </h6> */}
+        <Link to={`/products/${review.productId}/reviews/${review.id}/edit`}>
+          <button type="button">Edit Review</button>
+        </Link>
       </div>
     </div>
   )
