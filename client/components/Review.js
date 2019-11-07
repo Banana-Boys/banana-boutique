@@ -5,9 +5,19 @@ const Review = props => {
   return (
     <div>
       <div>
+        <button
+          type="button"
+          onClick={() => {
+            props.deleteReview(review)
+          }}
+        >
+          Delete
+        </button>
+        <button type="button">Edit</button>
         <h5>Rating: {review.rating}</h5>
         <h5>Title: {review.title}</h5>
-        <h5>{review.body}</h5>
+        <h5>Description: {review.body}</h5>
+        <h6>Author: {review.author}</h6>
       </div>
     </div>
   )

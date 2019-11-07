@@ -33,10 +33,48 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-//POST product
-router.post('/', async (req, res, next) => {
+router.get('/product/:id', async (req, res, next) => {
+  try {
+    const reviews = await Review.findAll({
+      where: {
+        productId: req.params.id
+      },
+      include: {
+        model: User,
+        Product
+      }
+    })
+
+    res.json(reviews)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//POST review
+router.post('/:productId/:reviewId', async (req, res, next) => {
   try {
     const review = await Review.create(req.body)
+    const rev = await Review.find({
+      where: {
+        productId: req.params.productId
+      },
+      include: {
+        model: User,
+        Product
+      }
+    })
+
+    const product = await Product.find({
+      where: {
+        id: req.params.reviewId
+      },
+      include: {
+        model: User,
+        Review
+      }
+    })
+    product.addReview(rev)
     res.json(review)
   } catch (error) {
     next(error)
@@ -46,8 +84,28 @@ router.post('/', async (req, res, next) => {
 // DELETE product
 router.delete('/:id', async (req, res, next) => {
   try {
-    const id = req.params.id
-    await Review.destroy({where: {id: id}})
+    console.log('reqbody', req.body)
+    // const rev = await Review.find({
+    //   where: {
+    //     productId: req.params.productId
+    //   },
+    //   include: {
+    //     model: User,
+    //     Product
+    //   }
+    // })
+
+    // const product = await Product.find({
+    //   where: {
+    //     id: req.params.reviewId
+    //   },
+    //   include: {
+    //     model: User,
+    //     Review
+    //   }
+    // })
+    //product.removeReview(rev)
+    await Review.destroy({where: {id: req.params.id}})
     res.sendStatus(200)
   } catch (err) {
     next(err)

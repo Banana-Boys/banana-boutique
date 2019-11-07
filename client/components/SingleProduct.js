@@ -4,6 +4,8 @@ import {fetchProduct, removeProduct} from '../store/singleProduct'
 import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 import priceConvert from '../../utilFrontEnd/priceConvert'
+import {fetchProductReviews} from '../store/review'
+
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
@@ -17,8 +19,9 @@ class SingleProduct extends React.Component {
     this.priceConvert = priceConvert
   }
 
-  componentDidMount() {
-    this.props.fetchProduct(this.props.match.params.id)
+  async componentDidMount() {
+    await this.props.fetchProduct(this.props.match.params.id)
+    await this.props.fetchProductReviews(this.props.match.params.id)
   }
 
   async handleChange(event) {
@@ -49,6 +52,10 @@ class SingleProduct extends React.Component {
     const reviews = product.reviews || []
     const categories = product.categories || []
     const quantitySelect = []
+    const sumofratings = reviews.reduce(function(a, b) {
+      return b.rating == null ? a : a + b.rating
+    }, 0)
+    const avgrating = sumofratings / reviews.length
     let i = 1
 
     // quantity select dropdown options
@@ -82,20 +89,23 @@ class SingleProduct extends React.Component {
           Add to Cart
         </button>
         <h4>Number of ratings: {reviews.length}</h4>
-        <h4>
-          Avg Rating:
-          {reviews.reduce((pv, cv) => {
-            return pv + cv
-          }, 0) / reviews.length}
-          {console.log('nan')}
-        </h4>
-        <Reviews reviews={reviews} />
+        <h4>Avg Rating: {avgrating}</h4>
+        <Reviews revs={reviews} />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({singleProduct, user}) => ({singleProduct, user})
-const mapDispatchToProps = {fetchProduct, removeProduct, sendAddCartLineItem}
+const mapStateToProps = ({singleProduct, user, review}) => ({
+  singleProduct,
+  user,
+  review
+})
+const mapDispatchToProps = {
+  fetchProduct,
+  removeProduct,
+  sendAddCartLineItem,
+  fetchProductReviews
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
