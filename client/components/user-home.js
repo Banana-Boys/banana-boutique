@@ -3,6 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchAddresses, deleteAddress} from '../store/addresses'
+import {deleteUser} from '../store/user'
 
 /**
  * COMPONENT
@@ -37,7 +38,7 @@ class UserHome extends React.Component {
               {address2 ? <p>{address2}</p> : null}
               <p>
                 <span>{city}</span>, {state ? <span>{state},</span> : null}{' '}
-                <span>{country}</span> {zip ? <span>{zip},</span> : null}
+                <span>{country}</span> <span>{zip}</span>
               </p>
               <Link to={`/addresses/${id}/edit`}>
                 <button type="button">Edit Address</button>
@@ -62,7 +63,12 @@ class UserHome extends React.Component {
         <Link to={`/users/${this.props.match.params.id}/edit`}>
           <button type="button">Edit Profile</button>
         </Link>
-        <button type="button" onClick={this.handleClick}>
+        <button
+          type="button"
+          onClick={() => {
+            this.props.deleteUser(this.props.match.params.id)
+          }}
+        >
           Delete Profile
         </button>
       </div>
@@ -74,7 +80,7 @@ class UserHome extends React.Component {
  * CONTAINER
  */
 const mapState = ({user, addresses}) => ({user, addresses})
-const mapDispatch = {fetchAddresses, deleteAddress}
+const mapDispatch = {fetchAddresses, deleteAddress, deleteUser}
 
 export default connect(mapState, mapDispatch)(UserHome)
 

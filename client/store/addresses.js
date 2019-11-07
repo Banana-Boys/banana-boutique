@@ -6,6 +6,7 @@ import axios from 'axios'
 const SET_ADDRESSES = 'SET_ADDRESSES'
 const ADD_ADDRESS = 'ADD_ADDRESS'
 const REMOVE_ADDRESS = 'DELETE_ADDRESS'
+const EDIT_ADDRESS = 'EDIT_ADDRESS'
 
 /**
  * INITIAL STATE
@@ -18,6 +19,7 @@ const initialState = []
 const setAddresses = addresses => ({type: SET_ADDRESSES, addresses})
 const addAddress = address => ({type: ADD_ADDRESS, address})
 const removeAddress = addressId => ({type: REMOVE_ADDRESS, addressId})
+export const editAddressOnAddresses = address => ({type: EDIT_ADDRESS, address})
 
 /**
  * THUNK CREATORS
@@ -66,6 +68,10 @@ export default function(state = initialState, action) {
       return [...state, action.address]
     case REMOVE_ADDRESS:
       return state.filter(address => address.id !== action.addressId)
+    case EDIT_ADDRESS:
+      return state.map(
+        address => (address.id === action.address.id ? action.address : address)
+      )
     default:
       return state
   }

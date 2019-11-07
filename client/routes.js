@@ -9,6 +9,8 @@ import NewProductForm from './components/NewProductForm'
 import SingleProduct from './components/SingleProduct'
 import EditProductForm from './components/EditProductForm'
 import NewAddressForm from './components/NewAddressForm'
+import EditAddressForm from './components/EditAddressForm'
+import EditUserForm from './components/EditUserForm'
 
 /**
  * COMPONENT
@@ -32,8 +34,10 @@ class Routes extends Component {
           <Route path="/products/:id" component={SingleProduct} />
           <Route path="/home" component={AllProducts} />
           <Route path="/products" component={AllProducts} />
+          <Route path="/users/:id/edit" component={EditUserForm} />
           <Route path="/users/:id" component={UserHome} />
           <Route path="/addresses/new" component={NewAddressForm} />
+          <Route path="/addresses/:id/edit" component={EditAddressForm} />
           {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
         </Switch>
         {isLoggedIn && (
