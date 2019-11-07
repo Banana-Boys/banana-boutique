@@ -11,7 +11,8 @@ const Order = db.define('order', {
   //   fk reference to Promotion
   datePlaced: {
     type: Sequelize.DATE,
-    allowNull: false
+    allowNull: false,
+    default: Sequelize.NOW
   },
   status: {
     type: Sequelize.ENUM(['created', 'processing', 'cancelled', 'completed']),
