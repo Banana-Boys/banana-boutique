@@ -3,6 +3,7 @@ const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const {isUser} = require('../middleware')
 
 router.post('/', async (req, res, next) => {
   try {
@@ -125,7 +126,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/:id/reviews', async (req, res, next) => {
+router.post('/:id/reviews', isUser(), async (req, res, next) => {
   try {
     let review = await Review.create(req.body)
     await review.setUser(req.user.id)

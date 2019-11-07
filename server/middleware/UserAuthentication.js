@@ -23,7 +23,18 @@ const isAdmin = () => {
   }
 }
 
+const isUser = () => {
+  return (req, res, next) => {
+    if (req.user) {
+      next()
+    } else {
+      res.sendStatus(403)
+    }
+  }
+}
+
 module.exports = {
   checkGuest,
-  isAdmin
+  isAdmin,
+  isUser
 }
