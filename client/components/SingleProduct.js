@@ -5,6 +5,7 @@ import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {fetchProductReviews} from '../store/review'
+import {Button, Container, Header} from 'semantic-ui-react'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -65,40 +66,46 @@ class SingleProduct extends React.Component {
     }
 
     return (
-      <div id="product">
-        <h1>{product.name}</h1>
-        <p>{categories.reduce((str, ele) => str + ' ' + ele.name, '')}</p>
-        <img src={product.imageUrl} />
-        <p>{product.description}</p>
-        <p>${this.priceConvert(product.price)}</p>
-        <select
-          id="quantity"
-          name="quantity"
-          value={this.state.quantity}
-          onChange={this.handleChange}
-        >
-          {quantitySelect}
-        </select>
-        <button type="button" onClick={this.handleDelete}>
-          Delete
-        </button>
-        <button type="button" onClick={this.handleEdit}>
-          Edit
-        </button>
-        {product.inventory ? (
-          <button type="button" onClick={this.handleAddToCart}>
-            Add to Cart
-          </button>
-        ) : (
-          <button type="button" disabled>
-            Add to Cart
-          </button>
-        )}
+      <Container id="product">
+        <Container>
+          <img src={product.imageUrl} />
+        </Container>
+        <Container>
+          <Header as="h1">{product.name}</Header>
+          <p>${this.priceConvert(product.price)}</p>
+          <select
+            id="quantity"
+            name="quantity"
+            value={this.state.quantity}
+            onChange={this.handleChange}
+          >
+            <p>{product.description}</p>
+            <p>{categories.reduce((str, ele) => str + ' ' + ele.name, '')}</p>
+            {quantitySelect}
+          </select>
+          <Button type="button" onClick={this.handleDelete}>
+            Delete
+          </Button>
+          <Button type="button" onClick={this.handleEdit}>
+            Edit
+          </Button>
+          {product.inventory ? (
+            <Button type="button" onClick={this.handleAddToCart}>
+              Add to Cart
+            </Button>
+          ) : (
+            <Button type="button" disabled>
+              Add to Cart
+            </Button>
+          )}
+        </Container>
 
-        <h4>Number of ratings: {reviews.length}</h4>
-        <h4>Avg Rating: {avgrating}</h4>
-        <Reviews revs={reviews} />
-      </div>
+        <Container>
+          <h4>Number of ratings: {reviews.length}</h4>
+          <h4>Avg Rating: {avgrating}</h4>
+          <Reviews revs={reviews} />
+        </Container>
+      </Container>
     )
   }
 }

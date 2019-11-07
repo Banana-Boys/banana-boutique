@@ -69,7 +69,7 @@ export const postReview = review => {
   return async dispatch => {
     try {
       const {data} = await axios.post(
-        `/api/reviews/${review.productId}/${review.id}`,
+        `/api/reviews/${review}/${review.id}`,
         review
       )
       return dispatch(addReview(data))
@@ -126,7 +126,7 @@ export default (reviews = [], action) => {
     case GET_MAKER:
       return action.user
     case REMOVE_REVIEW:
-      return [...reviews.filter(i => i !== action.review)]
+      return [...reviews]
     default:
       return reviews
   }

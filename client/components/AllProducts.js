@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Categories from './Categories'
+import {Grid, Image, Container} from 'semantic-ui-react'
 
 export class AllProducts extends Component {
   constructor() {
@@ -23,7 +24,7 @@ export class AllProducts extends Component {
       return <div>NO PRODUCTS!</div>
     }
     return (
-      <div>
+      <Container>
         <div>
           <input
             type="text"
@@ -38,12 +39,12 @@ export class AllProducts extends Component {
         <div>
           <Categories />
         </div>
-        <div>
+        <Grid>
           {products.map(product => (
             <Product key={product.id} product={product} />
           ))}
-        </div>
-      </div>
+        </Grid>
+      </Container>
     )
   }
 }
