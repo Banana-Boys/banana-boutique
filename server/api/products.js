@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
 const Sequelize = require('sequelize')
@@ -33,9 +34,17 @@ router.get('/', async (req, res, next) => {
   try {
     let products = []
     if (!req.query.categoryIds && !req.query.searchTerms) {
-      products = await Product.findAll({
-        include: [Category]
-      })
+      if (req.query.itemIds) {
+        products = await Promise.all(
+          req.query.itemIds.map(id => {
+            return Product.findByPk(id)
+          })
+        )
+      } else {
+        products = await Product.findAll({
+          include: [Category]
+        })
+      }
     } else if (req.query.categoryIds && !req.query.searchTerms) {
       products = await Product.findAll({
         include: [
@@ -78,17 +87,6 @@ router.get('/', async (req, res, next) => {
       })
     }
     res.json(products)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/:id', async (req, res, next) => {
-  try {
-    const product = await Product.findByPk(req.params.id, {
-      include: [Review, Category]
-    })
-    res.json(product)
   } catch (error) {
     next(error)
   }

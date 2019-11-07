@@ -67,7 +67,7 @@ class EditProductForm extends React.Component {
       ...this.state,
       price: Number(this.state.price * 100).toFixed(0)
     }
-    console.log(submitState)
+
     this.props.editProduct(
       this.props.match.params.id,
       submitState,
