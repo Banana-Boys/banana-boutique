@@ -24,10 +24,13 @@ export const fetchProducts = () => {
   }
 }
 
-export const fetchFilteredProducts = categoryIds => async dispatch => {
+export const fetchFilteredProducts = (
+  categoryIds,
+  searchTerms
+) => async dispatch => {
   try {
     const response = await axios.get('/api/products', {
-      params: {categoryIds: categoryIds}
+      params: {categoryIds: categoryIds, searchTerms: searchTerms}
     })
     dispatch(selectedProducts(response.data))
   } catch (err) {

@@ -29,25 +29,63 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// eslint-disable-next-line complexity
 router.get('/', async (req, res, next) => {
   try {
     let products = []
-    if (req.query.itemIds) {
-      products = await Promise.all(
-        req.query.itemIds.map(id => {
-          return Product.findByPk(id)
+    //if no filters and searches
+    if (!req.query.categoryIds && !req.query.searchTerms) {
+      // if specified product ids
+      if (req.query.itemIds) {
+        products = await Promise.all(
+          req.query.itemIds.map(id => {
+            return Product.findByPk(id)
+          })
+        )
+        // if no specification
+      } else {
+        products = await Product.findAll({
+          include: [Category]
         })
-      )
-    } else if (!req.query.categoryIds) {
-      products = await Product.findAll({
-        include: [Review, Category]
-      })
-    } else {
+      }
+
+      // if category ids
+    } else if (req.query.categoryIds && !req.query.searchTerms) {
       products = await Product.findAll({
         include: [
-          {model: Review},
           {
             model: Category,
+            where: {
+              id: {
+                [Op.or]: req.query.categoryIds
+              }
+            }
+          }
+        ]
+      })
+
+      // if search term
+    } else if (!req.query.categoryIds && req.query.searchTerms) {
+      products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
+        include: [Category]
+      })
+
+      // if category ids and search term
+    } else {
+      products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
+        include: [
+          {
+            model: Product,
             where: {
               id: {
                 [Op.or]: req.query.categoryIds
