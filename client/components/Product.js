@@ -3,6 +3,10 @@ import {Link} from 'react-router-dom'
 
 const Product = props => {
   let product = props.product
+  // console.log('product in Product.js:', product)
+  if (!product) {
+    return <div>NO PRODUCT FOUND!</div>
+  }
 
   return (
     <Link to={`/products/${product.id}`}>

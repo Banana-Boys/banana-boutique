@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
 const Sequelize = require('sequelize')
@@ -32,22 +33,50 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     let products = []
-    if (req.query.itemIds) {
-      products = await Promise.all(
-        req.query.itemIds.map(id => {
-          return Product.findByPk(id)
+    if (!req.query.categoryIds && !req.query.searchTerms) {
+      if (req.query.itemIds) {
+        products = await Promise.all(
+          req.query.itemIds.map(id => {
+            return Product.findByPk(id)
+          })
+        )
+      } else {
+        products = await Product.findAll({
+          include: [Category]
         })
-      )
-    } else if (!req.query.categoryIds) {
+      }
+    } else if (req.query.categoryIds && !req.query.searchTerms) {
       products = await Product.findAll({
-        include: [Review, Category]
+        include: [
+          {
+            model: Category,
+            where: {
+              id: {
+                [Op.or]: req.query.categoryIds
+              }
+            }
+          }
+        ]
+      })
+    } else if (!req.query.categoryIds && req.query.searchTerms) {
+      products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
+        include: [Category]
       })
     } else {
       products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
         include: [
-          {model: Review},
           {
-            model: Category,
+            model: Product,
             where: {
               id: {
                 [Op.or]: req.query.categoryIds
