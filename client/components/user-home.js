@@ -24,7 +24,7 @@ class UserHome extends React.Component {
   handleClick(e) {}
 
   render() {
-    const {name, email, phone, imageUrl, reviews} = this.props.user
+    const {name, email, phone, imageUrl} = this.props.user
     return (
       <div>
         <h3>Welcome, {name}</h3>

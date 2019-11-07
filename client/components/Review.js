@@ -7,7 +7,7 @@ const Review = props => {
   return (
     <div>
       <Table>
-        <Table.Header as="h2">Title: {review.title}</Table.Header>
+        <Table.Header>Title: {review.title}</Table.Header>
         <Table.Row>
           <Table.Cell>
             <p> {review.body}</p>
