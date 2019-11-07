@@ -4,7 +4,8 @@ import {fetchProduct, removeProduct} from '../store/singleProduct'
 import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 import priceConvert from '../../utilFrontEnd/priceConvert'
-import {fetchProductReviews} from '../store/review'
+import {fetchProductReviews} from '../store/reviews'
+import {Button, Container, Header} from 'semantic-ui-react'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -49,16 +50,11 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
-    const reviews = product.reviews || []
     const categories = product.categories || []
     const quantitySelect = []
-    const sumofratings = reviews.reduce(function(a, b) {
-      return b.rating == null ? a : a + b.rating
-    }, 0)
-    const avgrating = sumofratings / reviews.length
-    let i = 1
 
     // quantity select dropdown options
+    let i = 1
     while (i <= product.inventory) {
       quantitySelect.push(<option key={i}>{i}</option>)
       i++
@@ -80,33 +76,35 @@ class SingleProduct extends React.Component {
           {quantitySelect}
         </select>
         <button type="button" onClick={this.handleDelete}>
-          Delete
+          Delete Product
         </button>
         <button type="button" onClick={this.handleEdit}>
-          Edit
+          Edit Product
         </button>
-        {product.inventory ? (
-          <button type="button" onClick={this.handleAddToCart}>
-            Add to Cart
-          </button>
-        ) : (
-          <button type="button" disabled>
-            Add to Cart
-          </button>
-        )}
+        <button
+          disabled={!product.inventory}
+          type="button"
+          onClick={this.handleAddToCart}
+        >
+          Add Product to Cart
+        </button>
 
-        <h4>Number of ratings: {reviews.length}</h4>
-        <h4>Avg Rating: {avgrating}</h4>
-        <Reviews revs={reviews} />
+        <h4>Number of ratings: {product.numratings}</h4>
+        <h4>
+          Avg Rating:{' '}
+          {isNaN(product.sumratings / product.numratings)
+            ? 'No ratings'
+            : (product.sumratings / product.numratings).toFixed(1)}
+        </h4>
+        <Reviews />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({singleProduct, user, review}) => ({
+const mapStateToProps = ({singleProduct, user}) => ({
   singleProduct,
-  user,
-  review
+  user
 })
 const mapDispatchToProps = {
   fetchProduct,

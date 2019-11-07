@@ -6,14 +6,14 @@ import {
 } from '../store/cart'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {connect} from 'react-redux'
-import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 export class Cart extends Component {
   constructor() {
     super()
-    this.state = {
-      cartItems: []
-    }
+    // this.state = {
+    //   cartItems: []
+    // }
     this.handleRemove = this.handleRemove.bind(this)
     this.handleQuantityChange = this.handleQuantityChange.bind(this)
   }
@@ -22,25 +22,26 @@ export class Cart extends Component {
     this.props.fetchCart()
   }
 
-  async componentWillReceiveProps(newProps) {
-    if (newProps.cart && newProps.cart.length > 0) {
-      const itemIds = newProps.cart.map(item => item.productId)
-      const {data} = await axios.get('/api/products', {
-        params: {
-          itemIds
-        }
-      })
+  // componentWillReceiveProps() {
+  //   // if (newProps.cart && newProps.cart.length > 0) {
+  //   //   const itemIds = newProps.cart.map(item => item.productId)
+  //   //   const {data} = await axios.get('/api/products', {
+  //   //     params: {
+  //   //       itemIds
+  //   //     }
+  //   //   })
 
-      const cartItems = data.map((item, i) => ({
-        ...item,
-        quantity: newProps.cart[i].quantity
-      }))
+  //   //   const cartItems = data.map((item, i) => ({
+  //   //     ...item,
+  //   //     quantity: newProps.cart[i].quantity
+  //   //   }))
 
-      this.setState({cartItems})
-    } else if (newProps.cart.length === 0) {
-      this.setState({cartItems: []})
-    }
-  }
+  //   //   this.setState({cartItems})
+  //   // } else if (newProps.cart.length === 0) {
+  //   //   this.setState({cartItems: []})
+  //   // }
+  //   this.props.fetchCart()
+  // }
 
   handleRemove(productId) {
     this.props.removeProduct(productId)
@@ -52,41 +53,54 @@ export class Cart extends Component {
   }
 
   render() {
-    let cartItems = this.state.cartItems
-    cartItems = cartItems.map(item => {
-      const quantitySelect = []
-      let i = 1
-      while (i <= item.inventory) {
-        quantitySelect.push(<option key={i}>{i}</option>)
-        i++
+    let cartItems = this.props.cart
+    const quantityOptions = function(inventory) {
+      const options = []
+      for (let i = 1; i <= inventory; i++) {
+        options.push(<option key={i}>{i}</option>)
       }
-      return {
-        ...item,
-        quantitySelect
-      }
-    })
+      return options
+    }
+    // cartItems = cartItems.map(item => {
+    //   const quantitySelect = []
+    //   let i = 1
+    //   while (i <= item.product.inventory) {
+    //     quantitySelect.push(<option key={i}>{i}</option>)
+    //     i++
+    //   }
+    //   return {
+    //     ...item,
+    //     quantitySelect
+    //   }
+    // })
     return (
       <div id="cart">
         {cartItems.map(item => {
           return (
-            <div className="product" key={item.id}>
-              <h4>{item.name}</h4>
+            <div className="product" key={item.product.id}>
+              <h4>{item.product.name}</h4>
               <select
                 className="quantity"
-                name={item.id}
+                name={item.product.id}
                 value={item.quantity}
                 onChange={this.handleQuantityChange}
               >
-                {item.quantitySelect}
+                {quantityOptions(item.product.inventory)}
               </select>
-              <p>Total: ${priceConvert(item.quantity * item.price)}</p>
-              <img src={item.imageUrl} />
-              <button type="button" onClick={() => this.handleRemove(item.id)}>
+              <p>Total: ${priceConvert(item.quantity * item.product.price)}</p>
+              <img src={item.product.imageUrl} />
+              <button
+                type="button"
+                onClick={() => this.handleRemove(item.product.id)}
+              >
                 Delete
               </button>
             </div>
           )
         })}
+        <Link to="/checkout">
+          <button type="button">Checkout</button>
+        </Link>
       </div>
     )
   }
