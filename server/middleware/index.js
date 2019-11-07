@@ -1,5 +1,6 @@
-const {checkGuest} = require('./UserAuthentication')
+const {checkGuest, isAdmin} = require('./UserAuthentication')
 
 export default {
-  checkGuest
+  checkGuest,
+  isAdmin
 }
