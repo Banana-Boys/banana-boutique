@@ -1,20 +1,8 @@
 const {User, Address, Order, OrderLineItem} = require('../db/models')
 const router = require('express').Router()
+const {checkGuest} = require('../middleware')
 
-const checkUserType = () => {
-  return async (req, res, next) => {
-    if (!req.user) {
-      const {email} = req.body.user
-      const user = await User.findOrCreate({
-        where: {email}
-      })
-      req.user = {id: user.id}
-    }
-    next()
-  }
-}
-
-router.get('/', checkUserType(), async (req, res, next) => {
+router.get('/', checkGuest(), async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: {
