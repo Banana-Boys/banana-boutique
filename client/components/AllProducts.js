@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Categories from './Categories'
+import Search from './Search'
 
 export class AllProducts extends Component {
   constructor() {
@@ -25,15 +26,7 @@ export class AllProducts extends Component {
     return (
       <div>
         <div>
-          <input
-            type="text"
-            className="input"
-            id="search"
-            placeholder="Search..."
-          />
-          <button type="submit" className="button">
-            Search{' '}
-          </button>
+          <Search />
         </div>
         <div>
           <Categories />

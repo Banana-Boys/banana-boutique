@@ -34,6 +34,8 @@ export class Categories extends Component {
     } else {
       this.state.checkedCategories.push(catId)
     }
+    //console.log('this.state:', this.state)
+
     this.props.updateProducts(this.state.checkedCategories)
   }
 
@@ -60,13 +62,15 @@ export class Categories extends Component {
 
 const mapState = (state, props) => {
   return {
+    products: state.products,
     categories: state.categories
   }
 }
 
 const mapDispatch = dispatch => ({
   loadCategories: () => dispatch(fetchAllCategories()),
-  updateProducts: categoryIds => dispatch(fetchFilteredProducts(categoryIds))
+  updateProducts: categoryIds =>
+    dispatch(fetchFilteredProducts(categoryIds, null))
 })
 
 export default connect(mapState, mapDispatch)(Categories)
