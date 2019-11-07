@@ -5,7 +5,7 @@ const Product = props => {
   let product = props.product
 
   return (
-    <div>
+    <Link to={`/products/${product.id}`}>
       <div>
         <img src={product.imageUrl} />
       </div>
@@ -19,8 +19,16 @@ const Product = props => {
         ) : (
           <h2>In Stock: {product.inventory}</h2>
         )}
+        <h3>
+          Categories:{' '}
+          <ul>
+            {product.categories.map(category => (
+              <li key={category.id}>{category.name}</li>
+            ))}
+          </ul>
+        </h3>
       </div>
-    </div>
+    </Link>
   )
 }
 
