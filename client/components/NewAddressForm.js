@@ -24,11 +24,7 @@ class NewAddressForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.props.createAddress(
-      this.state,
-      this.props.match.params.id,
-      this.props.history
-    )
+    this.props.createAddress(this.state, this.props.user.id, this.props.history)
   }
 
   render() {
@@ -94,6 +90,7 @@ class NewAddressForm extends React.Component {
   }
 }
 
+const mapStateToProps = ({user}) => ({user})
 const mapDispatchToProps = {createAddress}
 
-export default connect(null, mapDispatchToProps)(NewAddressForm)
+export default connect(mapStateToProps, mapDispatchToProps)(NewAddressForm)

@@ -27,6 +27,10 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Switch>
+          <Route path="/products/:id/edit" component={EditProductForm} />
+          <Route path="/products/new" component={NewProductForm} />
+          <Route path="/products/:id" component={SingleProduct} />
+          <Route path="/home" component={AllProducts} />
           <Route path="/products" component={AllProducts} />
           <Route path="/users/:id" component={UserHome} />
           <Route path="/addresses/new" component={NewAddressForm} />
@@ -36,8 +40,6 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/users/:id" component={UserHome} />
-            <Route path="/products/new" component={NewProductForm} />
-            <Route path="/products/:id/edit" component={EditProductForm} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

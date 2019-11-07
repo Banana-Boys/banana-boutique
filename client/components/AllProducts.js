@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Categories from './Categories'
+import {Link} from 'react-router-dom'
 
 export class AllProducts extends Component {
   constructor() {
@@ -40,7 +41,9 @@ export class AllProducts extends Component {
         </div>
         <div>
           {products.map(product => (
-            <Product key={product.id} product={product} />
+            <Link to={`/products/${product.id}`} key={product.id}>
+              <Product product={product} />
+            </Link>
           ))}
         </div>
       </div>
