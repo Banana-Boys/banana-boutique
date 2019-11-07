@@ -6,7 +6,6 @@ import user from './user'
 import products from './products'
 import singleProduct from './singleProduct'
 import review from './review'
-import singlereview from './singleReview'
 import cart from './cart'
 import orders from './orders'
 import singleOrder from './singleOrder'
@@ -23,7 +22,6 @@ const reducer = combineReducers({
   orders,
   singleOrder,
   categories,
-  singlereview,
   addresses,
   address
 })
@@ -42,4 +40,3 @@ export * from './singleProduct'
 export * from './orders'
 export * from './singleOrder'
 export * from './categories'
-export * from './singlereview'
