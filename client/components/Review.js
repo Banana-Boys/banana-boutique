@@ -2,6 +2,9 @@ import React from 'react'
 
 const Review = props => {
   const review = props.review
+  //console.log('review', props)
+  //const user = props.fetchUser(review.userId)
+  //console.log(user)
   return (
     <div>
       <div>
@@ -17,7 +20,7 @@ const Review = props => {
         <h5>Rating: {review.rating}</h5>
         <h5>Title: {review.title}</h5>
         <h5>Description: {review.body}</h5>
-        <h6>Author: {review.author}</h6>
+        {/* <h6>Author: </h6> */}
       </div>
     </div>
   )

@@ -49,6 +49,8 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
+    console.log(product)
+
     const reviews = product.reviews || []
     const categories = product.categories || []
     const quantitySelect = []
@@ -85,9 +87,16 @@ class SingleProduct extends React.Component {
         <button type="button" onClick={this.handleEdit}>
           Edit
         </button>
-        <button type="button" onClick={this.handleAddToCart}>
-          Add to Cart
-        </button>
+        {product.inventory ? (
+          <button type="button" onClick={this.handleAddToCart}>
+            Add to Cart
+          </button>
+        ) : (
+          <button type="button" disabled>
+            Add to Cart
+          </button>
+        )}
+
         <h4>Number of ratings: {reviews.length}</h4>
         <h4>Avg Rating: {avgrating}</h4>
         <Reviews revs={reviews} />
