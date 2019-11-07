@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const CartLineItem = require('../db/models/CartLineItem')
+const Product = require('../db/models/Product')
 
 //GET
 router.get('/', async (req, res, next) => {
@@ -8,10 +9,24 @@ router.get('/', async (req, res, next) => {
     // might have to play around with the order of this to make sure the session cart persists when a user logs in, and then will need save the session cart to the db
     if (req.session.cart) {
       cart = req.session.cart
+      cart = await Promise.all(
+        cart.map(async cartLineItem => ({
+          quantity: cartLineItem.quantity,
+          product: await Product.findByPk(cartLineItem.productId, {
+            attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
+          })
+        }))
+      )
     } else if (req.user) {
       cart = await CartLineItem.findAll({
         where: {userId: req.user.id},
-        attributes: ['productId', 'quantity']
+        include: [
+          {
+            model: Product,
+            attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
+          }
+        ]
+        // attributes: ['productId', 'quantity']
       })
     } else {
       cart = []
@@ -24,7 +39,10 @@ router.get('/', async (req, res, next) => {
 
 //POST product
 router.post('/', async (req, res, next) => {
-  const {productId, quantity} = req.body
+  let {productId, quantity} = req.body
+  const product = await Product.findByPk(productId, {
+    attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
+  })
   try {
     if (!req.session.cart) {
       req.session.cart = []
@@ -34,6 +52,7 @@ router.post('/', async (req, res, next) => {
     )
     if (sameProduct) {
       sameProduct.quantity += quantity
+      quantity = sameProduct.quantity
     } else {
       req.session.cart.push(req.body)
     }
@@ -53,10 +72,8 @@ router.post('/', async (req, res, next) => {
         ])
         cartLineItem = await CartLineItem.findByPk(cartLineItem.id)
       }
-      res.status(200).json(cartLineItem)
-    } else {
-      res.status(200).json(req.body)
     }
+    res.status(200).json({product, quantity})
   } catch (error) {
     next(error)
   }
