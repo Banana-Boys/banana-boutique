@@ -1,10 +1,11 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const Product = props => {
   let product = props.product
 
   return (
-    <div>
+    <Link to={`/products/${product.id}`}>
       <div>
         <img src={product.imageUrl} />
       </div>
@@ -22,7 +23,7 @@ const Product = props => {
           </ul>
         </h3>
       </div>
-    </div>
+    </Link>
   )
 }
 
