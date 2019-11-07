@@ -1,5 +1,8 @@
+/* eslint-disable complexity */
 const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 router.post('/', async (req, res, next) => {
   try {
@@ -23,13 +26,66 @@ router.post('/', async (req, res, next) => {
     res.status(201).json(productWithCategories)
   } catch (error) {
     console.log(error)
+    next(error)
   }
 })
 
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll()
-    console.log(products)
+    let products = []
+    if (!req.query.categoryIds && !req.query.searchTerms) {
+      if (req.query.itemIds) {
+        products = await Promise.all(
+          req.query.itemIds.map(id => {
+            return Product.findByPk(id)
+          })
+        )
+      } else {
+        products = await Product.findAll({
+          include: [Category]
+        })
+      }
+    } else if (req.query.categoryIds && !req.query.searchTerms) {
+      products = await Product.findAll({
+        include: [
+          {
+            model: Category,
+            where: {
+              id: {
+                [Op.or]: req.query.categoryIds
+              }
+            }
+          }
+        ]
+      })
+    } else if (!req.query.categoryIds && req.query.searchTerms) {
+      products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
+        include: [Category]
+      })
+    } else {
+      products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
+        include: [
+          {
+            model: Product,
+            where: {
+              id: {
+                [Op.or]: req.query.categoryIds
+              }
+            }
+          }
+        ]
+      })
+    }
     res.json(products)
   } catch (error) {
     next(error)
@@ -83,6 +139,7 @@ router.put('/:id', async (req, res, next) => {
     res.status(200).json(productWithCategories)
   } catch (error) {
     console.log(error)
+    next(error)
   }
 })
 

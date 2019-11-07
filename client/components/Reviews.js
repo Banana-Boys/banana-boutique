@@ -1,5 +1,12 @@
 import React, {Component} from 'react'
-import {postReview, destroyReview, updateReview} from '../store/review'
+import {connect} from 'react-redux'
+import {
+  postReview,
+  destroyReview,
+  updateReview
+  //fetchReviewUser
+} from '../store/review'
+import Review from './Review'
 
 export class Reviews extends Component {
   constructor() {
@@ -7,12 +14,19 @@ export class Reviews extends Component {
   }
 
   render() {
-    //const reviews = this.props.reviews
+    const reviews = this.props.revs || []
     return (
       <div>
-        {/*
-            reviews.map(rev=>{<Review review={rev}>})
-            */}
+        <div>
+          {reviews.map(rev => (
+            <Review
+              key={rev.id}
+              deleteReview={this.props.deleteReview}
+              review={rev}
+              fetchUser={this.props.fetchUser}
+            />
+          ))}
+        </div>
       </div>
     )
   }
@@ -26,7 +40,7 @@ const mapDispatchToProps = dispatch => ({
   addReview: review => dispatch(postReview(review)),
   deleteReview: review => dispatch(destroyReview(review)),
   updateReview: review => dispatch(updateReview(review))
+  //fetchUser: userId => dispatch(fetchReviewUser(userId))
 })
 
-//export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
-export default Reviews
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews)

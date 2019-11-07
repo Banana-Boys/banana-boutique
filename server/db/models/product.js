@@ -22,6 +22,14 @@ const Product = db.define('product', {
   inventory: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  numratings: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  ratingsaverage: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 

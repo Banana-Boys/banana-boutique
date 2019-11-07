@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import Product from './Product'
+import Categories from './Categories'
+import Search from './Search'
 
 export class AllProducts extends Component {
   constructor() {
@@ -18,16 +20,22 @@ export class AllProducts extends Component {
 
   render() {
     const products = this.props.products
-    console.log(this.props)
-    console.log('here')
     if (!products) {
-      return <div>NO PROJECTS!</div>
+      return <div>NO PRODUCTS!</div>
     }
     return (
       <div>
-        {products.map(product => (
-          <Product key={product.id} product={product} />
-        ))}
+        <div>
+          <Search />
+        </div>
+        <div>
+          <Categories />
+        </div>
+        <div>
+          {products.map(product => (
+            <Product key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     )
   }

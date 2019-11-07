@@ -1,4 +1,5 @@
-module.exports.states = [
+export const states = [
+  '',
   'AL',
   'AK',
   'AS',
@@ -60,7 +61,8 @@ module.exports.states = [
   'WY'
 ]
 
-module.exports.countries = [
+export const countries = [
+  '',
   'Afghanistan',
   'Albania',
   'Algeria',
