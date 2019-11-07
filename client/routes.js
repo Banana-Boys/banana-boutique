@@ -8,6 +8,7 @@ import {me} from './store'
 import NewProductForm from './components/NewProductForm'
 import SingleProduct from './components/SingleProduct'
 import EditProductForm from './components/EditProductForm'
+import Cart from './components/Cart'
 import NewAddressForm from './components/NewAddressForm'
 import EditAddressForm from './components/EditAddressForm'
 import EditUserForm from './components/EditUserForm'
@@ -32,6 +33,7 @@ class Routes extends Component {
           <Route path="/products/:id/edit" component={EditProductForm} />
           <Route path="/products/new" component={NewProductForm} />
           <Route path="/products/:id" component={SingleProduct} />
+          <Route path="/cart" component={Cart} />
           <Route path="/home" component={AllProducts} />
           <Route path="/products" component={AllProducts} />
           <Route path="/users/:id/edit" component={EditUserForm} />
