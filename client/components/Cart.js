@@ -23,7 +23,6 @@ export class Cart extends Component {
   }
 
   async componentWillReceiveProps(newProps) {
-    console.log('props1')
     if (newProps.cart && newProps.cart.length > 0) {
       const itemIds = newProps.cart.map(item => item.productId)
       const {data} = await axios.get('/api/products', {
@@ -53,7 +52,6 @@ export class Cart extends Component {
   }
 
   render() {
-    console.log('render')
     let cartItems = this.state.cartItems
     cartItems = cartItems.map(item => {
       const quantitySelect = []
