@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
-import {fetchCart, sendRemoveCartLineItem} from '../store/cart'
+import {
+  fetchCart,
+  sendRemoveCartLineItem,
+  sendEditCartLineItem
+} from '../store/cart'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {connect} from 'react-redux'
 import axios from 'axios'
@@ -11,6 +15,7 @@ export class Cart extends Component {
       cartItems: []
     }
     this.handleRemove = this.handleRemove.bind(this)
+    this.handleQuantityChange = this.handleQuantityChange.bind(this)
   }
 
   componentDidMount() {
@@ -19,7 +24,7 @@ export class Cart extends Component {
 
   async componentWillReceiveProps(newProps) {
     console.log('props')
-    if (newProps.cart && newProps.cart.length > 0) {
+    if (newProps.cart) {
       const itemIds = newProps.cart.map(item => item.productId)
       const {data} = await axios.get('/api/products', {
         params: {
@@ -40,16 +45,40 @@ export class Cart extends Component {
     this.props.removeProduct(productId)
   }
 
+  handleQuantityChange(event) {
+    const {name, value} = event.target //the name is the product id ;)
+    this.props.editItem(+name, +value)
+  }
+
   render() {
     console.log('render')
-    const cartItems = this.state.cartItems
+    let cartItems = this.state.cartItems
+    cartItems = cartItems.map(item => {
+      const quantitySelect = []
+      let i = 1
+      while (i <= item.inventory) {
+        quantitySelect.push(<option key={i}>{i}</option>)
+        i++
+      }
+      return {
+        ...item,
+        quantitySelect
+      }
+    })
     return (
       <div id="cart">
         {cartItems.map(item => {
           return (
             <div className="product" key={item.id}>
               <h4>{item.name}</h4>
-              <p>{item.id}</p>
+              <select
+                className="quantity"
+                name={item.id}
+                value={item.quantity}
+                onChange={this.handleQuantityChange}
+              >
+                {item.quantitySelect}
+              </select>
               <p>Total: ${priceConvert(item.quantity * item.price)}</p>
               <img src={item.imageUrl} />
               <button type="button" onClick={() => this.handleRemove(item.id)}>
@@ -71,8 +100,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   removeProduct: productId => dispatch(sendRemoveCartLineItem(productId)),
-  fetchCart: () => dispatch(fetchCart())
+  fetchCart: () => dispatch(fetchCart()),
+  editItem: (productId, quantity) =>
+    dispatch(sendEditCartLineItem(productId, quantity))
 })
 
-//export default connect(mapStatetProps, mapDispatchToProps)(Cart)
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

@@ -99,7 +99,7 @@ export default (state = initialState, action) => {
     }
     case REMOVE_CART_LINE_ITEM:
       return state.filter(
-        cartLineItem => cartLineItem.productId !== action.productId
+        cartLineItem => cartLineItem.productId !== +action.productId
       )
     case EDIT_CART_LINE_ITEM:
       return [
