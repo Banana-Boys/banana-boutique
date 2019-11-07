@@ -1,6 +1,6 @@
 const {User} = require('../db/models')
 
-export const checkGuest = () => {
+const checkGuest = () => {
   return async (req, res, next) => {
     if (!req.user) {
       const {email} = req.body.user
@@ -13,7 +13,7 @@ export const checkGuest = () => {
   }
 }
 
-export const isAdmin = () => {
+const isAdmin = () => {
   return (req, res, next) => {
     if (req.user && req.user.role === 'admin') {
       next()
@@ -21,4 +21,9 @@ export const isAdmin = () => {
       res.sendStatus(403)
     }
   }
+}
+
+module.exports = {
+  checkGuest,
+  isAdmin
 }

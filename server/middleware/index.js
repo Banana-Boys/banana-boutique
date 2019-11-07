@@ -1,6 +1,6 @@
 const {checkGuest, isAdmin} = require('./UserAuthentication')
 
-export default {
+module.exports = {
   checkGuest,
   isAdmin
 }
