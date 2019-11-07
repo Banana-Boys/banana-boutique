@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Categories from './Categories'
 import AllProducts from './AllProducts'
+import Search from './Search'
 
 /**
  * COMPONENT
@@ -23,7 +24,7 @@ export const UserHome = props => {
       <h5>Orders: </h5>
       <h5>Reviews: </h5>
       <div>
-        <div>
+        {/* <div>
           <input
             type="text"
             className="input"
@@ -33,8 +34,9 @@ export const UserHome = props => {
           <button type="submit" className="button">
             Search{' '}
           </button>
-        </div>
+        </div> */}
         <div>
+          {/* <Search /> */}
           <Categories />
           <AllProducts />
         </div>
