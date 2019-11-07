@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 router.post('/', async (req, res, next) => {
   try {
@@ -29,10 +31,26 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    console.log('req.query.categoryIds:', req.query.categoryIds)
-    const products = await Product.findAll({
-      include: [Review, Category]
-    })
+    let products = []
+    if (!req.query.categoryIds) {
+      products = await Product.findAll({
+        include: [Review, Category]
+      })
+    } else {
+      products = await Product.findAll({
+        include: [
+          {model: Review},
+          {
+            model: Category,
+            where: {
+              id: {
+                [Op.or]: req.query.categoryIds
+              }
+            }
+          }
+        ]
+      })
+    }
     res.json(products)
   } catch (error) {
     next(error)

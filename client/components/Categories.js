@@ -62,7 +62,6 @@ export class Categories extends Component {
 
 const mapState = (state, props) => {
   return {
-    products: state.products,
     categories: state.categories
   }
 }
