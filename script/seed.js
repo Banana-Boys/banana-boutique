@@ -3,10 +3,17 @@ const faker = require('faker')
 const {db} = require('../server/db')
 const {User, Product, Category, Review} = require('../server/db/models')
 
+const session = require('express-session')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+
 async function seed() {
   const NUM_PRODUCTS = 100
   const NUM_CATEGORIES = 4
 
+  //DROP SESSION DATA
+  const sessionStore = new SequelizeStore({db})
+
+  await sessionStore.sync()
   await db.sync({force: true})
   console.log('db synced!')
 

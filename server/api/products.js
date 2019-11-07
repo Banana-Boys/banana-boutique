@@ -32,7 +32,13 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     let products = []
-    if (!req.query.categoryIds) {
+    if (req.query.itemIds) {
+      products = await Promise.all(
+        req.query.itemIds.map(id => {
+          return Product.findByPk(id)
+        })
+      )
+    } else if (!req.query.categoryIds) {
       products = await Product.findAll({
         include: [Review, Category]
       })
@@ -52,17 +58,6 @@ router.get('/', async (req, res, next) => {
       })
     }
     res.json(products)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/:id', async (req, res, next) => {
-  try {
-    const product = await Product.findByPk(req.params.id, {
-      include: [Review, Category]
-    })
-    res.json(product)
   } catch (error) {
     next(error)
   }
