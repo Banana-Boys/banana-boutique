@@ -32,16 +32,42 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     let products = []
-    if (!req.query.categoryIds) {
+    if (!req.query.categoryIds && !req.query.searchTerms) {
       products = await Product.findAll({
-        include: [Review, Category]
+        include: [Category]
+      })
+    } else if (req.query.categoryIds && !req.query.searchTerms) {
+      products = await Product.findAll({
+        include: [
+          {
+            model: Category,
+            where: {
+              id: {
+                [Op.or]: req.query.categoryIds
+              }
+            }
+          }
+        ]
+      })
+    } else if (!req.query.categoryIds && req.query.searchTerms) {
+      products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
+        include: [Category]
       })
     } else {
       products = await Product.findAll({
+        where: {
+          name: {
+            [Op.or]: req.query.searchTerms
+          }
+        },
         include: [
-          {model: Review},
           {
-            model: Category,
+            model: Product,
             where: {
               id: {
                 [Op.or]: req.query.categoryIds
