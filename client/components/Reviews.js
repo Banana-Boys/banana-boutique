@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {postReview, destroyReview, updateReview} from '../store/reviews'
+import {createReview, destroyReview, editReview} from '../store/reviews'
 import Review from './Review'
 import {Link, withRouter} from 'react-router-dom'
+import {Button, Container, Grid} from 'semantic-ui-react'
 
 export class Reviews extends Component {
   constructor(props) {
@@ -12,11 +13,11 @@ export class Reviews extends Component {
   render() {
     const reviews = this.props.reviews || []
     return (
-      <div>
+      <Container>
         <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
-          <button type="button">Add Review</button>
+          <Button type="button">Add Review</Button>
         </Link>
-        <div>
+        <Grid.Column>
           {reviews.map(rev => (
             <Review
               key={rev.id}
@@ -25,8 +26,8 @@ export class Reviews extends Component {
               fetchUser={this.props.fetchUser}
             />
           ))}
-        </div>
-      </div>
+        </Grid.Column>
+      </Container>
     )
   }
 }
@@ -35,6 +36,6 @@ const mapStateToProps = state => ({
   reviews: state.reviews
 })
 
-const mapDispatchToProps = {postReview, destroyReview, updateReview}
+const mapDispatchToProps = {createReview, destroyReview, editReview}
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Reviews))

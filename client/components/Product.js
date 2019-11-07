@@ -4,21 +4,21 @@ import {Grid, Image, Container} from 'semantic-ui-react'
 
 const Product = props => {
   let product = props.product
+  //console.log(product)
   // console.log('product in Product.js:', product)
   if (!product) {
     return <div>NO PRODUCT FOUND!</div>
   }
 
   return (
-    <Grid>
+    <Grid divided="vertically">
       <Link to={`/products/${product.id}`}>
         <Grid.Row>
-          <Grid.Column>
+          <Grid.Column width={3}>
             <Image src={product.imageUrl} />
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width={3}>
             <h1>{product.name}</h1>
-
             <h2>{product.description}</h2>
             <h2>price: {product.price}</h2>
             {!product.inventory ? (
@@ -34,6 +34,13 @@ const Product = props => {
                 ))}
               </ul>
             </h3>
+            <h4>Number of ratings: {product.numratings}</h4>
+            <h4>
+              Avg Rating:{' '}
+              {isNaN(product.sumratings / product.numratings)
+                ? 'No ratings'
+                : (product.sumratings / product.numratings).toFixed(1)}
+            </h4>
           </Grid.Column>
         </Grid.Row>
       </Link>
