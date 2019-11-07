@@ -7,14 +7,14 @@ export const checkGuest = () => {
       const user = await User.findOrCreate({
         where: {email}
       })
-      req.user = {id: user.id}
+      req.user = {id: user.id, email}
     }
     next()
   }
 }
 
 export const isAdmin = () => {
-  return async (req, res, next) => {
+  return (req, res, next) => {
     if (req.user && req.user.role === 'admin') {
       next()
     } else {
