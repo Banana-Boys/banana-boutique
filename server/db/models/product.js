@@ -27,7 +27,7 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  ratingsaverage: {
+  sumratings: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   }
