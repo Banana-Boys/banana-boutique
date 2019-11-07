@@ -18,7 +18,7 @@ export class Categories extends Component {
   async componentDidMount() {
     try {
       await this.props.loadCategories()
-      await this.props.updateProducts()
+      //await this.props.updateProducts()
       this.setState()
     } catch (error) {
       console.error(error)
@@ -34,8 +34,6 @@ export class Categories extends Component {
     } else {
       this.state.checkedCategories.push(catId)
     }
-    console.log('this.state:', this.state)
-
     this.props.updateProducts(this.state.checkedCategories)
   }
 
