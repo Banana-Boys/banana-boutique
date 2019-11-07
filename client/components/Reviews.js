@@ -9,14 +9,25 @@ export class Reviews extends Component {
   }
 
   render() {
-    const reviews = this.props.reviews || []
-    console.log('reviews', reviews)
-    return <div>{reviews.map(rev => <Review key={rev.id} review={rev} />)}</div>
+    const reviews = this.props.revs || []
+    return (
+      <div>
+        <div>
+          {reviews.map(rev => (
+            <Review
+              key={rev.id}
+              deleteReview={this.props.deleteReview}
+              review={rev}
+            />
+          ))}
+        </div>
+      </div>
+    )
   }
 }
 
 const mapStateToProps = state => ({
-  revs: state.reviews
+  reviews: state.reviews
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -26,7 +37,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
-//export default Reviews
-
-//add number of reviews per product
-//add average of ratings per product
