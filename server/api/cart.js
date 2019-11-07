@@ -67,10 +67,12 @@ router.delete('/:id', async (req, res, next) => {
   const productId = req.params.id
   try {
     req.session.cart = req.session.cart.filter(
-      cartLineItem => cartLineItem.productId !== productId
+      cartLineItem => cartLineItem.productId !== +productId
     )
     req.session.save()
-    await CartLineItem.delete({where: {productId}})
+    await CartLineItem.destroy({
+      where: {productId, userId: req.session.passport.user}
+    })
     res.sendStatus(204)
   } catch (err) {
     next(err)
