@@ -42,8 +42,8 @@ export const sendAddCartLineItem = (productId, quantity, history) => {
   return async dispatch => {
     try {
       const cartLineItem = {productId, quantity}
-      await axios.post('/api/cart', cartLineItem)
-      dispatch(addCartLineItem(cartLineItem))
+      const {data} = await axios.post('/api/cart', cartLineItem)
+      dispatch(addCartLineItem(data))
       history.push('/cart')
     } catch (error) {
       console.error(error)
@@ -78,36 +78,25 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CART:
       return action.cart
-    case ADD_CART_LINE_ITEM: {
-      const sameProduct = state.find(
-        cartLineItem => cartLineItem.productId === action.cartLineItem.productId
-      )
-      if (sameProduct) {
-        return [
-          ...state.filter(
-            cartLineItem =>
-              cartLineItem.productId !== action.cartLineItem.productId
-          ),
-          {
-            ...action.cartLineItem,
-            quantity: action.cartLineItem.quantity + sameProduct.quantity
-          }
-        ]
-      } else {
-        return [...state, action.cartLineItem]
-      }
-    }
-    case REMOVE_CART_LINE_ITEM:
-      return state.filter(
-        cartLineItem => cartLineItem.productId !== +action.productId
-      )
-    case EDIT_CART_LINE_ITEM:
+    case ADD_CART_LINE_ITEM:
       return [
         ...state.filter(
-          cartLineItem => cartLineItem.productId !== action.productId
+          cartLineItem =>
+            cartLineItem.product.id !== action.cartLineItem.product.id
         ),
-        {productId: action.productId, quantity: action.quantity}
+        action.cartLineItem
       ]
+    case REMOVE_CART_LINE_ITEM:
+      return state.filter(
+        cartLineItem => cartLineItem.product.id !== +action.productId
+      )
+    case EDIT_CART_LINE_ITEM:
+      return state.map(
+        cartLineItem =>
+          cartLineItem.product.id === action.productId
+            ? {...cartLineItem, quantity: action.quantity}
+            : cartLineItem
+      )
     default:
       return state
   }
