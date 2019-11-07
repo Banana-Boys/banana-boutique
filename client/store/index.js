@@ -11,6 +11,7 @@ import cart from './cart'
 import orders from './orders'
 import singleOrder from './singleOrder'
 import categories from './categories'
+import addresses from './addresses'
 
 const reducer = combineReducers({
   user,
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   orders,
   singleOrder,
   categories,
-  singlereview
+  singlereview,
+  addresses
 })
 
 const middleware = composeWithDevTools(

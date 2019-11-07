@@ -70,7 +70,7 @@ router.delete('/:id', async (req, res, next) => {
       cartLineItem => cartLineItem.productId !== productId
     )
     req.session.save()
-    if (req.user) await CartLineItem.delete({where: {productId}})
+    if (req.user) await CartLineItem.destroy({where: {productId}})
     res.sendStatus(204)
   } catch (err) {
     next(err)
