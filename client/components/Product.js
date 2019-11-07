@@ -1,10 +1,11 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const Product = props => {
   let product = props.product
 
   return (
-    <div>
+    <Link to={`/products/${product.id}`}>
       <div>
         <img src={product.imageUrl} />
       </div>
@@ -14,7 +15,7 @@ const Product = props => {
         <h2>price: {product.price}</h2>
         <h3>In Stock: {product.quantity}</h3>
       </div>
-    </div>
+    </Link>
   )
 }
 

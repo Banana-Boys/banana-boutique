@@ -41,9 +41,7 @@ export class AllProducts extends Component {
         </div>
         <div>
           {products.map(product => (
-            <Link to={`/products/${product.id}`} key={product.id}>
-              <Product product={product} />
-            </Link>
+            <Product key={product.id} product={product} />
           ))}
         </div>
       </div>
