@@ -1,45 +1,82 @@
+/* eslint-disable complexity */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllCategories} from '../store/categories'
-import {filterCategories} from '../store/activeCategories'
+import {fetchProducts} from '../store/products'
+import {withRouter} from 'react-router-dom'
+import {queryParser} from '../../utilFrontEnd/queryParser'
+import {queryPusher} from '../../utilFrontEnd/queryPusher'
 import {fetchCategory} from '../store/singleCategory'
-import {fetchFilteredProducts} from '../store/products'
 import {Link} from 'react-router-dom'
 
 export class Categories extends Component {
   constructor(props) {
     super(props)
-    this.state = this.buildInitialState()
-    this.handleEdit = this.handleEdit.bind(this)
-    this.handleAdd = this.handleAdd.bind(this)
-  }
-
-  buildInitialState() {
-    return {
-      checkedCategories: [],
+    const query = queryParser(this.props.location.search)
+    const {categories, search, inStock, sort} = query
+    this.state = {
+      categories: categories || [],
+      search: search || '',
+      inStock: Boolean(inStock) || false,
+      sort: sort || '',
       editCategory: {}
     }
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
+    this.handleInStock = this.handleInStock.bind(this)
+    this.handleSort = this.handleSort.bind(this)
   }
 
-  async componentDidMount() {
-    try {
-      await this.props.loadCategories()
-      this.setState()
-    } catch (error) {
-      console.error(error)
-    }
+  componentDidMount() {
+    this.props.fetchAllCategories()
+    this.props.fetchProducts(this.state)
   }
 
   updateCategorySelected = event => {
-    let catId = Number(event.target.value)
-    let index = this.state.checkedCategories.indexOf(catId)
-    if (index >= 0) {
-      this.state.checkedCategories.splice(index, 1)
+    event.persist()
+    let newState
+    if (event.target.checked) {
+      newState = {
+        ...this.state,
+        categories: [...this.state.categories, event.target.value]
+      }
+      this.setState(newState)
     } else {
-      this.state.checkedCategories.push(catId)
+      newState = {
+        ...this.state,
+        categories: this.state.categories.filter(
+          categoryId => categoryId !== event.target.value
+        )
+      }
+      this.setState(newState)
     }
-    this.props.filterCats(this.state.checkedCategories)
-    this.props.updateProducts(this.state.checkedCategories)
+    this.props.fetchProducts(newState)
+    queryPusher(newState, this.props)
+  }
+
+  handleSearch(e) {
+    const newState = {...this.state, search: e.target.value}
+    this.setState(newState)
+    this.props.fetchProducts(newState)
+    queryPusher(newState, this.props)
+  }
+
+  handleInStock() {
+    const newState = {...this.state, inStock: !this.state.inStock}
+    this.setState(newState)
+    this.props.fetchProducts(newState)
+    queryPusher(newState, this.props)
+  }
+
+  handleSort(e) {
+    const newState = {
+      ...this.state,
+      sort: [...e.target.options].filter(option => option.selected)[0].value
+    }
+    this.setState(newState)
+    this.props.fetchProducts(newState)
+    queryPusher(newState, this.props)
   }
 
   handleEdit(event) {
@@ -55,9 +92,15 @@ export class Categories extends Component {
 
   render() {
     let categories = this.props.categories
-
     return (
       <div>
+        <label htmlFor="search">Search: </label>
+        <input
+          type="text"
+          id="search"
+          value={this.state.search}
+          onChange={this.handleSearch}
+        />
         <button type="button" onClick={this.handleAdd}>
           Add New Category
         </button>
@@ -67,6 +110,7 @@ export class Categories extends Component {
               name="category-selected"
               type="checkbox"
               value={category.id}
+              checked={this.state.categories.includes(category.id.toString())}
               onChange={this.updateCategorySelected}
             />
             {category.name}
@@ -75,6 +119,52 @@ export class Categories extends Component {
             </Link>
           </div>
         ))}
+        <input
+          name="inStock"
+          type="checkbox"
+          onChange={this.handleInStock}
+          checked={this.state.inStock}
+        />
+        <label htmlFor="inStock">In stock</label>
+        <select name="sort" onChange={this.handleSort}>
+          <option value="" selected={this.state.sort === ''} />
+          <option value="name_0" selected={this.state.sort === 'name_0'}>
+            Name (A to Z)
+          </option>
+          <option value="name_1" selected={this.state.sort === 'name_1'}>
+            Name (Z to A)
+          </option>
+          <option value="price_0" selected={this.state.sort === 'price_0'}>
+            Price (low to high)
+          </option>
+          <option value="price_1" selected={this.state.sort === 'price_1'}>
+            Price (Z to A)
+          </option>
+          <option
+            value="avgrating_0"
+            selected={this.state.sort === 'avgrating_0'}
+          >
+            Avg. rating (low to high)
+          </option>
+          <option
+            value="avgrating_1"
+            selected={this.state.sort === 'avgrating_1'}
+          >
+            Avg. rating (high to low)
+          </option>
+          <option
+            value="numratings_0"
+            selected={this.state.sort === 'numratings_0'}
+          >
+            # ratings (low to high)
+          </option>
+          <option
+            value="numratings_1"
+            selected={this.state.sort === 'numratings_1'}
+          >
+            # ratings (high to low)
+          </option>
+        </select>
       </div>
     )
   }
@@ -88,11 +178,6 @@ const mapState = (state, props) => {
   }
 }
 
-const mapDispatch = dispatch => ({
-  loadCategories: () => dispatch(fetchAllCategories()),
-  updateProducts: categoryIds => dispatch(fetchFilteredProducts(categoryIds)),
-  filterCats: categoryIds => dispatch(filterCategories(categoryIds)),
-  gotoCategory: id => dispatch(fetchCategory(id))
-})
+const mapDispatch = {fetchAllCategories, fetchProducts, fetchCategory}
 
-export default connect(mapState, mapDispatch)(Categories)
+export default withRouter(connect(mapState, mapDispatch)(Categories))

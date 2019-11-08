@@ -7,16 +7,12 @@ import {Grid, Image, Container, Card} from 'semantic-ui-react'
 import Search from './Search'
 
 export class AllProducts extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
-  async componentDidMount() {
-    try {
-      await this.props.loadProducts()
-    } catch (error) {
-      console.error(error)
-    }
+  componentDidMount() {
+    this.props.loadProducts()
   }
 
   render() {
