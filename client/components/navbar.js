@@ -7,7 +7,7 @@ import Search from './Search'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <img src="/images/banana-boutique.png" />
+    <img src="/images/nanas-600.jpg" />
     <nav>
       {isLoggedIn ? (
         <div>
