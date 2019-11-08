@@ -12,6 +12,8 @@ import Cart from './components/Cart'
 import NewAddressForm from './components/NewAddressForm'
 import EditAddressForm from './components/EditAddressForm'
 import EditUserForm from './components/EditUserForm'
+import EditCategoryForm from './components/EditCategoryForm'
+//import NewCategoryForm from './components/NewCategoryForm'
 
 /**
  * COMPONENT
@@ -30,6 +32,8 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Switch>
+          <Route path="/categories/:id/edit" component={EditCategoryForm} />
+          {/* <Route path="/categories/new" component={NewCategoryForm} /> */}
           <Route path="/products/:id/edit" component={EditProductForm} />
           <Route path="/products/new" component={NewProductForm} />
           <Route path="/products/:id" component={SingleProduct} />
