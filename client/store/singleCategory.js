@@ -16,6 +16,7 @@ const defaultCategory = []
  */
 const getCategory = category => ({type: GET_CATEGORY, category})
 const updatedCategory = category => ({type: GET_CATEGORY, category})
+
 /**
  * THUNK CREATORS
  */

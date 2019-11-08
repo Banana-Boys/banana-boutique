@@ -36,7 +36,6 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Switch>
           <Route path="/categories/:id/edit" component={EditCategoryForm} />
-          {/* <Route path="/categories/new" component={NewCategoryForm} /> */}
           <Route
             path="/products/:productId/reviews/:reviewId/edit"
             component={EditReviewForm}

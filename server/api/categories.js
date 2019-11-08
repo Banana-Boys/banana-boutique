@@ -37,4 +37,16 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+//CREATE category
+router.post('/', async (req, res, next) => {
+  try {
+    const category = Category.build(req.body)
+    await category.save()
+    const returnCategory = category.toJSON()
+    res.json(returnCategory)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router

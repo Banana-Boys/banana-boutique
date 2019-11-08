@@ -5,6 +5,7 @@ import {filterCategories} from '../store/activeCategories'
 import {fetchCategory} from '../store/singleCategory'
 import {fetchFilteredProducts} from '../store/products'
 import {Link} from 'react-router-dom'
+import NewCategoryForm from './NewCategoryForm'
 
 export class Categories extends Component {
   constructor(props) {
@@ -45,9 +46,6 @@ export class Categories extends Component {
   handleEdit(event) {
     event.preventDefault()
     console.log('this.props.category.id', this.props.category.id)
-    // console.log('event.target:', event)
-    // let catId = Number(event.target.value)
-    // console.log('catId:', catId)
     this.props.gotoCategory(this.props.category.id)
   }
 
@@ -58,9 +56,9 @@ export class Categories extends Component {
 
     return (
       <div>
-        <button type="button" onClick={this.handleAdd}>
-          Add New Category
-        </button>
+        <div>
+          <NewCategoryForm />
+        </div>
         {categories.map(category => (
           <div key={category.id} className="category">
             <input
