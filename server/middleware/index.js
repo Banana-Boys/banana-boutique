@@ -1,6 +1,7 @@
-const {checkGuest, isAdmin} = require('./UserAuthentication')
+const {checkGuest, isAdmin, isUser} = require('./UserAuthentication')
 
 module.exports = {
   checkGuest,
-  isAdmin
+  isAdmin,
+  isUser
 }
