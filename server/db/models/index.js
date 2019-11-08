@@ -50,6 +50,7 @@ CartLineItem.belongsTo(User)
 CartLineItem.belongsTo(Product)
 
 OrderLineItem.belongsTo(Product)
+OrderLineItem.belongsTo(Order)
 
 /**
  * If we had any associations to make, this would be a great place to put them!

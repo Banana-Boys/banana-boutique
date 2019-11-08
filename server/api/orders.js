@@ -1,4 +1,11 @@
-const {Address, Order, OrderLineItem, CartLineItem} = require('../db/models')
+const {
+  Address,
+  Order,
+  OrderLineItem,
+  CartLineItem,
+  User,
+  Product
+} = require('../db/models')
 const router = require('express').Router()
 const {checkGuest, isAdmin} = require('../middleware')
 
@@ -47,37 +54,65 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
 
 router.post('/', checkGuest(), async (req, res, next) => {
   try {
-    const {cartLineItems, user} = req.body
+    let {cart, user, shippingTax, shippingAddress} = req.body
+
+    await Promise.all(
+      cart.map(async item => {
+        const product = await Product.findByPk(item.product.id)
+        console.log(product)
+        if (item.quantity > product.inventory) {
+          const error = new Error()
+          error.message = `Insufficient inventory (quantity: ${
+            product.inventory
+          }) to fulfill order of ${product.name} (id: ${
+            product.id
+          }, quantity: ${item.quantity})`
+          throw error
+        } else {
+          await product.update({inventory: product.inventory - item.quantity})
+          console.log(await Product.findByPk(product.id))
+        }
+      })
+    )
+
+    if (!user.id) {
+      user = await User.create({email: user.email})
+    }
 
     // Creates Addresses
-    const billingAddress = await Address.findOrCreate({
-      where: user.billingAddress
-    })
+    if (!shippingAddress.id) {
+      shippingAddress = await Address.create(shippingAddress)
+      await shippingAddress.setUser(user.id)
+    }
+    // const billingAddress = await Address.findOrCreate({
+    //   where: user.billingAddress
+    // })
 
-    const shippingAddress = await Address.findOrCreate({
-      where: user.shippingAddress
-    })
+    // const shippingAddress = await Address.findOrCreate({
+    //   where: user.shippingAddress
+    // })
 
     // Create Order
-    const order = await Order.create({
-      datePlaced: new Date(),
-      userId: user.id
-    })
+    const order = await Order.create({shippingTax, datePlaced: Date.now()})
 
     // Associates Order
-    await order.setBilling(billingAddress) //magic methods might not work
-    await order.setShipping(shippingAddress)
+    // await order.setBilling(billingAddress) //magic methods might not work
+    await order.setShipping(shippingAddress.id)
+    await order.setBuyer(user.id)
+    await order.setReceiver(user.id)
 
     // Creates line item for each cart item
-    cartLineItems.forEach(async lineItem => {
-      await OrderLineItem.create({
-        quantity: lineItem.quantity,
-        price: lineItem.price,
-        productId: lineItem.id,
-        orderId: order.id
+    await Promise.all(
+      cart.map(async lineItem => {
+        const orderLineItem = await OrderLineItem.create({
+          quantity: lineItem.quantity,
+          price: lineItem.product.price
+        })
+        await orderLineItem.setProduct(lineItem.product.id)
+        return orderLineItem.setOrder(order.id)
+        // console.log(await OrderLineItem.findByPk(orderLineItem.id))
       })
-    })
-
+    )
     // Clears Cart
     await CartLineItem.destroy({
       where: {userId: user.id}
@@ -86,7 +121,7 @@ router.post('/', checkGuest(), async (req, res, next) => {
     // Returns Order
     res.json(
       await Order.findByPk(order.id, {
-        include: [OrderLineItem, Address]
+        include: [{model: OrderLineItem}, {model: Address, as: 'shipping'}]
       })
     )
   } catch (err) {
