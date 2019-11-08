@@ -5,7 +5,16 @@ import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {fetchProductReviews} from '../store/reviews'
-import {Button, Container, Grid, Header} from 'semantic-ui-react'
+import {
+  Button,
+  Container,
+  Grid,
+  Header,
+  Card,
+  Item,
+  Icon,
+  Label
+} from 'semantic-ui-react'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -62,46 +71,68 @@ class SingleProduct extends React.Component {
 
     return (
       <Container id="product">
-        <Grid.Row>
-          <Grid.Column>
-            <img src={product.imageUrl} />
-          </Grid.Column>
-          <Grid.Column>
-            <Header as="h1">{product.name}</Header>
-            <p>{categories.reduce((str, ele) => str + ' ' + ele.name, '')}</p>
-            <p>{product.description}</p>
-            <p>${this.priceConvert(product.price)}</p>
-            <select
-              id="quantity"
-              name="quantity"
-              value={this.state.quantity}
-              onChange={this.handleChange}
-            >
-              {quantitySelect}
-            </select>
-            <button type="button" onClick={this.handleDelete}>
-              Delete Product
-            </button>
-            <button type="button" onClick={this.handleEdit}>
-              Edit Product
-            </button>
-            <button
-              disabled={!product.inventory}
-              type="button"
-              onClick={this.handleAddToCart}
-            >
-              Add Product to Cart
-            </button>
-
-            <h4>Number of ratings: {product.numratings}</h4>
-            <h4>
-              Avg Rating:{' '}
-              {isNaN(product.sumratings / product.numratings)
-                ? 'No ratings'
-                : (product.sumratings / product.numratings).toFixed(1)}
-            </h4>
-          </Grid.Column>
-        </Grid.Row>
+        <Item.Group>
+          <Item>
+            <Item.Image size="large" src={product.imageUrl} />
+            <Item.Content>
+              <Item.Header as="h1">{product.name}</Item.Header>
+              <Item.Meta>
+                <span className="cinema">
+                  ${this.priceConvert(product.price)}
+                </span>
+              </Item.Meta>
+              <Item.Description>
+                <h4>{product.description}</h4>
+                <h6>Ratings: {product.numratings}</h6>
+                <h6>
+                  Avg Rating:
+                  {isNaN(product.sumratings / product.numratings)
+                    ? 'No ratings'
+                    : (product.sumratings / product.numratings).toFixed(1)}
+                </h6>
+              </Item.Description>
+              <Item.Extra>
+                <Button
+                  primary
+                  floated="right"
+                  type="button"
+                  onClick={this.handleDelete}
+                >
+                  Delete Product
+                </Button>
+                <Button
+                  primary
+                  floated="right"
+                  type="button"
+                  onClick={this.handleEdit}
+                >
+                  Edit Product
+                </Button>
+                <Label>
+                  {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
+                </Label>
+                <select
+                  float="right"
+                  id="quantity"
+                  name="quantity"
+                  value={this.state.quantity}
+                  onChange={this.handleChange}
+                >
+                  {quantitySelect}
+                </select>
+                <Button
+                  primary
+                  floated="right"
+                  disabled={!product.inventory}
+                  onClick={this.handleAddToCart}
+                >
+                  Add Product to Cart
+                  <Icon name="right chevron" />
+                </Button>
+              </Item.Extra>
+            </Item.Content>
+          </Item>
+        </Item.Group>
         <Reviews />
       </Container>
     )
