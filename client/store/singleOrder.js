@@ -14,6 +14,17 @@ export const fetchOrder = orderId => {
   }
 }
 
+export const createOrder = order => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/orders', order)
+      dispatch(getOrder(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 /**
  * REDUCER
  */

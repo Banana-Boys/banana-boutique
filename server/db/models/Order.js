@@ -11,18 +11,11 @@ const Order = db.define('order', {
   //   fk reference to Promotion
   datePlaced: {
     type: Sequelize.DATE,
-    allowNull: false,
-    default: Sequelize.NOW
+    allowNull: false
   },
   status: {
     type: Sequelize.ENUM(['created', 'processing', 'cancelled', 'completed']),
     defaultValue: 'created'
-  },
-  shippingAddress: {
-    type: Sequelize.STRING
-  },
-  billingAddress: {
-    type: Sequelize.STRING
   },
   shippingTax: {
     type: Sequelize.INTEGER,
