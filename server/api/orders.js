@@ -59,7 +59,6 @@ router.post('/', checkGuest(), async (req, res, next) => {
     await Promise.all(
       cart.map(async item => {
         const product = await Product.findByPk(item.product.id)
-        console.log(product)
         if (item.quantity > product.inventory) {
           const error = new Error()
           error.message = `Insufficient inventory (quantity: ${
@@ -70,13 +69,17 @@ router.post('/', checkGuest(), async (req, res, next) => {
           throw error
         } else {
           await product.update({inventory: product.inventory - item.quantity})
-          console.log(await Product.findByPk(product.id))
         }
       })
     )
 
     if (!user.id) {
-      user = await User.create({email: user.email})
+      const alreadyUser = await User.findOne({where: {email: user.email}})
+      if (!alreadyUser) {
+        user = await User.create({email: user.email})
+      } else {
+        user = alreadyUser
+      }
     }
 
     // Creates Addresses
@@ -84,13 +87,6 @@ router.post('/', checkGuest(), async (req, res, next) => {
       shippingAddress = await Address.create(shippingAddress)
       await shippingAddress.setUser(user.id)
     }
-    // const billingAddress = await Address.findOrCreate({
-    //   where: user.billingAddress
-    // })
-
-    // const shippingAddress = await Address.findOrCreate({
-    //   where: user.shippingAddress
-    // })
 
     // Create Order
     const order = await Order.create({shippingTax, datePlaced: Date.now()})
@@ -110,13 +106,14 @@ router.post('/', checkGuest(), async (req, res, next) => {
         })
         await orderLineItem.setProduct(lineItem.product.id)
         return orderLineItem.setOrder(order.id)
-        // console.log(await OrderLineItem.findByPk(orderLineItem.id))
       })
     )
     // Clears Cart
     await CartLineItem.destroy({
       where: {userId: user.id}
     })
+    req.session.cart = []
+    req.session.save()
 
     // Returns Order
     res.json(
