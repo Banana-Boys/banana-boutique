@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {Login, Signup} from './auth-form'
 import {fetchAddresses} from '../store/addresses'
+import {createOrder} from '../store/singleOrder'
 import {states, countries} from '../../utilFrontEnd/address'
 
 class Checkout extends React.Component {
@@ -31,6 +32,7 @@ class Checkout extends React.Component {
     this.handleUserOptions = this.handleUserOptions.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.createOrder = this.createOrder.bind(this)
   }
 
   componentDidMount() {
@@ -42,6 +44,15 @@ class Checkout extends React.Component {
       this.props.fetchAddresses()
     }
     this.setState({cart: newProps.cart, user: newProps.user})
+  }
+
+  createOrder() {
+    this.props.createOrder({
+      user: this.state.user,
+      cart: this.state.cart,
+      shippingAddress: this.state.shippingAddress,
+      shippingTax: this.state.shippingTax
+    })
   }
 
   handleUserOptions(e) {
@@ -378,12 +389,22 @@ class Checkout extends React.Component {
             </p>
           </div>
         )}
+        <button
+          type="button"
+          disabled={
+            typeof this.state.shippingAddress !== 'object' ||
+            !this.state.user.email
+          }
+          onClick={this.createOrder}
+        >
+          Process Order
+        </button>
       </div>
     )
   }
 }
 
 const mapStateToProps = ({cart, user, addresses}) => ({cart, user, addresses})
-const mapDispatchToProps = {fetchAddresses}
+const mapDispatchToProps = {fetchAddresses, createOrder}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
