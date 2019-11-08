@@ -14,6 +14,7 @@ import EditAddressForm from './components/EditAddressForm'
 import EditUserForm from './components/EditUserForm'
 import NewReviewForm from './components/NewReviewForm'
 import EditReviewForm from './components/EditReviewForm'
+import Checkout from './components/Checkout'
 
 /**
  * COMPONENT
@@ -36,6 +37,7 @@ class Routes extends Component {
             path="/products/:productId/reviews/:reviewId/edit"
             component={EditReviewForm}
           />
+          <Route path="/checkout" component={Checkout} />
           <Route path="/products/:id/reviews/new" component={NewReviewForm} />
           <Route path="/products/:id/edit" component={EditProductForm} />
           <Route path="/products/new" component={NewProductForm} />
