@@ -47,15 +47,15 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
 
 router.post('/', checkGuest(), async (req, res, next) => {
   try {
-    const {cartLineItems, user} = req.body
+    const {cartLineItems, user, shippingAddress} = req.body
 
     // Creates Addresses
-    const billingAddress = await Address.findOrCreate({
-      where: user.billingAddress
-    })
+    // const billingAddress = await Address.findOrCreate({
+    //   where: user.billingAddress
+    // })
 
-    const shippingAddress = await Address.findOrCreate({
-      where: user.shippingAddress
+    const shipping = await Address.findOrCreate({
+      where: shippingAddress
     })
 
     // Create Order
@@ -65,7 +65,7 @@ router.post('/', checkGuest(), async (req, res, next) => {
     })
 
     // Associates Order
-    await order.setBilling(billingAddress) //magic methods might not work
+    // await order.setBilling(billingAddress) //magic methods might not work
     await order.setShipping(shippingAddress)
 
     // Creates line item for each cart item
