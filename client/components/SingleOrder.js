@@ -1,9 +1,12 @@
 import react from 'react'
 
-class SingleProduct extends react.Component {
-  render() {
-    return 'hello world'
-  }
+const SingleProduct = props => {
+  console.log(props)
+  return (
+    <div>
+      <div />
+    </div>
+  )
 }
 
 export default SingleProduct
