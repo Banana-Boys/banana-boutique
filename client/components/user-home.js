@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchAddresses, deleteAddress} from '../store/addresses'
 import {deleteUser} from '../store/user'
+import {fetchUserReviews, destroyReview} from '../store/reviews'
+import Review from './Review'
 
 /**
  * COMPONENT
@@ -14,15 +16,15 @@ class UserHome extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidMount() {
-    this.props.fetchAddresses()
+  async componentDidMount() {
+    await this.props.fetchAddresses()
+    await this.props.fetchUserReviews(this.props.match.params.id)
   }
 
   handleClick(e) {}
 
   render() {
     const {name, email, phone, imageUrl} = this.props.user
-    console.log('render user home')
     return (
       <div>
         <h3>Welcome, {name}</h3>
@@ -59,7 +61,16 @@ class UserHome extends React.Component {
         </Link>
         <h5>Wishlists: </h5>
         <h5>Orders: </h5>
-        <h5>Reviews: </h5>
+        <h5>
+          Reviews:{this.props.reviews.map(rev => (
+            <Review
+              key={rev.id}
+              destroyReview={this.props.destroyReview}
+              review={rev}
+              //fetchUser={this.props.fetchUser}
+            />
+          ))}
+        </h5>
         <Link to={`/users/${this.props.match.params.id}/edit`}>
           <button type="button">Edit Profile</button>
         </Link>
@@ -79,8 +90,14 @@ class UserHome extends React.Component {
 /**
  * CONTAINER
  */
-const mapState = ({user, addresses}) => ({user, addresses})
-const mapDispatch = {fetchAddresses, deleteAddress, deleteUser}
+const mapState = ({user, addresses, reviews}) => ({user, addresses, reviews})
+const mapDispatch = {
+  fetchAddresses,
+  deleteAddress,
+  deleteUser,
+  fetchUserReviews,
+  destroyReview
+}
 
 export default connect(mapState, mapDispatch)(UserHome)
 

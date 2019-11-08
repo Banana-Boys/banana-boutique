@@ -18,6 +18,12 @@ const Order = db.define('order', {
     type: Sequelize.ENUM(['created', 'processing', 'cancelled', 'completed']),
     defaultValue: 'created'
   },
+  shippingAddress: {
+    type: Sequelize.STRING
+  },
+  billingAddress: {
+    type: Sequelize.STRING
+  },
   shippingTax: {
     type: Sequelize.INTEGER,
     defaultValue: 0
