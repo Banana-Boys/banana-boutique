@@ -44,11 +44,11 @@ export class Categories extends Component {
 
   handleEdit(event) {
     event.preventDefault()
-    console.log(this.props.history)
+    console.log('this.props.category.id', this.props.category.id)
     // console.log('event.target:', event)
     // let catId = Number(event.target.value)
     // console.log('catId:', catId)
-    this.props.history.push(`/products`)
+    this.props.gotoCategory(this.props.category.id)
   }
 
   handleAdd() {}
@@ -70,7 +70,7 @@ export class Categories extends Component {
               onChange={this.updateCategorySelected}
             />
             {category.name}
-            <Link to={`/categories/${category.id}/edit`}>
+            <Link to={`/categories/${category.id}/edit`} params={{category}}>
               <button type="button">Edit</button>
             </Link>
           </div>
@@ -91,7 +91,8 @@ const mapState = (state, props) => {
 const mapDispatch = dispatch => ({
   loadCategories: () => dispatch(fetchAllCategories()),
   updateProducts: categoryIds => dispatch(fetchFilteredProducts(categoryIds)),
-  filterCats: categoryIds => dispatch(filterCategories(categoryIds))
+  filterCats: categoryIds => dispatch(filterCategories(categoryIds)),
+  gotoCategory: id => dispatch(fetchCategory(id))
 })
 
 export default connect(mapState, mapDispatch)(Categories)

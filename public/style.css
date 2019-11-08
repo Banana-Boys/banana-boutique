@@ -21,5 +21,6 @@ form div {
 }
 
 img {
-  width: 300px;
+  max-width: 400px !important;
+  max-height: 200px;
 }

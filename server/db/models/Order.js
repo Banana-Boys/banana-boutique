@@ -11,14 +11,22 @@ const Order = db.define('order', {
   //   fk reference to Promotion
   datePlaced: {
     type: Sequelize.DATE,
-    allowNull: false
+    allowNull: false,
+    default: Sequelize.NOW
   },
   status: {
     type: Sequelize.ENUM(['created', 'processing', 'cancelled', 'completed']),
     defaultValue: 'created'
   },
+  shippingAddress: {
+    type: Sequelize.STRING
+  },
+  billingAddress: {
+    type: Sequelize.STRING
+  },
   shippingTax: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
   // Subtotal will be calculated as a function of the line items, promotion, and shipping tax as an instance method
 })

@@ -1,33 +1,33 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {
-  postReview,
-  destroyReview,
-  updateReview
-  //fetchReviewUser
-} from '../store/review'
+import {createReview, destroyReview, editReview} from '../store/reviews'
 import Review from './Review'
+import {Link, withRouter} from 'react-router-dom'
+import {Button, Container, Grid} from 'semantic-ui-react'
 
 export class Reviews extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
   render() {
-    const reviews = this.props.revs || []
+    const reviews = this.props.reviews || []
     return (
-      <div>
-        <div>
+      <Container>
+        <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
+          <Button type="button">Add Review</Button>
+        </Link>
+        <Grid.Column>
           {reviews.map(rev => (
             <Review
               key={rev.id}
-              deleteReview={this.props.deleteReview}
+              destroyReview={this.props.destroyReview}
               review={rev}
               fetchUser={this.props.fetchUser}
             />
           ))}
-        </div>
-      </div>
+        </Grid.Column>
+      </Container>
     )
   }
 }
@@ -36,11 +36,6 @@ const mapStateToProps = state => ({
   reviews: state.reviews
 })
 
-const mapDispatchToProps = dispatch => ({
-  addReview: review => dispatch(postReview(review)),
-  deleteReview: review => dispatch(destroyReview(review)),
-  updateReview: review => dispatch(updateReview(review))
-  //fetchUser: userId => dispatch(fetchReviewUser(userId))
-})
+const mapDispatchToProps = {createReview, destroyReview, editReview}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Reviews)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Reviews))

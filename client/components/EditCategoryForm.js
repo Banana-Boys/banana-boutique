@@ -5,57 +5,57 @@ import {editCategory, fetchCategory} from '../store/singleCategory'
 class EditCategoryForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      name: ''
+    this.state = this.buildInitialState()
+  }
+
+  buildInitialState() {
+    return {
+      formValues: ''
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchCategory(this.props.match.params.id)
   }
 
-  componentWillReceiveProps(newProps) {
-    let {name} = newProps.category
-
-    const newState = {
-      name
+  updateFormValue = event => {
+    const fieldName = event.target.name
+    const fieldValue = event.target.value
+    const stateUpdate = {
+      formValues: {
+        ...this.state.formValues,
+        [fieldName]: fieldValue
+      }
     }
-    this.setState(newState)
+    this.setState(stateUpdate)
   }
 
-  handleChange(e) {
-    let value = e.target.value
-    this.setState({[e.target.name]: value})
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
-    const submitState = {
-      ...this.state,
-      name: this.state.name
+  invokeOnSubmit = async event => {
+    try {
+      event.preventDefault()
+      await this.props.editCategory(
+        this.props.match.params.id,
+        this.state.formValues
+      )
+    } catch (err) {
+      console.log(err)
     }
-
-    this.props.editCategory(
-      this.props.match.params.id,
-      submitState,
-      this.props.history
-    )
   }
 
   render() {
+    let category = this.props.category
+
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.invokeOnSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">Catergory Name: {category.name}</label>
           <input
             type="text"
-            name="my category name"
-            value={this.state.name}
-            onChange={this.handleChange}
+            name="name"
+            placeholder="New category name..."
+            onChange={this.updateFormValue}
+            value={this.state.formValues.name}
           />
-          {this.state.name.length > 0 ? null : <div>Name cannot be empty</div>}
         </div>
         <div className="form-group">
           <button type="submit">Submit</button>
@@ -65,8 +65,8 @@ class EditCategoryForm extends React.Component {
   }
 }
 
-const mapStateToProps = ({singleCategory, categories}) => ({
-  singleCategory,
+const mapStateToProps = ({category, categories}) => ({
+  category,
   categories
 })
 const mapDispatchToProps = {editCategory, fetchCategory}

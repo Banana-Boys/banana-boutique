@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Categories from './Categories'
+import {Grid, Image, Container, Card} from 'semantic-ui-react'
 import Search from './Search'
 
 export class AllProducts extends Component {
@@ -24,19 +25,16 @@ export class AllProducts extends Component {
       return <div>NO PRODUCTS!</div>
     }
     return (
-      <div>
-        <div>
-          <Search />
-        </div>
+      <Container>
         <div>
           <Categories />
         </div>
-        <div>
+        <Grid centered>
           {products.map(product => (
             <Product key={product.id} product={product} />
           ))}
-        </div>
-      </div>
+        </Grid>
+      </Container>
     )
   }
 }

@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSearchedProducts} from '../store/products'
+import {fetchFilteredProducts} from '../store/products'
+import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 export class Search extends Component {
   constructor(props) {
@@ -31,19 +33,31 @@ export class Search extends Component {
     // let products = this.props.products
     // console.log(products)
     return (
-      <form id="search-form" onSubmit={this.newSearch}>
-        <label htmlFor="product-search">
-          <span>Search</span>
-          <input
-            name="product-search"
-            placeholder="enter a product name"
-            type="text"
-            value={this.state.searchText}
-            onChange={event => this.setState({searchText: event.target.value})}
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
+      <Form id="search-form" onSubmit={this.newSearch}>
+        <Grid centered>
+          <Grid.Row>
+            <Item.Group>
+              <Item>
+                <label htmlFor="product-search">
+                  {/* <span>Search</span> */}
+                  <Input
+                    name="product-search"
+                    placeholder="Search"
+                    type="text"
+                    value={this.state.searchText}
+                    onChange={event =>
+                      this.setState({searchText: event.target.value})
+                    }
+                  />
+                </label>
+                <Item.Content>
+                  <Button type="submit">Submit</Button>
+                </Item.Content>
+              </Item>
+            </Item.Group>
+          </Grid.Row>
+        </Grid>
+      </Form>
     )
   }
 }

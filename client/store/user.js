@@ -22,6 +22,7 @@ const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
  */
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -47,7 +48,9 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     dispatch(getUser(res.data))
     dispatch(fetchAddresses())
-    history.push(`/users/${res.data.id}`)
+    if (history.location.pathname !== '/checkout') {
+      history.push(`/users/${res.data.id}`)
+    }
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }

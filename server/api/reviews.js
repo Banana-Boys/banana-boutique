@@ -16,15 +16,7 @@ router.get('/', async (req, res, next) => {
 //GET by id
 router.get('/:id', async (req, res, next) => {
   try {
-    const review = await Review.find({
-      where: {
-        id: req.params.id
-      },
-      include: {
-        model: User,
-        Product
-      }
-    })
+    const review = await Review.findByPk(req.params.id)
     res.json(review)
   } catch (error) {
     next(error)

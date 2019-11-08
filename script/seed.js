@@ -6,6 +6,7 @@ const {User, Product, Category, Review} = require('../server/db/models')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
+// eslint-disable-next-line max-statements
 async function seed() {
   const NUM_PRODUCTS = 100
   const NUM_CATEGORIES = 4
@@ -42,62 +43,36 @@ async function seed() {
   // CATEGORIES
   const categories = await Promise.all([
     Category.create({
-      name: faker.commerce.productMaterial()
+      name: 'Benign'
     }),
     Category.create({
-      name: faker.commerce.productMaterial()
+      name: 'Malignant'
     }),
     Category.create({
-      name: faker.commerce.productMaterial()
+      name: 'Inoculated'
     }),
     Category.create({
-      name: faker.commerce.productMaterial()
+      name: 'Tasty'
     })
   ])
 
-  // CREATE USER WITH REVIEWS
-  const userWithReviews = await User.create({
-    name: 'Lindsey',
-    email: 'lindsey@email.com',
-    password: '123',
-    role: 'user'
-  })
-
-  const productWithReviews = await Product.create({
-    name: 'Blandana',
-    price: 1000,
-    description: 'Not the greatest, but will get the job done.',
-    categoryId: categories[0].id,
-    inventory: 5
-  })
-
-  const anotherProductWithReviews = await Product.create({
-    name: 'Wowana',
-    price: 10000,
-    description: 'Perhaps the greatest banana ever found.',
-    categoryId: categories[0].id,
-    inventory: 5
-  })
-
-  const reviews = await Promise.all([
-    Review.create({
-      title: 'To Bland',
-      body: 'This banana was way too bland, would not recommend.',
-      rating: '2',
-      userId: userWithReviews.id,
-      productId: productWithReviews.id
-    }),
-    Review.create({
-      title: 'So Guuuud',
-      body: 'This banana was prime.',
-      rating: '5',
-      userId: userWithReviews.id,
-      productWithReviews: anotherProductWithReviews.id
+  // CREATE RANDOM REVIEWS
+  const randomUsers = []
+  let numUsers = 10
+  while (numUsers > 0) {
+    const user = await User.create({
+      name: faker.name.lastName(),
+      email: faker.internet.email(),
+      password: '123',
+      role: 'user'
     })
-  ])
+    randomUsers.push(user)
+    numUsers--
+  }
 
-  // PRODUCTS
+  // CREATE RANDOM PRODUCTS
   let i = NUM_PRODUCTS
+  const products = []
   while (i > 0) {
     const product = await Product.create({
       name: faker.commerce.product(),
@@ -106,11 +81,34 @@ async function seed() {
       inventory: 5
     })
     let index = Math.floor(Math.random() * categories.length)
-    await product.setCategories([categories[index]])
+    let jndex = Math.floor(Math.random() * categories.length)
+    if (index !== jndex) {
+      await product.setCategories([categories[index], categories[jndex]])
+    } else {
+      await product.setCategories([categories[index]])
+    }
+    products.push(product)
     i--
   }
 
-  console.log(`seeded ${users.length} users`)
+  // CREATE RANDOM REVIEWS
+  let userIndex = 0
+  while (userIndex < randomUsers.length) {
+    let productIndex = 0
+    while (productIndex < products.length) {
+      const review = await Review.create({
+        title: faker.hacker.phrase(),
+        body: faker.lorem.paragraph(),
+        rating: Math.ceil(Math.random() * 5).toString(),
+        productId: products[productIndex].id,
+        userId: randomUsers[userIndex].id
+      })
+      productIndex++
+    }
+    userIndex++
+  }
+
+  console.log(`seeded ${users.length + randomUsers.length} users`)
   console.log(`seeded successfully`)
 }
 

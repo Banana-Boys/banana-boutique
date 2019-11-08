@@ -38,8 +38,8 @@ Product.belongsToMany(User, {
 Order.belongsTo(User, {as: 'buyer'})
 Order.belongsTo(User, {as: 'receiver'})
 Order.hasMany(OrderLineItem)
-Order.hasOne(Address, {as: 'shipping'})
-Order.hasOne(Address, {as: 'billing'})
+Order.belongsTo(Address, {as: 'shipping'})
+Order.belongsTo(Address, {as: 'billing'})
 
 Category.belongsToMany(Product, {through: 'ProductCategory'})
 
