@@ -26,7 +26,6 @@ router.get('/', async (req, res, next) => {
             attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
           }
         ]
-        // attributes: ['productId', 'quantity']
       })
     } else {
       cart = []
