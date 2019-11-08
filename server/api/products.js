@@ -33,7 +33,6 @@ router.post('/', async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
-  console.log(req.query)
   try {
     let products = await Product.findAll({include: [Category]})
     if (req.query.categories) {
@@ -53,10 +52,8 @@ router.get('/', async (req, res, next) => {
       products = products.filter(product => product.inventory)
     }
     if (req.query.sort) {
-      console.log(req.query.sort)
       products.sort(sorter(req.query.sort))
     }
-    console.log('numProducts', products.length)
     // if (req.query.categories) {
     //   req.query.categories.forEach(async categoryId => {
     //     const category = await Category.findByPk(categoryId)

@@ -4,13 +4,15 @@ import axios from 'axios'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
-const SELECT_PRODUCTS = 'SELECT_PRODUCTS'
+const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
+const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS'
 
 //action creators
 const getProducts = products => ({type: GET_PRODUCTS, products})
 const addProduct = product => ({type: ADD_PRODUCT, product})
 const deleteProduct = product => ({type: DELETE_PRODUCT, product})
-const selectedProducts = products => ({type: SELECT_PRODUCTS, products})
+const selectedProducts = products => ({type: FILTER_PRODUCTS, products})
+const searchedProducts = products => ({type: SEARCH_PRODUCTS, products})
 
 //thunks
 export const fetchProducts = query => {
@@ -24,15 +26,23 @@ export const fetchProducts = query => {
   }
 }
 
-export const fetchFilteredProducts = (
-  categoryIds,
-  searchTerms
-) => async dispatch => {
+export const fetchFilteredProducts = categoryIds => async dispatch => {
   try {
     const response = await axios.get('/api/products', {
-      params: {categoryIds: categoryIds, searchTerms: searchTerms}
+      params: {categoryIds: categoryIds}
     })
     dispatch(selectedProducts(response.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const fetchSearchedProducts = searchTerms => async dispatch => {
+  try {
+    const response = await axios.get('/api/products', {
+      params: {searchTerms: searchTerms}
+    })
+    dispatch(searchedProducts(response.data))
   } catch (err) {
     console.error(err)
   }
@@ -69,7 +79,9 @@ export default (products = [], action) => {
       return [...products, action.product]
     case DELETE_PRODUCT:
       return [...products.filter(i => i !== action.product)]
-    case SELECT_PRODUCTS:
+    case FILTER_PRODUCTS:
+      return action.products
+    case SEARCH_PRODUCTS:
       return action.products
     default:
       return products

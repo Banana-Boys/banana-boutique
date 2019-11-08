@@ -274,8 +274,6 @@ module.exports.countries = [
 ]
 
 module.exports.overlap = (selectCats, productCats) => {
-  console.log('selectCats', selectCats)
-  console.log('productCats', productCats)
   for (let cat of selectCats) {
     if (productCats.includes(Number(cat))) return true
   }
@@ -302,12 +300,12 @@ module.exports.sorter = sortBy => (A, B) => {
       result = 0
     }
   } else if (A[attribute] < B[attribute]) {
-      result = -1
-    } else if (A[attribute] > B[attribute]) {
-      result = 1
-    } else {
-      result = 0
-    }
+    result = -1
+  } else if (A[attribute] > B[attribute]) {
+    result = 1
+  } else {
+    result = 0
+  }
   if (Number(reverse)) {
     return -result
   } else {

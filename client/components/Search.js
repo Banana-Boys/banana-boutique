@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {fetchSearchedProducts} from '../store/products'
 import {fetchFilteredProducts} from '../store/products'
 import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
@@ -16,14 +17,15 @@ export class Search extends Component {
   newSearch = event => {
     event.preventDefault()
     //console.log('event.target.value:', event.target.value)
-    console.log('this.state.searchText:', this.state.searchText)
+    // console.log('this.state.searchText:', this.state.searchText)
+    // this.setState({searchTerms: event.target.value})
     let index = this.state.searchTerms.indexOf(this.state.searchText)
     if (index >= 0) {
       this.state.searchTerms.splice(index, 1)
     } else {
       this.state.searchTerms.push(this.state.searchText)
     }
-    console.log('this.state.searchTerms:', this.state.searchTerms)
+    // console.log('this.state.searchTerms:', this.state.searchTerms)
     this.props.findProducts(this.state.searchTerms)
   }
 
@@ -67,8 +69,7 @@ const mapState = (state, props) => {
 }
 
 const mapDispatch = dispatch => ({
-  findProducts: searchTerms =>
-    dispatch(fetchFilteredProducts(null, searchTerms))
+  findProducts: searchTerms => dispatch(fetchSearchedProducts(searchTerms))
 })
 
 export default connect(mapState, mapDispatch)(Search)

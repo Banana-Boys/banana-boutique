@@ -6,6 +6,8 @@ import {fetchProducts} from '../store/products'
 import {withRouter} from 'react-router-dom'
 import {queryParser} from '../../utilFrontEnd/queryParser'
 import {queryPusher} from '../../utilFrontEnd/queryPusher'
+import {fetchCategory} from '../store/singleCategory'
+import {Link} from 'react-router-dom'
 
 export class Categories extends Component {
   constructor(props) {
@@ -16,8 +18,11 @@ export class Categories extends Component {
       categories: categories || [],
       search: search || '',
       inStock: Boolean(inStock) || false,
-      sort: sort || ''
+      sort: sort || '',
+      editCategory: {}
     }
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleAdd = this.handleAdd.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleInStock = this.handleInStock.bind(this)
     this.handleSort = this.handleSort.bind(this)
@@ -74,6 +79,17 @@ export class Categories extends Component {
     queryPusher(newState, this.props)
   }
 
+  handleEdit(event) {
+    event.preventDefault()
+    console.log('this.props.category.id', this.props.category.id)
+    // console.log('event.target:', event)
+    // let catId = Number(event.target.value)
+    // console.log('catId:', catId)
+    this.props.gotoCategory(this.props.category.id)
+  }
+
+  handleAdd() {}
+
   render() {
     let categories = this.props.categories
     return (
@@ -85,16 +101,22 @@ export class Categories extends Component {
           value={this.state.search}
           onChange={this.handleSearch}
         />
+        <button type="button" onClick={this.handleAdd}>
+          Add New Category
+        </button>
         {categories.map(category => (
           <div key={category.id} className="category">
             <input
               name="category-selected"
               type="checkbox"
-              onChange={this.updateCategorySelected}
               value={category.id}
               checked={this.state.categories.includes(category.id.toString())}
+              onChange={this.updateCategorySelected}
             />
             {category.name}
+            <Link to={`/categories/${category.id}/edit`} params={{category}}>
+              <button type="button">Edit</button>
+            </Link>
           </div>
         ))}
         <input
@@ -151,10 +173,11 @@ export class Categories extends Component {
 const mapState = (state, props) => {
   return {
     products: state.products,
-    categories: state.categories
+    categories: state.categories,
+    activeCategories: state.activeCategories
   }
 }
 
-const mapDispatch = {fetchAllCategories, fetchProducts}
+const mapDispatch = {fetchAllCategories, fetchProducts, fetchCategory}
 
 export default withRouter(connect(mapState, mapDispatch)(Categories))
