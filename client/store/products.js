@@ -13,10 +13,10 @@ const deleteProduct = product => ({type: DELETE_PRODUCT, product})
 const selectedProducts = products => ({type: SELECT_PRODUCTS, products})
 
 //thunks
-export const fetchProducts = () => {
+export const fetchProducts = query => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/products') //looked cute, might change later
+      const {data} = await axios.get('/api/products', {params: query}) //looked cute, might change later
       return dispatch(getProducts(data))
     } catch (err) {
       console.log(err)

@@ -4,6 +4,7 @@ const {Product, Category, User, Review} = require('../db')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 const {isUser} = require('../middleware')
+const {overlap, sorter} = require('../../utilBackEnd/util')
 
 router.post('/', async (req, res, next) => {
   try {
@@ -32,43 +33,77 @@ router.post('/', async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
+  console.log(req.query)
   try {
-    let products = []
-    if (!req.query.categoryIds && !req.query.searchTerms) {
-      if (req.query.itemIds) {
-        products = await Promise.all(
-          req.query.itemIds.map(id => {
-            return Product.findByPk(id)
-          })
+    let products = await Product.findAll({include: [Category]})
+    if (req.query.categories) {
+      products = products.filter(product => {
+        return overlap(
+          req.query.categories,
+          product.categories.map(category => category.id)
         )
-      } else {
-        products = await Product.findAll({
-          include: [Category]
-        })
-      }
-    } else if (req.query.categoryIds && !req.query.searchTerms) {
-      products = await Product.findAll({
-        include: [Category]
-      })
-    } else {
-      products = await Product.findAll({
-        where: {
-          name: {
-            [Op.or]: req.query.searchTerms
-          }
-        },
-        include: [
-          {
-            model: Product,
-            where: {
-              id: {
-                [Op.or]: req.query.categoryIds
-              }
-            }
-          }
-        ]
       })
     }
+    if (req.query.search) {
+      products = products.filter(product =>
+        product.name.includes(req.query.search)
+      )
+    }
+    if (req.query.inStock === 'true') {
+      products = products.filter(product => product.inventory)
+    }
+    if (req.query.sort) {
+      console.log(req.query.sort)
+      products.sort(sorter(req.query.sort))
+    }
+    console.log('numProducts', products.length)
+    // if (req.query.categories) {
+    //   req.query.categories.forEach(async categoryId => {
+    //     const category = await Category.findByPk(categoryId)
+    //     const categoryProducts = await category.getProducts()
+    //     products = [...products, ...categoryProducts]
+    //   })
+    // } else {
+    //   products = await Product.findAll()
+    // }
+    // console.log(products)
+
+    // let products = []
+    // if (!req.query.categoryIds && !req.query.searchTerms) {
+    //   if (req.query.itemIds) {
+    //     products = await Promise.all(
+    //       req.query.itemIds.map(id => {
+    //         return Product.findByPk(id)
+    //       })
+    //     )
+    //   } else {
+    //     products = await Product.findAll({
+    //       include: [Category]
+    //     })
+    //   }
+    // } else if (req.query.categoryIds && !req.query.searchTerms) {
+    //   products = await Product.findAll({
+    //     include: [Category]
+    //   })
+    // } else {
+    //   products = await Product.findAll({
+    //     where: {
+    //       name: {
+    //         [Op.or]: req.query.searchTerms
+    //       }
+    //     },
+    //     include: [
+    //       {
+    //         model: Product,
+    //         where: {
+    //           id: {
+    //             [Op.or]: req.query.categoryIds
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   })
+    // }
     res.json(products)
   } catch (error) {
     next(error)
