@@ -87,7 +87,19 @@ class Checkout extends React.Component {
             )
             .toFixed(2)}
         </h3>
-        {this.state.user.email ? null : (
+
+        {this.state.user.email ? (
+          <div>
+            {this.state.user.name ? <p>Name: {this.state.user.name}</p> : null}
+            <p>
+              Email: {this.state.user.email}{' '}
+              <em>(confirmation will be sent to this email)</em>
+            </p>
+            {this.state.user.phone ? (
+              <p>Phone: {this.state.user.phone}</p>
+            ) : null}
+          </div>
+        ) : (
           <div>
             <button type="button" name="login" onClick={this.handleUserOptions}>
               {login ? 'Hide' : 'Login'}
@@ -117,6 +129,41 @@ class Checkout extends React.Component {
             ) : null}
           </div>
         )}
+
+        {this.state.user.id
+          ? this.props.addresses.map(address => {
+              const {
+                id,
+                address1,
+                address2,
+                city,
+                state,
+                country,
+                zip
+              } = address
+              return (
+                <div key={id}>
+                  <p>{address1}</p>
+                  {address2 ? <p>{address2}</p> : null}
+                  <p>
+                    <span>{city}</span>, {state ? <span>{state},</span> : null}{' '}
+                    <span>{country}</span> <span>{zip}</span>
+                  </p>
+                  <Link to={`/addresses/${id}/edit`}>
+                    <button type="button">Edit Address</button>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.props.deleteAddress(id)
+                    }}
+                  >
+                    Delete Address
+                  </button>
+                </div>
+              )
+            })
+          : null}
       </div>
     )
   }
