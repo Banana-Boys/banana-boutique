@@ -3,6 +3,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {Login, Signup} from './auth-form'
+import {fetchAddresses} from '../store/addresses'
+import {states, countries} from '../../utilFrontEnd/address'
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -15,13 +17,30 @@ class Checkout extends React.Component {
       },
       cart: this.props.cart || [],
       shippingTax: 0,
-      user: this.props.user || {}
+      user: this.props.user || {},
+      shippingAddress: '',
+      newShippingAddress: {
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        country: '',
+        zip: ''
+      }
     }
     this.handleUserOptions = this.handleUserOptions.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.user.id) this.props.fetchAddresses()
   }
 
   componentWillReceiveProps(newProps) {
+    if (newProps.user.id !== this.state.user.id) {
+      this.props.fetchAddresses()
+    }
     this.setState({cart: newProps.cart, user: newProps.user})
   }
 
@@ -50,9 +69,43 @@ class Checkout extends React.Component {
     }
   }
 
+  handleChange(e) {
+    e.persist()
+    if (e.target.name === 'shippingAddress') {
+      this.setState({shippingAddress: e.target.value})
+    } else {
+      this.setState(prevState => ({
+        newShippingAddress: {
+          ...prevState.newShippingAddress,
+          [e.target.name]: e.target.value
+        }
+      }))
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault()
-    this.setState({user: {email: e.target.email.value}})
+    if (e.target.id === 'guestEmailForm') {
+      this.setState({user: {email: e.target.email.value}})
+    } else if (e.target.id === 'shippingAddressForm') {
+      if (e.target.shippingAddress) {
+        if (e.target.shippingAddress.value === 'new') {
+          this.setState(prevState => ({
+            shippingAddress: prevState.newShippingAddress
+          }))
+        } else {
+          this.setState({
+            shippingAddress: this.props.addresses.find(
+              address => address.id === Number(e.target.shippingAddress.value)
+            )
+          })
+        }
+      } else {
+        this.setState(prevState => ({
+          shippingAddress: prevState.newShippingAddress
+        }))
+      }
+    }
   }
 
   render() {
@@ -121,7 +174,7 @@ class Checkout extends React.Component {
               {continueAsGuest ? 'Hide' : 'Continue as Guest'}
             </button>
             {continueAsGuest ? (
-              <form onSubmit={this.handleSubmit}>
+              <form id="guestEmailForm" onSubmit={this.handleSubmit}>
                 <label htmlFor="email">Email:</label>
                 <input type="email" name="email" />
                 <button type="submit">Submit</button>
@@ -130,46 +183,207 @@ class Checkout extends React.Component {
           </div>
         )}
 
-        {this.state.user.id
-          ? this.props.addresses.map(address => {
-              const {
-                id,
-                address1,
-                address2,
-                city,
-                state,
-                country,
-                zip
-              } = address
-              return (
-                <div key={id}>
-                  <p>{address1}</p>
-                  {address2 ? <p>{address2}</p> : null}
-                  <p>
-                    <span>{city}</span>, {state ? <span>{state},</span> : null}{' '}
-                    <span>{country}</span> <span>{zip}</span>
-                  </p>
-                  <Link to={`/addresses/${id}/edit`}>
-                    <button type="button">Edit Address</button>
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      this.props.deleteAddress(id)
-                    }}
-                  >
-                    Delete Address
-                  </button>
+        {typeof this.state.shippingAddress !== 'object' ? (
+          this.state.user.id ? (
+            <form id="shippingAddressForm" onSubmit={this.handleSubmit}>
+              {' '}
+              {this.props.addresses.map(address => {
+                const {
+                  id,
+                  address1,
+                  address2,
+                  city,
+                  state,
+                  country,
+                  zip
+                } = address
+                return (
+                  <div key={id}>
+                    <input
+                      type="radio"
+                      name="shippingAddress"
+                      value={id}
+                      onChange={this.handleChange}
+                    />
+                    <div>
+                      <div>{address1}</div>
+                      {address2 ? <div>{address2}</div> : null}
+                      <div>
+                        <span>{city}</span>,{' '}
+                        {state ? <span>{state},</span> : null}{' '}
+                        <span>{country}</span> <span>{zip}</span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+              <div>
+                <input
+                  type="radio"
+                  name="shippingAddress"
+                  value="new"
+                  onChange={this.handleChange}
+                />
+                <div className="form-group">
+                  <label htmlFor="address1">Street Address:</label>
+                  <input
+                    type="text"
+                    name="address1"
+                    onChange={this.handleChange}
+                  />
+                  {this.state.newShippingAddress.address1.length > 0 ? null : (
+                    <div>Street address cannot be empty</div>
+                  )}
                 </div>
-              )
-            })
-          : null}
+
+                <div className="form-group">
+                  <label htmlFor="address2">Apartment/Unit:</label>
+                  <input
+                    type="text"
+                    name="address2"
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="city">City:</label>
+                  <input type="text" name="city" onChange={this.handleChange} />
+                  {this.state.newShippingAddress.city.length > 0 ? null : (
+                    <div>City cannot be empty</div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="state">State:</label>
+                  <select name="state" onChange={this.handleChange}>
+                    {states.map(state => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="country">Country:</label>
+                  <select name="country" onChange={this.handleChange}>
+                    {countries.map(country => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                  {this.state.newShippingAddress.country.length > 0 ? null : (
+                    <div>Please choose a country</div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="zip">Zip Code:</label>
+                  <input type="text" name="zip" onChange={this.handleChange} />
+                  {this.state.newShippingAddress.zip.length > 0 ? null : (
+                    <div>Zip code cannot be empty</div>
+                  )}
+                </div>
+              </div>
+              <button
+                type="submit"
+                disabled={!this.state.shippingAddress.length}
+              >
+                Submit
+              </button>
+            </form>
+          ) : (
+            <form id="shippingAddressForm" onSubmit={this.handleSubmit}>
+              <div>
+                <div className="form-group">
+                  <label htmlFor="address1">Street Address:</label>
+                  <input
+                    type="text"
+                    name="address1"
+                    onChange={this.handleChange}
+                  />
+                  {this.state.newShippingAddress.address1.length > 0 ? null : (
+                    <div>Street address cannot be empty</div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="address2">Apartment/Unit:</label>
+                  <input
+                    type="text"
+                    name="address2"
+                    onChange={this.handleChange}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="city">City:</label>
+                  <input type="text" name="city" onChange={this.handleChange} />
+                  {this.state.newShippingAddress.city.length > 0 ? null : (
+                    <div>City cannot be empty</div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="state">State:</label>
+                  <select name="state" onChange={this.handleChange}>
+                    {states.map(state => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="country">Country:</label>
+                  <select name="country" onChange={this.handleChange}>
+                    {countries.map(country => (
+                      <option key={country} value={country}>
+                        {country}
+                      </option>
+                    ))}
+                  </select>
+                  {this.state.newShippingAddress.country.length > 0 ? null : (
+                    <div>Please choose a country</div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="zip">Zip Code:</label>
+                  <input type="text" name="zip" onChange={this.handleChange} />
+                  {this.state.newShippingAddress.zip.length > 0 ? null : (
+                    <div>Zip code cannot be empty</div>
+                  )}
+                </div>
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          )
+        ) : (
+          <div>
+            <div>Shipping Address:</div>
+            <p>{this.state.shippingAddress.address1}</p>
+            {this.state.shippingAddress.address2 ? (
+              <p>{this.state.shippingAddress.address2}</p>
+            ) : null}
+            <p>
+              <span>{this.state.shippingAddress.city}</span>,{' '}
+              {this.state.shippingAddress.state ? (
+                <span>{this.state.shippingAddress.state},</span>
+              ) : null}{' '}
+              <span>{this.state.shippingAddress.country}</span>{' '}
+              <span>{this.state.shippingAddress.zip}</span>
+            </p>
+          </div>
+        )}
       </div>
     )
   }
 }
 
-const mapStateToProps = ({cart, user}) => ({cart, user})
-const mapDispatchToProps = {}
+const mapStateToProps = ({cart, user, addresses}) => ({cart, user, addresses})
+const mapDispatchToProps = {fetchAddresses}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

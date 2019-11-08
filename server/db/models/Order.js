@@ -19,7 +19,8 @@ const Order = db.define('order', {
     defaultValue: 'created'
   },
   shippingTax: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
   // Subtotal will be calculated as a function of the line items, promotion, and shipping tax as an instance method
 })
