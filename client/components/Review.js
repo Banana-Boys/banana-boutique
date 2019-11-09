@@ -5,7 +5,7 @@ import {Table, Button, Container, TableBody} from 'semantic-ui-react'
 const Review = props => {
   const review = props.review
   return (
-    <div>
+    <Container>
       <Table>
         <Table.Header>
           <Table.Row>
@@ -43,7 +43,7 @@ const Review = props => {
           </Table.Row>
         </TableBody>
       </Table>
-    </div>
+    </Container>
   )
 }
 
