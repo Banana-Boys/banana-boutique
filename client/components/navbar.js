@@ -11,32 +11,29 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div id="nav-container">
     <img src="/images/nanas-600.jpg" id="logo" />
     <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">home</Link>
-          <a href="#" onClick={handleClick}>
-            logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/products">products</Link>
-          <Link to="/login">login</Link>
-          <Link to="/signup">sign up</Link>
-        </div>
+      {isLoggedIn && (
+        <a href="#" onClick={handleClick}>
+          logout
+        </a>
       )}
-      <div>
-        <Search />
-      </div>
-      <Container>
+      {!isLoggedIn && <Link to="/login">login</Link>}{' '}
+      {!isLoggedIn && <Link to="/signup">sign up</Link>}
+      <Link to="/home">home</Link>
+      <Link to="/products">products</Link>
+    </nav>
+    {/* <div>
+        /* <Search />
+      </div> */}
+    <Container id="nav-profile">
+      {isLoggedIn && (
         <Link to={`/users/${user.id}`}>
           <Button type="button">Profile</Button>
         </Link>
-      </Container>
-    </nav>
-    <hr />
+      )}
+      <Link to="/cart">
+        <Button type="button">Cart</Button>
+      </Link>
+    </Container>
   </div>
 )
 

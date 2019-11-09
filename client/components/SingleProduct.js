@@ -70,7 +70,7 @@ class SingleProduct extends React.Component {
     }
 
     return (
-      <Container id="product">
+      <Container id="single-product">
         <Item.Group>
           <Item>
             <Item.Image size="large" src={product.imageUrl} />
