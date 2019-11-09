@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const GET_ORDER = 'GET_ORDER'
+
 const getOrder = order => ({type: GET_ORDER, order})
 
 export const fetchOrder = orderId => {

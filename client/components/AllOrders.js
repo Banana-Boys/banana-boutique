@@ -1,31 +1,36 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link, withRouter} from 'react-router-dom'
-import {fetchAllOrders} from '../store/orders'
+import React from 'react'
+import {Link} from 'react-router-dom'
+import OrderLineItem from './OrderLineItem'
+import {Table, TableBody, Container} from 'semantic-ui-react'
 
-export class AllOrders extends Component {
-  constructor() {
-    super()
-  }
-
-  async componentDidMount() {
-    await this.props.fetchAllOrders(this.props.propsId)
-  }
-
-  render() {
-    const orders = this.props.orders || []
-    return <div>{orders.map(order => {})}</div>
-  }
+const AllOrders = props => {
+  const order = props.order || []
+  const buyer = props.order.buyer || {}
+  return (
+    <Container>
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell singleLine>
+              Order Number : {order.id} <br /> Date Placed : {order.datePlaced}{' '}
+              <br /> User Name: {buyer.name} <br /> User Email: {buyer.email}
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <TableBody>
+          <Table.Row>
+            <Table.Cell>
+              {order.orderLineItems.map(ord => (
+                <Link key={ord.id} to={`/order/${ord.id}`}>
+                  <OrderLineItem order={ord} />
+                </Link>
+              ))}
+            </Table.Cell>
+          </Table.Row>
+        </TableBody>
+      </Table>
+    </Container>
+  )
 }
 
-const mapStateToProps = state => ({
-  orders: state.orders
-})
-
-const mapDispatchToProps = {fetchAllOrders}
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AllOrders)
-)
-
-//export default AllOrders
+export default AllOrders

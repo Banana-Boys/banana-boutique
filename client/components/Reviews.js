@@ -17,7 +17,7 @@ export class Reviews extends Component {
         <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
           <Button type="button">Add Review</Button>
         </Link>
-        <Grid.Column>
+        <Container>
           {reviews.map(rev => (
             <Review
               key={rev.id}
@@ -26,7 +26,7 @@ export class Reviews extends Component {
               fetchUser={this.props.fetchUser}
             />
           ))}
-        </Grid.Column>
+        </Container>
       </Container>
     )
   }
