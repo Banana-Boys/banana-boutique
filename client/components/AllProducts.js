@@ -17,19 +17,19 @@ export class AllProducts extends Component {
 
   render() {
     const products = this.props.products
-    if (!products) {
-      return <div>NO PRODUCTS!</div>
-    }
     return (
-      <Container>
+      <Container id="all-products">
         <div>
           <Categories />
         </div>
-        <Grid centered>
-          {products.map(product => (
-            <Product key={product.id} product={product} />
-          ))}
-        </Grid>
+        {products.length > 0 && (
+          <Grid centered>
+            {products.map(product => (
+              <Product key={product.id} product={product} />
+            ))}
+          </Grid>
+        )}
+        {products.length === 0 && <div>NO PRODUCTS!</div>}
       </Container>
     )
   }
