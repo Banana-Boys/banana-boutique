@@ -9,6 +9,7 @@ import {fetchUserOrders, fetchAllOrders} from '../store/orders'
 import Review from './Review'
 import UserOrder from './UserOrder'
 import AllOrders from './AllOrders'
+import {Button} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -30,6 +31,7 @@ class UserHome extends React.Component {
   render() {
     const {name, email, phone, imageUrl} = this.props.user
     const propsId = this.props.match.params.id
+    console.log('props', this.props)
     return (
       <div id="user-home">
         <h3>Welcome, {name}</h3>
@@ -37,7 +39,9 @@ class UserHome extends React.Component {
 
         {this.props.user.role === 'admin' ? (
           <Link to={`/adminboard/${propsId}`}>
-            <h4>Admin Board</h4>
+            <Button>
+              <h4>Admin Board</h4>
+            </Button>
           </Link>
         ) : (
           <div />

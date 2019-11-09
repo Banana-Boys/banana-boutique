@@ -11,21 +11,21 @@ const AllUsers = props => {
       <Table>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell singleLine>
-              {' '}
-              Name: {user.name} <br />Id: {user.id}
-            </Table.HeaderCell>
+            <Table.HeaderCell singleLine> Name: {user.name}</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <TableBody>
           <Table.Row>
+            <Table.Cell>Id: {user.id}</Table.Cell>
             <Table.Cell>Email: {user.email}</Table.Cell>
+            <Table.Cell>Role: {user.role}</Table.Cell>
+
             <Table.Cell>
               <Button
                 floated="right"
                 type="button"
                 onClick={() => {
-                  // props.destroyReview(review.productId, review.id)
+                  props.deleteUser(user.id)
                 }}
               >
                 Delete User
@@ -40,28 +40,36 @@ const AllUsers = props => {
               </Button>
               {/* </Table.Cell></Link> */}
             </Table.Cell>
-            <Table.Cell>
-              <Button
-                floated="right"
-                type="button"
-                onClick={() => {
-                  // props.destroyReview(review.productId, review.id)
-                }}
-              >
-                Promote
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button
-                floated="right"
-                type="button"
-                onClick={() => {
-                  // props.destroyReview(review.productId, review.id)
-                }}
-              >
-                Demote
-              </Button>
-            </Table.Cell>
+            {user.role === 'user' ? (
+              <Table.Cell>
+                <Button
+                  floated="right"
+                  type="button"
+                  onClick={() => {
+                    // props.destroyReview(review.productId, review.id)
+                  }}
+                >
+                  Promote
+                </Button>
+              </Table.Cell>
+            ) : (
+              <div />
+            )}
+            {user.role === 'admin' ? (
+              <Table.Cell>
+                <Button
+                  floated="right"
+                  type="button"
+                  onClick={() => {
+                    // props.destroyReview(review.productId, review.id)
+                  }}
+                >
+                  Demote
+                </Button>
+              </Table.Cell>
+            ) : (
+              <div />
+            )}
           </Table.Row>
         </TableBody>
       </Table>
