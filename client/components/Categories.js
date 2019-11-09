@@ -94,13 +94,6 @@ export class Categories extends Component {
     let categories = this.props.categories
     return (
       <div id="filters">
-        <label htmlFor="search">Search: </label>
-        <input
-          type="text"
-          id="search"
-          value={this.state.search}
-          onChange={this.handleSearch}
-        />
         <button type="button" onClick={this.handleAdd}>
           Add New Category
         </button>
@@ -165,6 +158,13 @@ export class Categories extends Component {
             # ratings (high to low)
           </option>
         </select>
+        <label htmlFor="search">Search: </label>
+        <input
+          type="text"
+          id="search"
+          value={this.state.search}
+          onChange={this.handleSearch}
+        />
       </div>
     )
   }
