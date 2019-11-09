@@ -6,7 +6,6 @@ const {User, Product, Category, Review} = require('../server/db/models')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
-// eslint-disable-next-line max-statements
 async function seed() {
   const NUM_PRODUCTS = 100
   const NUM_CATEGORIES = 4

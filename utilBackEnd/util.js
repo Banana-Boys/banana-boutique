@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 module.exports.states = [
   '',
   'AL',
@@ -271,3 +272,43 @@ module.exports.countries = [
   'Zambia',
   'Zimbabwe'
 ]
+
+module.exports.overlap = (selectCats, productCats) => {
+  for (let cat of selectCats) {
+    if (productCats.includes(Number(cat))) return true
+  }
+  return false
+}
+
+module.exports.sorter = sortBy => (A, B) => {
+  const [attribute, reverse] = sortBy.split('_')
+  let result
+  if (attribute === 'avgrating') {
+    if (A.sumratings / A.numratings < B.sumratings / B.numratings) {
+      result = -1
+    } else if (A.sumratings / A.numratings > B.sumratings / B.numratings) {
+      result = 1
+    } else {
+      result = 0
+    }
+  } else if (typeof A[attribute] === 'string') {
+    if (A[attribute].toLowerCase() < B[attribute].toLowerCase()) {
+      result = -1
+    } else if (A[attribute].toLowerCase() > B[attribute].toLowerCase()) {
+      result = 1
+    } else {
+      result = 0
+    }
+  } else if (A[attribute] < B[attribute]) {
+    result = -1
+  } else if (A[attribute] > B[attribute]) {
+    result = 1
+  } else {
+    result = 0
+  }
+  if (Number(reverse)) {
+    return -result
+  } else {
+    return result
+  }
+}
