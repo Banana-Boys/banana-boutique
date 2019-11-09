@@ -4,8 +4,10 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import Search from './Search'
+import UserHome from './UserHome'
+import {Input, Button, Form, Item, Grid, Container} from 'semantic-ui-react'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div>
     <img src="/images/nanas-600.jpg" />
     <nav>
@@ -28,6 +30,11 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <div>
         <Search />
       </div>
+      <Container>
+        <Link to={`/users/${user.id}`}>
+          <Button type="button">Profile</Button>
+        </Link>
+      </Container>
     </nav>
     <hr />
   </div>
@@ -38,7 +45,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 

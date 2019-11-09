@@ -83,6 +83,7 @@ class SingleProduct extends React.Component {
               </Item.Meta>
               <Item.Description>
                 <h4>{product.description}</h4>
+                <h4>In Stock: {product.inventory}</h4>
                 <h6>Ratings: {product.numratings}</h6>
                 <h6>
                   Avg Rating:

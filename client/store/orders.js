@@ -5,6 +5,8 @@ import axios from 'axios'
  */
 
 const GET_ORDERS = 'GET_ORDERS'
+
+//action creators
 const getOrders = orders => ({type: GET_ORDERS, orders})
 
 export const fetchAllOrders = () => {
