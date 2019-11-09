@@ -1,5 +1,6 @@
 import React from 'react'
 import {Table, Button, TableBody, Card, Image} from 'semantic-ui-react'
+import priceConvert from '../../utilFrontEnd/priceConvert'
 
 const OrderLineItem = props => {
   const product = props.order.product || {}
@@ -14,7 +15,7 @@ const OrderLineItem = props => {
         </Table.Header>
         <TableBody>
           <Table.Row>
-            <Table.Cell>Price: {product.price}</Table.Cell>
+            <Table.Cell>Price: ${priceConvert(product.price)}</Table.Cell>
             <Table.Cell>Description: {product.description}</Table.Cell>
             <Table.Cell>Qty: {props.order.quantity}</Table.Cell>
           </Table.Row>

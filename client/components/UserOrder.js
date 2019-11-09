@@ -33,14 +33,4 @@ const UserOrder = props => {
   )
 }
 
-// const mapStateToProps = state => ({
-//   orders: state.orders
-// })
-
-// //const mapDispatchToProps = {createOrder}
-
-// export default withRouter(
-//   connect(mapStateToProps, mapDispatchToProps)(UserOrder)
-// )
-
 export default UserOrder

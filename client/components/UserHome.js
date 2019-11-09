@@ -33,6 +33,15 @@ class UserHome extends React.Component {
     return (
       <div>
         <h3>Welcome, {name}</h3>
+        {}
+
+        {this.props.user.role === 'admin' ? (
+          <Link to={`/adminboard/${propsId}`}>
+            <h4>Admin Board</h4>
+          </Link>
+        ) : (
+          <div />
+        )}
         <img src={imageUrl} />
         <h5>Email: {email}</h5>
         <h5>Phone #: {phone}</h5>
@@ -71,13 +80,7 @@ class UserHome extends React.Component {
             <UserOrder key={order.id} order={order} />
           ))}
         </h5>
-        {this.props.user.role === 'admin' ? (
-          <h5>
-            All Orders: <AllOrders propsId={propsId} />
-          </h5>
-        ) : (
-          <div />
-        )}
+
         <h5>
           Reviews:{this.props.reviews.map(rev => (
             <Review

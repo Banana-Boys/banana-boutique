@@ -1,13 +1,6 @@
 import React, {Component} from 'react'
-import {Link, withRouter} from 'react-router-dom'
-import {
-  Table,
-  Button,
-  TableBody,
-  Card,
-  Image,
-  Container
-} from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
+import {Table, TableBody, Container} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {fetchOrder} from '../store/singleOrder'
 import OrderLineItem from './OrderLineItem'
@@ -39,10 +32,15 @@ export class SingleOrder extends Component {
           <TableBody>
             <Table.Row>
               <Table.Cell>
-                {!order.orderLineItems ? <div>none</div> : <div>some</div>}
-                {/* {order.orderLineItems.map(ord => (
-                  <OrderLineItem key={ord.id} order={ord} />
-                ))} */}
+                {!order.orderLineItems ? (
+                  <div>none</div>
+                ) : (
+                  <div>
+                    {order.orderLineItems.map(ord => (
+                      <OrderLineItem key={ord.id} order={ord} />
+                    ))}
+                  </div>
+                )}
               </Table.Cell>
             </Table.Row>
           </TableBody>
