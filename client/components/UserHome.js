@@ -30,7 +30,6 @@ class UserHome extends React.Component {
   render() {
     const {name, email, phone, imageUrl} = this.props.user
     const propsId = this.props.match.params.id
-    console.log(propsId)
     return (
       <div>
         <h3>Welcome, {name}</h3>
@@ -69,7 +68,7 @@ class UserHome extends React.Component {
         <h5>
           Your Orders:{' '}
           {this.props.orders.map(order => (
-            <Review key={order.id} order={order} />
+            <UserOrder key={order.id} order={order} />
           ))}
         </h5>
         {this.props.user.role === 'admin' ? (
@@ -79,7 +78,6 @@ class UserHome extends React.Component {
         ) : (
           <div />
         )}
-        {console.log('props,', this.props)}
         <h5>
           Reviews:{this.props.reviews.map(rev => (
             <Review

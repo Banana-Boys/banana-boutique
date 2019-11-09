@@ -32,7 +32,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
       </div>
       <Container>
         <Link to={`/users/${user.id}`}>
-          {console.log(user)}
           <Button type="button">Profile</Button>
         </Link>
       </Container>

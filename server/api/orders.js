@@ -31,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     if (req.user) {
       const order = await Order.findByPk(req.params.id, {
-        include: [OrderLineItem, Address]
+        include: [{model: OrderLineItem}, {model: Address, as: 'shipping'}]
       })
       res.json(order)
     } else {

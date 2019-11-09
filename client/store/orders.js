@@ -23,9 +23,7 @@ export const fetchAllOrders = () => {
 export const fetchUserOrders = userId => {
   return async dispatch => {
     try {
-      console.log()
       const {data} = await axios.get(`/api/users/${userId}/orders`) //looked cute, might change later
-      console.log('axios orders', data)
       dispatch(getOrders(data))
     } catch (err) {
       console.log(err)
