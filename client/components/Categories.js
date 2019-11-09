@@ -93,7 +93,7 @@ export class Categories extends Component {
   render() {
     let categories = this.props.categories
     return (
-      <div>
+      <div id="filters">
         <label htmlFor="search">Search: </label>
         <input
           type="text"
