@@ -17,6 +17,7 @@ import EditCategoryForm from './components/EditCategoryForm'
 import NewReviewForm from './components/NewReviewForm'
 import EditReviewForm from './components/EditReviewForm'
 import Checkout from './components/Checkout'
+import SingleOrder from './components/SingleOrder'
 
 /**
  * COMPONENT
@@ -53,6 +54,7 @@ class Routes extends Component {
           <Route path="/users/:id" component={UserHome} />
           <Route path="/addresses/new" component={NewAddressForm} />
           <Route path="/addresses/:id/edit" component={EditAddressForm} />
+          <Route path="/order/:id" component={SingleOrder} />
           {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
         </Switch>
         {isLoggedIn && (
