@@ -19,9 +19,7 @@ export class AllProducts extends Component {
     const products = this.props.products
     return (
       <Container id="all-products">
-        <div>
-          <Categories />
-        </div>
+        <Categories />
         {products.length > 0 && (
           <Grid centered>
             {products.map(product => (
