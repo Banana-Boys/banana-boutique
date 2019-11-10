@@ -11,15 +11,14 @@ const {checkGuest, isAdmin} = require('../middleware')
 
 router.get('/', async (req, res, next) => {
   try {
+    const query = req.query || {}
     if (req.user.role) {
       const orders = await Order.findAll({
-        // where: {
-        //   userId: req.user.id
-        // },
         include: [
           {model: OrderLineItem, include: [{model: Product}]},
           {model: User, as: 'buyer'}
-        ]
+        ],
+        where: query
       })
 
       res.send(orders)
@@ -53,7 +52,15 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.id)
     await order.update(req.body)
-    res.send(order)
+    res.send(
+      await Order.findByPk(req.params.id, {
+        include: [
+          {model: OrderLineItem, include: [{model: Product}]},
+          {model: Address, as: 'shipping'},
+          {model: User, as: 'buyer'}
+        ]
+      })
+    )
   } catch (err) {
     next(err)
   }
