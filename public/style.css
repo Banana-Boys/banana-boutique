@@ -156,7 +156,7 @@ body,
 
 /* TEXT STYLES */
 body {
-  font-family: Garamond, 'Times New Roman', Times, serif !important;
+  font-family: Garamond, 'Times New Roman', Times, serif;
 }
 h6 {
   color: rgb(123, 123, 123);
