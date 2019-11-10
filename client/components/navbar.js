@@ -32,11 +32,17 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
     <Container id="nav-profile">
       {isLoggedIn && (
         <Link to={`/users/${user.id}`}>
-          <Button type="button">Profile</Button>
+          <img
+            id="user-icon"
+            src="http://simpleicon.com/wp-content/uploads/user1.svg"
+          />
         </Link>
       )}
       <Link to="/cart">
-        <Button type="button">Cart</Button>
+        <img
+          id="cart-icon"
+          src="https://www.svgrepo.com/show/10154/shopping-cart-empty-side-view.svg"
+        />
       </Link>
     </Container>
   </div>
