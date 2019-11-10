@@ -5,7 +5,7 @@ import axios from 'axios'
  */
 const GET_CATEGORY = 'GET_CATEGORY'
 const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
-
+const NEW_CATEGORY = 'NEW_CATEGORY'
 /**
  * INITIAL STATE
  */
@@ -15,7 +15,9 @@ const defaultCategory = []
  * ACTION CREATORS
  */
 const getCategory = category => ({type: GET_CATEGORY, category})
-const updatedCategory = category => ({type: GET_CATEGORY, category})
+const updatedCategory = category => ({type: UPDATE_CATEGORY, category})
+export const createCategory = category => ({type: NEW_CATEGORY, category})
+
 /**
  * THUNK CREATORS
  */
@@ -31,12 +33,19 @@ export const fetchCategory = id => async dispatch => {
 
 export const editCategory = (id, params) => async dispatch => {
   try {
-    console.log(params)
     const {data} = await axios.put(`/api/categories/${id}`, params)
     dispatch(updatedCategory(data))
-    console.log('data:', data)
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const sendCategory = category => async dispatch => {
+  try {
+    const {data: newCategory} = await axios.post('/api/categories', category)
+    dispatch(createCategory(newCategory))
+  } catch (err) {
+    console.error(err)
   }
 }
 

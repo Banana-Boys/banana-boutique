@@ -3,11 +3,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllCategories} from '../store/categories'
 import {fetchProducts} from '../store/products'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {queryParser} from '../../utilFrontEnd/queryParser'
 import {queryPusher} from '../../utilFrontEnd/queryPusher'
 import {fetchCategory} from '../store/singleCategory'
-import {Link} from 'react-router-dom'
+import NewCategoryForm from './NewCategoryForm'
 
 export class Categories extends Component {
   constructor(props) {
@@ -19,7 +19,8 @@ export class Categories extends Component {
       search: search || '',
       inStock: Boolean(inStock) || false,
       sort: sort || '',
-      editCategory: {}
+      editCategory: {},
+      isAdmin: ''
     }
     this.handleEdit = this.handleEdit.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
@@ -81,10 +82,6 @@ export class Categories extends Component {
 
   handleEdit(event) {
     event.preventDefault()
-    console.log('this.props.category.id', this.props.category.id)
-    // console.log('event.target:', event)
-    // let catId = Number(event.target.value)
-    // console.log('catId:', catId)
     this.props.gotoCategory(this.props.category.id)
   }
 
@@ -92,7 +89,8 @@ export class Categories extends Component {
 
   render() {
     let categories = this.props.categories
-    const isAdmin = this.state.isAdmin
+    const isAdmin = this.props.user.role
+
     return (
       <div id="filters">
         <div id="seach-bar">
@@ -105,9 +103,9 @@ export class Categories extends Component {
           />
         </div>
         {isAdmin && (
-          <button type="button" onClick={this.handleAdd}>
-            Add New Category
-          </button>
+          <div>
+            <NewCategoryForm />
+          </div>
         )}
         <div id="categories">
           {categories.map(category => (
@@ -186,10 +184,10 @@ export class Categories extends Component {
 
 const mapState = (state, props) => {
   return {
+    user: state.user,
     products: state.products,
     categories: state.categories,
-    activeCategories: state.activeCategories,
-    isAdmin: state.user && state.user.role === 'admin'
+    activeCategories: state.activeCategories
   }
 }
 
