@@ -41,6 +41,7 @@ export class Search extends Component {
                 <label htmlFor="product-search">
                   {/* <span>Search</span> */}
                   <Input
+                    focus
                     name="product-search"
                     placeholder="Search"
                     type="text"
