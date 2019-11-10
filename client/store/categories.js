@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {NEW_CATEGORY} from './singleCategory'
 /**
  * ACTION TYPES
  */
@@ -31,11 +31,14 @@ export const fetchAllCategories = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultCategories, action) {
+
+export default function(categories = [], action) {
   switch (action.type) {
     case GET_CATEGORIES:
       return action.categories
+    case NEW_CATEGORY:
+      return [...categories, action.category]
     default:
-      return state
+      return categories
   }
 }

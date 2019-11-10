@@ -43,12 +43,12 @@ class EditCategoryForm extends React.Component {
   }
 
   render() {
-    let category = this.props.category
+    let category = this.props.singleCategory
 
     return (
       <form onSubmit={this.invokeOnSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Catergory Name: {category.name}</label>
+          <label htmlFor="name">Category Name: {category.name}</label>
           <input
             type="text"
             name="name"
@@ -65,8 +65,8 @@ class EditCategoryForm extends React.Component {
   }
 }
 
-const mapStateToProps = ({category, categories}) => ({
-  category,
+const mapStateToProps = ({singleCategory, categories}) => ({
+  singleCategory,
   categories
 })
 const mapDispatchToProps = {editCategory, fetchCategory}

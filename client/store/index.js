@@ -11,8 +11,7 @@ import cart from './cart'
 import orders from './orders'
 import singleOrder from './singleOrder'
 import categories from './categories'
-import category from './singleCategory'
-import activeCategories from './activeCategories'
+import singleCategory from './singleCategory'
 import addresses from './addresses'
 import address from './address'
 import users from './users'
@@ -25,9 +24,8 @@ const reducer = combineReducers({
   cart,
   orders,
   singleOrder,
-  category,
+  singleCategory,
   categories,
-  activeCategories,
   addresses,
   address,
   review,
