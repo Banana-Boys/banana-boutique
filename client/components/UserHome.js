@@ -31,7 +31,6 @@ class UserHome extends React.Component {
   render() {
     const {name, email, phone, imageUrl} = this.props.user
     const propsId = this.props.match.params.id
-    console.log('props', this.props)
     return (
       <div id="user-home">
         <h3>Welcome, {name}</h3>
