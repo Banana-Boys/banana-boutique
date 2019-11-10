@@ -2,17 +2,18 @@
 'use strict'
 const faker = require('faker')
 const {db} = require('../server/db')
-const {User, Product, Category, Review} = require('../server/db/models')
+const {
+  User,
+  Product,
+  Category,
+  Review,
+  CartLineItem
+} = require('../server/db/models')
 
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
-// eslint-disable-next-line max-statements
-// eslint-disable-next-line complexity
 async function seed() {
-  const NUM_PRODUCTS = 100
-  const NUM_CATEGORIES = 4
-
   //DROP SESSION DATA
   const sessionStore = new SequelizeStore({db})
 
@@ -61,7 +62,7 @@ async function seed() {
     })
   ])
 
-  // CREATE RANDOM REVIEWS
+  // CREATE RANDOM USERS
   const randomUsers = []
   let numUsers = 10
   while (numUsers > 0) {
@@ -165,22 +166,58 @@ async function seed() {
     })
   )
 
+  const allProducts = await Product.findAll()
   // CREATE RANDOM REVIEWS
-  let userIndex = 0
-  while (userIndex < randomUsers.length) {
-    let productIndex = 0
-    while (productIndex < products.length) {
-      const review = await Review.create({
-        title: faker.hacker.phrase(),
-        body: faker.lorem.paragraph(),
-        rating: Math.ceil(Math.random() * 5).toString(),
-        productId: products[productIndex].id,
-        userId: randomUsers[userIndex].id
-      })
+  const reviews = []
+  for (let userIndex = 0; userIndex < randomUsers.length; userIndex++) {
+    for (
+      let productIndex = 0;
+      productIndex < allProducts.length;
       productIndex++
+    ) {
+      let rating = Math.random() * 5
+      rating = Math.ceil(rating)
+
+      await allProducts[productIndex].update({
+        numratings: allProducts[productIndex].numratings + 1,
+        sumratings: allProducts[productIndex].sumratings + rating
+      })
+
+      reviews.push(
+        Review.create({
+          title: faker.hacker.phrase(),
+          body: faker.lorem.paragraph(),
+          rating: rating.toString(),
+          productId: allProducts[productIndex].id,
+          userId: randomUsers[userIndex].id
+        })
+      )
     }
-    userIndex++
   }
+
+  // AUTH/UNAUTH USER WITH CART
+  const userWithCart = await User.create({
+    name: 'userWithCart',
+    email: 'userCart@email.com',
+    password: '123',
+    role: 'user'
+  })
+
+  await Promise.all(
+    [2, 4, 8].map(index =>
+      CartLineItem.create({
+        quantity: 1,
+        productId: index,
+        userId: userWithCart.id
+      })
+    )
+  )
+
+  // AUTH/UNAUTH USER WITH ORDER
+
+  // AUTH/UNAUTH USER WITH WISHLIST
+
+  await Promise.all(reviews)
 
   console.log(`seeded ${users.length + randomUsers.length} users`)
   console.log(`seeded successfully`)
