@@ -38,10 +38,8 @@ class UserHome extends React.Component {
         {}
 
         {this.props.user.role === 'admin' ? (
-          <Link to={`/adminboard/${propsId}`}>
-            <Button>
-              <h4>Admin Board</h4>
-            </Button>
+          <Link to="/adminboard">
+            <Button>Admin Board</Button>
           </Link>
         ) : (
           <div />
