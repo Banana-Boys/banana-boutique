@@ -26,7 +26,7 @@ export class AdminBoard extends Component {
     const orders = this.props.orders || []
     const users = this.props.users || []
     return (
-      <div>
+      <div id="admin-board">
         <h5>
           All Orders:{' '}
           {orders.map(order => (
