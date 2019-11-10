@@ -92,35 +92,56 @@ export class Categories extends Component {
 
   render() {
     let categories = this.props.categories
+    const isAdmin = this.state.isAdmin
     return (
       <div id="filters">
-        <button type="button" onClick={this.handleAdd}>
-          Add New Category
-        </button>
-        {categories.map(category => (
-          <div key={category.id} className="category">
+        <div id="seach-bar">
+          <label htmlFor="search">Search: </label>
+          <input
+            type="text"
+            id="search"
+            value={this.state.search}
+            onChange={this.handleSearch}
+          />
+        </div>
+        {isAdmin && (
+          <button type="button" onClick={this.handleAdd}>
+            Add New Category
+          </button>
+        )}
+        <div id="categories">
+          {categories.map(category => (
+            <div key={category.id} className="category">
+              <input
+                name="category-selected"
+                type="checkbox"
+                value={category.id}
+                checked={this.state.categories.includes(category.id.toString())}
+                onChange={this.updateCategorySelected}
+              />
+              {category.name}
+              {isAdmin && (
+                <Link
+                  to={`/categories/${category.id}/edit`}
+                  params={{category}}
+                >
+                  <button type="button">Edit</button>
+                </Link>
+              )}
+            </div>
+          ))}
+          <div>
             <input
-              name="category-selected"
+              name="inStock"
               type="checkbox"
-              value={category.id}
-              checked={this.state.categories.includes(category.id.toString())}
-              onChange={this.updateCategorySelected}
-            />
-            {category.name}
-            <Link to={`/categories/${category.id}/edit`} params={{category}}>
-              <button type="button">Edit</button>
-            </Link>
+              onChange={this.handleInStock}
+              checked={this.state.inStock}
+            />In Stock
           </div>
-        ))}
-        <input
-          name="inStock"
-          type="checkbox"
-          onChange={this.handleInStock}
-          checked={this.state.inStock}
-        />
-        <label htmlFor="inStock">In stock</label>
+          {/* <label htmlFor="inStock">In stock</label> */}
+        </div>
         <select name="sort" onChange={this.handleSort}>
-          <option value="" selected={this.state.sort === ''} />
+          {/* <option value="name_0" selected={this.state.sort === ''} /> */}
           <option value="name_0" selected={this.state.sort === 'name_0'}>
             Name (A to Z)
           </option>
@@ -158,13 +179,6 @@ export class Categories extends Component {
             # ratings (high to low)
           </option>
         </select>
-        <label htmlFor="search">Search: </label>
-        <input
-          type="text"
-          id="search"
-          value={this.state.search}
-          onChange={this.handleSearch}
-        />
       </div>
     )
   }
@@ -174,7 +188,8 @@ const mapState = (state, props) => {
   return {
     products: state.products,
     categories: state.categories,
-    activeCategories: state.activeCategories
+    activeCategories: state.activeCategories,
+    isAdmin: state.user && state.user.role === 'admin'
   }
 }
 
