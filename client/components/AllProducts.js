@@ -7,33 +7,27 @@ import {Grid, Image, Container, Card} from 'semantic-ui-react'
 import Search from './Search'
 
 export class AllProducts extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
-  async componentDidMount() {
-    try {
-      await this.props.loadProducts()
-    } catch (error) {
-      console.error(error)
-    }
+  componentDidMount() {
+    this.props.loadProducts()
   }
 
   render() {
     const products = this.props.products
-    if (!products) {
-      return <div>NO PRODUCTS!</div>
-    }
     return (
-      <Container>
-        <div>
-          <Categories />
-        </div>
-        <Grid centered>
-          {products.map(product => (
-            <Product key={product.id} product={product} />
-          ))}
-        </Grid>
+      <Container id="all-products">
+        <Categories />
+        {products.length > 0 && (
+          <Grid centered>
+            {products.map(product => (
+              <Product key={product.id} product={product} />
+            ))}
+          </Grid>
+        )}
+        {products.length === 0 && <div>NO PRODUCTS!</div>}
       </Container>
     )
   }

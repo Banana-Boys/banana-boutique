@@ -1,10 +1,10 @@
 import axios from 'axios'
-
+import {NEW_CATEGORY} from './singleCategory'
 /**
  * ACTION TYPES
  */
 const GET_CATEGORIES = 'GET_CATEGORIES'
-const NEW_CATEGORY = 'NEW_CATEGORY'
+
 /**
  * INITIAL STATE
  */
@@ -14,7 +14,6 @@ const defaultCategories = []
  * ACTION CREATORS
  */
 const getCategories = categories => ({type: GET_CATEGORIES, categories})
-const createCategory = category => ({type: NEW_CATEGORY, category})
 
 /**
  * THUNK CREATORS
@@ -29,21 +28,17 @@ export const fetchAllCategories = () => async dispatch => {
   }
 }
 
-export const sendCategory = category => async dispatch => {
-  const {data: newCategory} = await axios.post('/api/categories', category)
-  dispatch(createCategory(newCategory))
-}
-
 /**
  * REDUCER
  */
-export default function(state = defaultCategories, action) {
+
+export default function(categories = [], action) {
   switch (action.type) {
     case GET_CATEGORIES:
       return action.categories
     case NEW_CATEGORY:
-      return action.category
+      return [...categories, action.category]
     default:
-      return state
+      return categories
   }
 }

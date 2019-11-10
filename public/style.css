@@ -1,9 +1,5 @@
-body {
-  font-family: sans-serif;
-}
-
-a {
-  text-decoration: none;
+* {
+  box-sizing: border-box;
 }
 
 label {
@@ -11,7 +7,6 @@ label {
 }
 
 nav a {
-  display: inline-block;
   margin: 1em;
 }
 
@@ -20,7 +15,142 @@ form div {
   display: inline-block;
 }
 
-img {
-  max-width: 400px !important;
-  max-height: 200px;
+/* ELEMENT POSITIONS + SIZE */
+
+nav {
+  display: flex !important;
+}
+
+html,
+body,
+#mount {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* NAVBAR */
+#nav-container {
+  padding: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8vh;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid #00000033;
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  text-align: center;
+  z-index: 9999;
+}
+
+/* height accomodation */
+#all-products,
+#cart,
+#single-product,
+#checkout,
+#user-home,
+#account-form {
+  top: 0;
+  margin-top: 8vh;
+}
+
+#nav-container nav {
+  width: 100%;
+  height: 8vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 13pt;
+}
+
+#nav-container a {
+  text-align: center;
+  text-justify: auto;
+}
+#logo {
+  height: 8vh;
+  padding: 10px;
+}
+
+#nav-profile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+}
+
+#nav-profile a {
+  height: inherit;
+}
+
+/* ALL PRODUCTS */
+.ui.grid {
+  width: 80%;
+  margin: 0 auto !important;
+}
+
+/* FILTERS */
+#filters {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 15px;
+  top: 0;
+  margin-top: 10vh;
+}
+
+#categories {
+  margin: 10px 0px;
+}
+
+#filters .category {
+  margin: 5px 0px;
+}
+
+#seach-bar {
+}
+
+/* PRODUCT CARD */
+.product-card {
+  margin: 25px -10px;
+  width: 50%;
+}
+
+.product-card .image img {
+  width: 100%;
+  xborder-radius: 2% 2% 0 0;
+}
+
+.product-card .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .content .header,
+.product-card .content .description {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-card .content * {
+  margin: 0px;
+  padding: 0px 3px;
+}
+
+/* TEXT STYLES */
+body {
+  font-family: Garamond, 'Times New Roman', Times, serif;
+}
+nav {
+  font-variant: small-caps;
+}
+a {
+  color: rgba(0, 0, 0, 0.95) !important;
+  text-decoration: none;
+}
+
+.product-card {
+  color: #000;
 }

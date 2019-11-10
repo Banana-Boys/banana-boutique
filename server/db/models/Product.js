@@ -13,7 +13,7 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     allowNull: false,
     defaultValue:
-      'https://cdn.clipart.email/a5b2f08b464dd175fba426d347842df2_campbells-soup-can-clipart_2032-3226.jpeg'
+      'https://nanas-image-store.s3.us-east-2.amazonaws.com/banana-group-yellow.jpg'
   },
   price: {
     type: Sequelize.INTEGER,

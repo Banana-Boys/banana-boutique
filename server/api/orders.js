@@ -11,13 +11,17 @@ const {checkGuest, isAdmin} = require('../middleware')
 
 router.get('/', async (req, res, next) => {
   try {
-    if (req.user) {
+    if (req.user.role) {
       const orders = await Order.findAll({
-        where: {
-          userId: req.user.id
-        },
-        include: [OrderLineItem]
+        // where: {
+        //   userId: req.user.id
+        // },
+        include: [
+          {model: OrderLineItem, include: [{model: Product}]},
+          {model: User, as: 'buyer'}
+        ]
       })
+
       res.send(orders)
     } else {
       res.sendStatus(404)
@@ -31,7 +35,10 @@ router.get('/:id', async (req, res, next) => {
   try {
     if (req.user) {
       const order = await Order.findByPk(req.params.id, {
-        include: [OrderLineItem, Address]
+        include: [
+          {model: OrderLineItem, include: [{model: Product}]},
+          {model: Address, as: 'shipping'}
+        ]
       })
       res.json(order)
     } else {

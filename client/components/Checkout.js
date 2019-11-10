@@ -124,7 +124,7 @@ class Checkout extends React.Component {
     let {login, signup, continueAsGuest} = this.state.showUserOptions
 
     return (
-      <div id="cart">
+      <div id="checkout">
         {cart.map(item => {
           return (
             <div className="product" key={item.product.id}>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {sendCategory} from '../store/categories'
+import {sendCategory} from '../store/singleCategory'
 import {connect} from 'react-redux'
 
 export class NewCategoryForm extends Component {

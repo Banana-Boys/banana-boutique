@@ -4,32 +4,41 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import Search from './Search'
+import UserHome from './UserHome'
+import {Input, Button, Form, Item, Grid, Container} from 'semantic-ui-react'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <img src="/images/nanas-600.jpg" />
+const Navbar = ({handleClick, isLoggedIn, user}) => (
+  <div id="nav-container">
+    <Link to="/home">
+      <img
+        src="https://nanas-image-store.s3.us-east-2.amazonaws.com/nana-logo.png"
+        id="logo"
+      />
+    </Link>
     <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/products">Products</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
+      {isLoggedIn && (
+        <a href="#" onClick={handleClick}>
+          logout
+        </a>
       )}
-      <div>
-        <Search />
-      </div>
+      {!isLoggedIn && <Link to="/login">login</Link>}{' '}
+      {!isLoggedIn && <Link to="/signup">sign up</Link>}
+      <Link to="/home">home</Link>
+      <Link to="/products">products</Link>
     </nav>
-    <hr />
+    {/* <div>
+        /* <Search />
+      </div> */}
+    <Container id="nav-profile">
+      {isLoggedIn && (
+        <Link to={`/users/${user.id}`}>
+          <Button type="button">Profile</Button>
+        </Link>
+      )}
+      <Link to="/cart">
+        <Button type="button">Cart</Button>
+      </Link>
+    </Container>
   </div>
 )
 
@@ -38,7 +47,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 

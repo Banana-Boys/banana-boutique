@@ -1,19 +1,19 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {createOrder} from '../store/orders'
+import {Table, Button, TableBody, Card, Container} from 'semantic-ui-react'
 import OrderLineItem from './OrderLineItem'
-import {Table, TableBody, Container} from 'semantic-ui-react'
 
-const AllOrders = props => {
-  const order = props.order || []
-  const buyer = props.order.buyer || {}
+const UserOrder = props => {
+  const order = props.order || {}
   return (
     <Container>
       <Table>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell singleLine>
-              Order Number : {order.id} <br /> Date Placed : {order.datePlaced}{' '}
-              <br /> User Name: {buyer.name} <br /> User Email: {buyer.email}
+              Order Number : {order.id} <br /> Date Placed : {order.datePlaced}
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -33,4 +33,4 @@ const AllOrders = props => {
   )
 }
 
-export default AllOrders
+export default UserOrder

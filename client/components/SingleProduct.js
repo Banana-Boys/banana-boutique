@@ -59,6 +59,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
+    //console.log('thisprops', this.props)
     const categories = product.categories || []
     const quantitySelect = []
 
@@ -70,7 +71,7 @@ class SingleProduct extends React.Component {
     }
 
     return (
-      <Container id="product">
+      <Container id="single-product">
         <Item.Group>
           <Item>
             <Item.Image size="large" src={product.imageUrl} />
@@ -83,6 +84,7 @@ class SingleProduct extends React.Component {
               </Item.Meta>
               <Item.Description>
                 <h4>{product.description}</h4>
+                <h4>In Stock: {product.inventory}</h4>
                 <h6>Ratings: {product.numratings}</h6>
                 <h6>
                   Avg Rating:

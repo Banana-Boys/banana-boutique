@@ -4,8 +4,9 @@ import {Table, Button, Container, TableBody} from 'semantic-ui-react'
 
 const Review = props => {
   const review = props.review
+  console.log('Review Props', props)
   return (
-    <div>
+    <Container>
       <Table>
         <Table.Header>
           <Table.Row>
@@ -15,14 +16,12 @@ const Review = props => {
         <TableBody>
           <Table.Row>
             <Table.Cell>
-              <p>Body:{review.body}</p>
+              <p>Body: {review.body}</p>
             </Table.Cell>
             <Table.Cell>
-              <p>Rating:{review.rating}</p>
+              <p>Rating: {review.rating}</p>
             </Table.Cell>
-            <Table.Cell>
-              <p>Author:{review.user.name}</p>
-            </Table.Cell>
+            <Table.Cell>{/* <p>Author:{review.user.name}</p> */}</Table.Cell>
             <Table.Cell>
               <Button
                 type="button"
@@ -43,7 +42,7 @@ const Review = props => {
           </Table.Row>
         </TableBody>
       </Table>
-    </div>
+    </Container>
   )
 }
 

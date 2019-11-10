@@ -5,7 +5,11 @@ import {Link} from 'react-router-dom'
 import {fetchAddresses, deleteAddress} from '../store/addresses'
 import {deleteUser} from '../store/user'
 import {fetchUserReviews, destroyReview} from '../store/reviews'
+import {fetchUserOrders, fetchAllOrders} from '../store/orders'
 import Review from './Review'
+import UserOrder from './UserOrder'
+import AllOrders from './AllOrders'
+import {Button} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -19,15 +23,29 @@ class UserHome extends React.Component {
   async componentDidMount() {
     await this.props.fetchAddresses()
     await this.props.fetchUserReviews(this.props.match.params.id)
+    await this.props.fetchUserOrders(this.props.match.params.id)
   }
 
   handleClick(e) {}
 
   render() {
     const {name, email, phone, imageUrl} = this.props.user
+    const propsId = this.props.match.params.id
+    console.log('props', this.props)
     return (
-      <div>
+      <div id="user-home">
         <h3>Welcome, {name}</h3>
+        {}
+
+        {this.props.user.role === 'admin' ? (
+          <Link to={`/adminboard/${propsId}`}>
+            <Button>
+              <h4>Admin Board</h4>
+            </Button>
+          </Link>
+        ) : (
+          <div />
+        )}
         <img src={imageUrl} />
         <h5>Email: {email}</h5>
         <h5>Phone #: {phone}</h5>
@@ -60,7 +78,13 @@ class UserHome extends React.Component {
           <button type="button">Add Address</button>
         </Link>
         <h5>Wishlists: </h5>
-        <h5>Orders: </h5>
+        <h5>
+          Your Orders:{' '}
+          {this.props.orders.map(order => (
+            <UserOrder key={order.id} order={order} />
+          ))}
+        </h5>
+
         <h5>
           Reviews:{this.props.reviews.map(rev => (
             <Review
@@ -90,13 +114,19 @@ class UserHome extends React.Component {
 /**
  * CONTAINER
  */
-const mapState = ({user, addresses, reviews}) => ({user, addresses, reviews})
+const mapState = ({user, addresses, reviews, orders}) => ({
+  user,
+  addresses,
+  reviews,
+  orders
+})
 const mapDispatch = {
   fetchAddresses,
   deleteAddress,
   deleteUser,
   fetchUserReviews,
-  destroyReview
+  destroyReview,
+  fetchUserOrders
 }
 
 export default connect(mapState, mapDispatch)(UserHome)
