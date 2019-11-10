@@ -7,13 +7,12 @@ import {
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {Button} from 'semantic-ui-react'
+import Bill from './Bill'
 
 export class Cart extends Component {
   constructor() {
     super()
-    // this.state = {
-    //   cartItems: []
-    // }
     this.handleRemove = this.handleRemove.bind(this)
     this.handleQuantityChange = this.handleQuantityChange.bind(this)
   }
@@ -21,27 +20,6 @@ export class Cart extends Component {
   componentDidMount() {
     this.props.fetchCart()
   }
-
-  // componentWillReceiveProps() {
-  //   // if (newProps.cart && newProps.cart.length > 0) {
-  //   //   const itemIds = newProps.cart.map(item => item.productId)
-  //   //   const {data} = await axios.get('/api/products', {
-  //   //     params: {
-  //   //       itemIds
-  //   //     }
-  //   //   })
-
-  //   //   const cartItems = data.map((item, i) => ({
-  //   //     ...item,
-  //   //     quantity: newProps.cart[i].quantity
-  //   //   }))
-
-  //   //   this.setState({cartItems})
-  //   // } else if (newProps.cart.length === 0) {
-  //   //   this.setState({cartItems: []})
-  //   // }
-  //   this.props.fetchCart()
-  // }
 
   handleRemove(productId) {
     this.props.removeProduct(productId)
@@ -54,53 +32,54 @@ export class Cart extends Component {
 
   render() {
     let cartItems = this.props.cart
-    const quantityOptions = function(inventory) {
+    const quantityOptions = inventory => {
       const options = []
       for (let i = 1; i <= inventory; i++) {
         options.push(<option key={i}>{i}</option>)
       }
       return options
     }
-    // cartItems = cartItems.map(item => {
-    //   const quantitySelect = []
-    //   let i = 1
-    //   while (i <= item.product.inventory) {
-    //     quantitySelect.push(<option key={i}>{i}</option>)
-    //     i++
-    //   }
-    //   return {
-    //     ...item,
-    //     quantitySelect
-    //   }
-    // })
     return (
       <div id="cart">
-        {cartItems.map(item => {
-          return (
-            <div className="product" key={item.product.id}>
-              <h4>{item.product.name}</h4>
-              <select
-                className="quantity"
-                name={item.product.id}
-                value={item.quantity}
-                onChange={this.handleQuantityChange}
-              >
-                {quantityOptions(item.product.inventory)}
-              </select>
-              <p>Total: ${priceConvert(item.quantity * item.product.price)}</p>
-              <img src={item.product.imageUrl} />
-              <button
-                type="button"
-                onClick={() => this.handleRemove(item.product.id)}
-              >
-                Delete
-              </button>
-            </div>
-          )
-        })}
-        <Link to="/checkout">
-          <button type="button">Checkout</button>
-        </Link>
+        <div id="products">
+          <h1>Cart</h1>
+          {cartItems.map(item => {
+            return (
+              <div className="product" key={item.product.id}>
+                <img src={item.product.imageUrl} />
+                <div className="product-info">
+                  <h2>${priceConvert(item.product.price)}</h2>
+                  <p>{item.product.name}</p>
+                  <div className="quantity-select">
+                    <p>Qty:</p>
+                    <select
+                      className="quantity"
+                      name={item.product.id}
+                      value={item.quantity}
+                      onChange={this.handleQuantityChange}
+                    >
+                      {quantityOptions(item.product.inventory)}
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    className="delete-button"
+                    onClick={() => this.handleRemove(item.product.id)}
+                  >
+                    X
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        <div id="bill">
+          <Bill cart={cartItems} />
+          <Link to="/checkout">
+            <button type="button">Checkout</button>
+          </Link>
+        </div>
       </div>
     )
   }
