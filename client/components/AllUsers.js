@@ -5,7 +5,6 @@ import {Table, TableBody, Container, Button} from 'semantic-ui-react'
 
 const AllUsers = props => {
   const user = props.user || {}
-  console.log(props)
   return (
     <Container>
       <Table>
@@ -31,22 +30,22 @@ const AllUsers = props => {
                 Delete User
               </Button>
             </Table.Cell>
-            <Table.Cell>
-              {/* <Link
+            {/* <Table.Cell>
+              <Link
                 to={`/products/${review.productId}/reviews/${review.id}/edit`}
-              > */}
+              >
               <Button floated="right" type="button">
                 Edit User
               </Button>
-              {/* </Table.Cell></Link> */}
-            </Table.Cell>
+              </Table.Cell></Link>
+            </Table.Cell> */}
             {user.role === 'user' ? (
               <Table.Cell>
                 <Button
                   floated="right"
                   type="button"
                   onClick={() => {
-                    // props.destroyReview(review.productId, review.id)
+                    props.promote(user)
                   }}
                 >
                   Promote
@@ -61,7 +60,7 @@ const AllUsers = props => {
                   floated="right"
                   type="button"
                   onClick={() => {
-                    // props.destroyReview(review.productId, review.id)
+                    props.demote(user)
                   }}
                 >
                   Demote
