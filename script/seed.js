@@ -9,8 +9,8 @@ const {
   Review,
   CartLineItem,
   Order,
-  OrderLineItem,
-  Wishlist
+  OrderLineItem
+  // Wishlist
 } = require('../server/db/models')
 
 const session = require('express-session')
