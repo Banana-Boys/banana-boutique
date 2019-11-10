@@ -31,7 +31,6 @@ class UserHome extends React.Component {
   render() {
     const {name, email, phone, imageUrl} = this.props.user
     const propsId = this.props.match.params.id
-    console.log('props', this.props)
     return (
       <div id="user-home">
         <h3>Welcome, {name}</h3>
@@ -44,10 +43,10 @@ class UserHome extends React.Component {
         ) : (
           <div />
         )}
-        <img src={imageUrl} />
+        <img id="" src={imageUrl} />
         <h5>Email: {email}</h5>
         <h5>Phone #: {phone}</h5>
-        <h5>Addresses: </h5>
+        <h5>Your Addresses: </h5>
         {this.props.addresses.map(address => {
           const {id, address1, address2, city, state, country, zip} = address
           return (
@@ -59,23 +58,28 @@ class UserHome extends React.Component {
                 <span>{country}</span> <span>{zip}</span>
               </p>
               <Link to={`/addresses/${id}/edit`}>
-                <button type="button">Edit Address</button>
+                <Button size="mini" type="button">
+                  Edit Address
+                </Button>
               </Link>
-              <button
+              <Button
+                size="mini"
                 type="button"
                 onClick={() => {
                   this.props.deleteAddress(id)
                 }}
               >
                 Delete Address
-              </button>
+              </Button>
             </div>
           )
         })}
         <Link to="/addresses/new">
-          <button type="button">Add Address</button>
+          <Button size="mini" type="button">
+            +Add Address
+          </Button>
         </Link>
-        <h5>Wishlists: </h5>
+        {/* <h5>Wishlists: </h5> */}
         <h5>
           Your Orders:{' '}
           {this.props.orders.map(order => (
@@ -84,7 +88,8 @@ class UserHome extends React.Component {
         </h5>
 
         <h5>
-          Reviews:{this.props.reviews.map(rev => (
+          Your Reviews:{' '}
+          {this.props.reviews.map(rev => (
             <Review
               key={rev.id}
               destroyReview={this.props.destroyReview}
@@ -93,17 +98,22 @@ class UserHome extends React.Component {
             />
           ))}
         </h5>
+
         <Link to={`/users/${this.props.match.params.id}/edit`}>
-          <button type="button">Edit Profile</button>
+          <Button size="mini" type="button">
+            Edit Profile
+          </Button>
         </Link>
-        <button
+
+        <Button
+          size="mini"
           type="button"
           onClick={() => {
             this.props.deleteUser(this.props.match.params.id)
           }}
         >
           Delete Profile
-        </button>
+        </Button>
       </div>
     )
   }

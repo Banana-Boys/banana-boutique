@@ -80,12 +80,31 @@ body,
   opacity: 0.95;
   margin: 0 5px;
   margin-right: 20px;
+  transition: all 0.1s ease-in-out;
+}
+
+#cart-icon:hover {
+  transform: scale(1.1);
 }
 
 #user-icon {
   height: 31px;
   opacity: 0.95;
   margin: 0 5px;
+  border-radius: 50%;
+  transition: all 0.1s ease-in-out;
+}
+
+#user-icon:hover {
+  transform: scale(1.1);
+}
+
+.navbartitle {
+  transition: all 0.1s ease-in-out;
+}
+
+.navbartitle:hover {
+  transform: translate(0, -4px);
 }
 
 #nav-profile {

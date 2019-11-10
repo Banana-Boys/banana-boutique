@@ -9,6 +9,7 @@ import {Input, Button, Form, Item, Grid, Container} from 'semantic-ui-react'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div id="nav-container">
+    {console.log('user', user)}
     <Link to="/home">
       <img
         src="https://nanas-image-store.s3.us-east-2.amazonaws.com/nana-logo.png"
@@ -18,13 +19,25 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
     <nav>
       {isLoggedIn && (
         <a href="#" onClick={handleClick}>
-          logout
+          <h2 className="navbartitle">logout</h2>
         </a>
       )}
-      {!isLoggedIn && <Link to="/login">login</Link>}{' '}
-      {!isLoggedIn && <Link to="/signup">sign up</Link>}
-      <Link to="/home">home</Link>
-      <Link to="/products">products</Link>
+      {!isLoggedIn && (
+        <Link to="/login">
+          <h2 className="navbartitle">login</h2>
+        </Link>
+      )}{' '}
+      {!isLoggedIn && (
+        <Link to="/signup">
+          <h2 className="navbartitle">sign up</h2>
+        </Link>
+      )}
+      <Link to="/home">
+        <h2 className="navbartitle">home</h2>
+      </Link>
+      <Link to="/products">
+        <h2 className="navbartitle">products</h2>
+      </Link>
     </nav>
     {/* <div>
         /* <Search />
@@ -32,10 +45,16 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
     <Container id="nav-profile">
       {isLoggedIn && (
         <Link to={`/users/${user.id}`}>
-          <img
-            id="user-icon"
-            src="http://simpleicon.com/wp-content/uploads/user1.svg"
-          />
+          {!user.imageUrl ? (
+            <img
+              id="user-icon"
+              src="http://simpleicon.com/wp-content/uploads/user1.svg"
+            />
+          ) : (
+            <div>
+              <img id="user-icon" src={user.imageUrl} />
+            </div>
+          )}
         </Link>
       )}
       <Link to="/cart">
