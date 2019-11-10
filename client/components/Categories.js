@@ -8,6 +8,15 @@ import {queryParser} from '../../utilFrontEnd/queryParser'
 import {queryPusher} from '../../utilFrontEnd/queryPusher'
 import {fetchCategory} from '../store/singleCategory'
 import NewCategoryForm from './NewCategoryForm'
+import {
+  Input,
+  Button,
+  Form,
+  Item,
+  Grid,
+  Container,
+  Select
+} from 'semantic-ui-react'
 
 export class Categories extends Component {
   constructor(props) {
@@ -94,8 +103,10 @@ export class Categories extends Component {
     return (
       <div id="filters">
         <div id="seach-bar">
-          <label htmlFor="search">Search: </label>
-          <input
+          <label id="searchlabel" htmlFor="search">
+            Search:{' '}
+          </label>
+          <Input
             type="text"
             id="search"
             value={this.state.search}
@@ -103,43 +114,60 @@ export class Categories extends Component {
           />
         </div>
         {isAdmin && (
-          <div>
+          <div id="categor">
+            <label id="newcategorylabel" htmlFor="new-category">
+              New Category:{' '}
+            </label>
             <NewCategoryForm />
           </div>
         )}
+        <label id="categorylable" htmlFor="categories">
+          Categories:{' '}
+        </label>
         <div id="categories">
           {categories.map(category => (
             <div key={category.id} className="category">
-              <input
+              <Input
                 name="category-selected"
                 type="checkbox"
                 value={category.id}
                 checked={this.state.categories.includes(category.id.toString())}
                 onChange={this.updateCategorySelected}
-              />
+              />{' '}
               {category.name}
-              {isAdmin && (
+              {this.props.user.role === 'admin' ? (
                 <Link
                   to={`/categories/${category.id}/edit`}
                   params={{category}}
                 >
-                  <button type="button">Edit</button>
+                  <Button
+                    size="mini"
+                    type="button"
+                    className="categoryeditbutton"
+                  >
+                    Edit
+                  </Button>
                 </Link>
+              ) : (
+                <div />
               )}
             </div>
           ))}
-          <div>
-            <input
+          <div id="instockcategory">
+            <Input
               name="inStock"
               type="checkbox"
               onChange={this.handleInStock}
               checked={this.state.inStock}
-            />In Stock
+            />{' '}
+            In Stock
           </div>
           {/* <label htmlFor="inStock">In stock</label> */}
         </div>
-        <select name="sort" onChange={this.handleSort}>
+
+        <select id="sort" name="sort" onChange={this.handleSort}>
           {/* <option value="name_0" selected={this.state.sort === ''} /> */}
+
           <option value="name_0" selected={this.state.sort === 'name_0'}>
             Name (A to Z)
           </option>
