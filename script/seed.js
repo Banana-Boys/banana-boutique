@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 'use strict'
 const faker = require('faker')
 const {db} = require('../server/db')
@@ -6,6 +7,8 @@ const {User, Product, Category, Review} = require('../server/db/models')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
+// eslint-disable-next-line max-statements
+// eslint-disable-next-line complexity
 async function seed() {
   const NUM_PRODUCTS = 100
   const NUM_CATEGORIES = 4
@@ -42,16 +45,16 @@ async function seed() {
   // CATEGORIES
   const categories = await Promise.all([
     Category.create({
-      name: 'Benign'
+      name: 'Green'
     }),
     Category.create({
-      name: 'Malignant'
+      name: 'Yellow'
     }),
     Category.create({
-      name: 'Inoculated'
+      name: 'Bushel'
     }),
     Category.create({
-      name: 'Tasty'
+      name: 'Single'
     })
   ])
 
@@ -69,26 +72,71 @@ async function seed() {
     numUsers--
   }
 
-  // CREATE RANDOM PRODUCTS
-  let i = NUM_PRODUCTS
-  const products = []
-  while (i > 0) {
+  let products = []
+
+  // CREATE GREEN BUSHELS
+  const greenCategory = categories[0]
+  const bushelCategory = categories[2]
+  for (let green = 0; green < 10; green++) {
+    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/bushel-green-${Math.ceil(
+      Math.random() * 3
+    )}.jpg`
+    const price = Math.ceil(Math.random() * 100)
+    const inventory = Math.ceil(Math.random() * 11)
+    const description = faker.lorem.paragraph()
+
     const product = await Product.create({
-      name: faker.commerce.product(),
-      price: 1000,
-      description: faker.commerce.productAdjective(),
-      inventory: 5
+      name: [faker.commerce.productAdjective(), 'Nana'].join(' '),
+      imageUrl,
+      price,
+      inventory,
+      description
     })
-    let index = Math.floor(Math.random() * categories.length)
-    let jndex = Math.floor(Math.random() * categories.length)
-    if (index !== jndex) {
-      await product.setCategories([categories[index], categories[jndex]])
-    } else {
-      await product.setCategories([categories[index]])
-    }
+    await product.setCategories([greenCategory, bushelCategory])
     products.push(product)
-    i--
   }
+
+  // CREATE YELLOW BUSHELS
+  const yellowCategory = categories[1]
+  for (let yellow = 0; yellow < 20; yellow++) {
+    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/bushel-yellow-${Math.ceil(
+      Math.random() * 5
+    )}.jpg`
+    const price = Math.ceil(Math.random() * 10000)
+    const inventory = Math.ceil(Math.random() * 11)
+    const description = faker.lorem.paragraph()
+
+    const product = await Product.create({
+      name: [faker.commerce.productAdjective(), 'Nana'].join(' '),
+      imageUrl,
+      price,
+      inventory,
+      description
+    })
+    await product.setCategories([yellowCategory, bushelCategory])
+    products.push(product)
+  }
+  // CREATE YELLOW SINGLES
+  const singleCategory = categories[3]
+  for (let single = 0; single < 5; single++) {
+    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/single-${Math.round(
+      Math.random()
+    )}.jpg`
+    const price = Math.ceil(Math.random() * 1000)
+    const inventory = Math.ceil(Math.random() * 11)
+    const description = faker.lorem.paragraph()
+
+    const product = await Product.create({
+      name: [faker.commerce.productAdjective(), 'Nana'].join(' '),
+      imageUrl,
+      price,
+      inventory,
+      description
+    })
+    await product.setCategories([singleCategory])
+    products.push(product)
+  }
+  // CREATE ART
 
   // CREATE RANDOM REVIEWS
   let userIndex = 0
