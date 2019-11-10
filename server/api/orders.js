@@ -52,7 +52,15 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.id)
     await order.update(req.body)
-    res.send(order)
+    res.send(
+      await Order.findByPk(req.params.id, {
+        include: [
+          {model: OrderLineItem, include: [{model: Product}]},
+          {model: Address, as: 'shipping'},
+          {model: User, as: 'buyer'}
+        ]
+      })
+    )
   } catch (err) {
     next(err)
   }

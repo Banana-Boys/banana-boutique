@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AllOrders from './AllOrders'
 import AllUsers from './AllUsers'
-import {fetchAllOrders} from '../store/orders'
+import {fetchAllOrders, sendUpdateOrder} from '../store/orders'
 import {
   fetchUsers,
   removeUserFromBoard,
@@ -14,10 +14,8 @@ import {withRouter} from 'react-router-dom'
 export class AdminBoard extends Component {
   constructor() {
     super()
-    this.state = {
-      filter: 'all'
-    }
     this.onFilter = this.onFilter.bind(this)
+    this.handeStatusChange = this.handeStatusChange.bind(this)
   }
 
   async componentDidMount() {
@@ -33,13 +31,14 @@ export class AdminBoard extends Component {
       const query = {status: event.target.value}
       await this.props.fetchAllOrders(query)
     }
-    this.setState({
-      filter: event.target.value
-    })
+  }
+
+  async handeStatusChange(event, id) {
+    const order = {id, status: event.target.value}
+    await this.props.sendUpdateOrder(order)
   }
 
   render() {
-    const propsId = this.props.match.params.id
     const orders = this.props.orders || []
     const users = this.props.users || []
     return (
@@ -56,7 +55,11 @@ export class AdminBoard extends Component {
         <h5>
           All Orders:{' '}
           {orders.map(order => (
-            <AllOrders key={order.id} propsId={propsId} order={order} />
+            <AllOrders
+              key={order.id}
+              order={order}
+              handleStatusChange={this.handeStatusChange}
+            />
           ))}
         </h5>
 
@@ -92,7 +95,8 @@ const mapDispatchToProps = {
   removeUserFromBoard,
   fetchUsers,
   promoteUserBoard,
-  demoteUserBoard
+  demoteUserBoard,
+  sendUpdateOrder
 }
 
 export default withRouter(
