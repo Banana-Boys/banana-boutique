@@ -51,7 +51,8 @@ body,
 #single-product,
 #checkout,
 #user-home,
-#account-form {
+#account-form,
+#admin-board {
   top: 0;
   margin-top: 8vh;
 }
