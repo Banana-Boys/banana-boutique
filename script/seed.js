@@ -7,7 +7,10 @@ const {
   Product,
   Category,
   Review,
-  CartLineItem
+  CartLineItem,
+  Order,
+  OrderLineItem,
+  Wishlist
 } = require('../server/db/models')
 
 const session = require('express-session')
@@ -195,7 +198,7 @@ async function seed() {
     }
   }
 
-  // AUTH/UNAUTH USER WITH CART
+  // AUTH USER WITH CART
   const userWithCart = await User.create({
     name: 'userWithCart',
     email: 'userCart@email.com',
@@ -214,8 +217,71 @@ async function seed() {
   )
 
   // AUTH/UNAUTH USER WITH ORDER
+  const userWithOrder = await User.create({
+    name: 'userWithOrder',
+    email: 'userOrder@email.com',
+    password: '123',
+    role: 'user'
+  })
+
+  const order = await Order.create({
+    buyerId: userWithOrder.id,
+    datePlaced: new Date()
+  })
+
+  await Promise.all(
+    [4, 8, 12].map(index =>
+      OrderLineItem.create({
+        quantity: 1,
+        price: Math.floor(Math.random() * 10000),
+        productId: index,
+        orderId: order.id
+      })
+    )
+  )
+
+  const guestWithOrder = await User.create({
+    name: 'guestWithOrder',
+    email: 'guestOrder@email.com',
+    role: 'guest'
+  })
+
+  const orderGuest = await Order.create({
+    buyerId: guestWithOrder.id,
+    datePlaced: new Date()
+  })
+
+  await Promise.all(
+    [5, 20, 10].map(index =>
+      OrderLineItem.create({
+        quantity: 1,
+        price: Math.floor(Math.random() * 20000),
+        productId: index,
+        orderId: orderGuest.id
+      })
+    )
+  )
 
   // AUTH/UNAUTH USER WITH WISHLIST
+  // const userWishlist = await User.create({
+  //   name: 'userWithWishlist',
+  //   email: 'userWishlist@email.com',
+  //   role: 'user'
+  // })
+
+  // const wishlist = await Wishlist.create({
+  //   userId: userWithlist.id
+  // })
+
+  // await Promise.all(
+  //   [5, 20, 10].map(index =>
+  //     WishlistLineItem.create({
+  //       quantity: 1,
+  //       productId: index,
+  //       wishlistId: wishlist.id
+  //     })
+  //   )
+  // )
 
   await Promise.all(reviews)
 
