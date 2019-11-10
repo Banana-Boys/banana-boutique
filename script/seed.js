@@ -55,6 +55,9 @@ async function seed() {
     }),
     Category.create({
       name: 'Single'
+    }),
+    Category.create({
+      name: 'Art'
     })
   ])
 
@@ -78,43 +81,41 @@ async function seed() {
   const greenCategory = categories[0]
   const bushelCategory = categories[2]
   for (let green = 0; green < 10; green++) {
-    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/bushel-green-${Math.ceil(
+    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/bushel-green-${Math.round(
       Math.random() * 3
     )}.jpg`
     const price = Math.ceil(Math.random() * 100)
     const inventory = Math.ceil(Math.random() * 11)
     const description = faker.lorem.paragraph()
 
-    const product = await Product.create({
+    const product = {
       name: [faker.commerce.productAdjective(), 'Nana'].join(' '),
       imageUrl,
       price,
       inventory,
       description
-    })
-    await product.setCategories([greenCategory, bushelCategory])
-    products.push(product)
+    }
+    products.push([product, [greenCategory, bushelCategory]])
   }
 
   // CREATE YELLOW BUSHELS
   const yellowCategory = categories[1]
   for (let yellow = 0; yellow < 20; yellow++) {
-    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/bushel-yellow-${Math.ceil(
+    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/bushel-yellow-${Math.round(
       Math.random() * 5
     )}.jpg`
     const price = Math.ceil(Math.random() * 10000)
     const inventory = Math.ceil(Math.random() * 11)
     const description = faker.lorem.paragraph()
 
-    const product = await Product.create({
+    const product = {
       name: [faker.commerce.productAdjective(), 'Nana'].join(' '),
       imageUrl,
       price,
       inventory,
       description
-    })
-    await product.setCategories([yellowCategory, bushelCategory])
-    products.push(product)
+    }
+    products.push([product, [yellowCategory, bushelCategory]])
   }
   // CREATE YELLOW SINGLES
   const singleCategory = categories[3]
@@ -126,17 +127,43 @@ async function seed() {
     const inventory = Math.ceil(Math.random() * 11)
     const description = faker.lorem.paragraph()
 
-    const product = await Product.create({
+    const product = {
       name: [faker.commerce.productAdjective(), 'Nana'].join(' '),
       imageUrl,
       price,
       inventory,
       description
-    })
-    await product.setCategories([singleCategory])
-    products.push(product)
+    }
+    products.push([product, [singleCategory]])
   }
-  // CREATE ART
+
+  // CREATE ART NANAS
+  const artCategory = categories[4]
+  for (let art = 0; art < 7; art++) {
+    const imageUrl = `https://nanas-image-store.s3.us-east-2.amazonaws.com/art-${Math.round(
+      Math.random() * 4
+    )}.jpg`
+    const price = Math.ceil(Math.random() * 10000000)
+    const inventory = Math.ceil(Math.random() * 11)
+    const description = faker.lorem.paragraph()
+
+    const product = {
+      name: [faker.commerce.productAdjective(), 'Nana'].join(' '),
+      imageUrl,
+      price,
+      inventory,
+      description
+    }
+    products.push([product, [artCategory]])
+  }
+
+  // shuffles nana objects before creation step
+  products.sort(() => Math.random() - 0.5)
+  await Promise.all(
+    products.map(([product, cats]) => {
+      return Product.create(product).then(nan => nan.setCategories(cats))
+    })
+  )
 
   // CREATE RANDOM REVIEWS
   let userIndex = 0
