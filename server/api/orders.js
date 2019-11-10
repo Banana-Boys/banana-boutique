@@ -11,15 +11,14 @@ const {checkGuest, isAdmin} = require('../middleware')
 
 router.get('/', async (req, res, next) => {
   try {
+    const query = req.query || {}
     if (req.user.role) {
       const orders = await Order.findAll({
-        // where: {
-        //   userId: req.user.id
-        // },
         include: [
           {model: OrderLineItem, include: [{model: Product}]},
           {model: User, as: 'buyer'}
-        ]
+        ],
+        where: query
       })
 
       res.send(orders)

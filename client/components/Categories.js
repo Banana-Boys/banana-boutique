@@ -150,7 +150,7 @@ export class Categories extends Component {
             Price (low to high)
           </option>
           <option value="price_1" selected={this.state.sort === 'price_1'}>
-            Price (Z to A)
+            Price (low to high)
           </option>
           <option
             value="avgrating_0"

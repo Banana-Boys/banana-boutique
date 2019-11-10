@@ -9,10 +9,10 @@ const GET_ORDERS = 'GET_ORDERS'
 //action creators
 const getOrders = orders => ({type: GET_ORDERS, orders})
 
-export const fetchAllOrders = () => {
+export const fetchAllOrders = query => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/orders') //looked cute, might change later
+      const {data} = await axios.get('/api/orders', {params: query}) //looked cute, might change later
       dispatch(getOrders(data))
     } catch (err) {
       console.log(err)
