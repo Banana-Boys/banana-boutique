@@ -59,6 +59,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
+    //console.log('thisprops', this.props)
     const categories = product.categories || []
     const quantitySelect = []
 

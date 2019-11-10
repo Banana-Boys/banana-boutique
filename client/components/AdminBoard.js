@@ -2,7 +2,12 @@ import React, {Component} from 'react'
 import AllOrders from './AllOrders'
 import AllUsers from './AllUsers'
 import {fetchAllOrders} from '../store/orders'
-import {fetchUsers} from '../store/user'
+import {
+  fetchUsers,
+  removeUserFromBoard,
+  promoteUserBoard,
+  demoteUserBoard
+} from '../store/users'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
@@ -19,7 +24,7 @@ export class AdminBoard extends Component {
   render() {
     const propsId = this.props.match.params.id
     const orders = this.props.orders || []
-    const users = this.props.user || []
+    const users = this.props.users || []
     return (
       <div>
         <h5>
@@ -34,7 +39,15 @@ export class AdminBoard extends Component {
           {!users.length ? (
             <div>No users in database</div>
           ) : (
-            users.map(user => <AllUsers key={user.id} user={user} />)
+            users.map(user => (
+              <AllUsers
+                key={user.id}
+                user={user}
+                deleteUser={this.props.removeUserFromBoard}
+                promote={this.props.promoteUserBoard}
+                demote={this.props.demoteUserBoard}
+              />
+            ))
           )}
         </h5>
       </div>
@@ -42,14 +55,18 @@ export class AdminBoard extends Component {
   }
 }
 
-const mapStateToProps = ({orders, user}) => ({
+const mapStateToProps = ({orders, user, users}) => ({
   orders,
-  user
+  user,
+  users
 })
 
 const mapDispatchToProps = {
   fetchAllOrders,
-  fetchUsers
+  removeUserFromBoard,
+  fetchUsers,
+  promoteUserBoard,
+  demoteUserBoard
 }
 
 export default withRouter(

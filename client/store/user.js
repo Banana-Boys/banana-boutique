@@ -6,7 +6,6 @@ import {fetchAddresses} from './addresses'
  * ACTION TYPES
  */
 const GET_USER = 'GET_USER'
-const GET_USERS = 'GET_USERS'
 const REMOVE_USER = 'REMOVE_USER'
 
 /**
@@ -19,7 +18,6 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-const getUsers = users => ({type: GET_USERS, users})
 
 /**
  * THUNK CREATORS
@@ -36,15 +34,6 @@ export const me = () => async dispatch => {
     }
   } catch (err) {
     console.error(err)
-  }
-}
-
-export const fetchUsers = () => async dispatch => {
-  try {
-    const {data} = await axios.get(`/api/users`)
-    dispatch(getUsers(data))
-  } catch (error) {
-    console.log(error)
   }
 }
 
@@ -103,8 +92,6 @@ export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
-    case GET_USERS:
-      return action.users
     case REMOVE_USER:
       return defaultUser
     default:
