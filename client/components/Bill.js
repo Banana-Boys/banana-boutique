@@ -7,15 +7,15 @@ const Bill = props => {
     return sum + item.quantity * item.product.price
   }, 0)
   return (
-    <div id="cart-display">
+    <div id="bill-display">
       {cart.map(({quantity, product}) => {
         return (
-          <div key={product.id}>
-            {product.name} - {quantity}
-          </div>
+          <h4 key={product.id}>
+            {product.name} -- {quantity} x ${priceConvert(product.price)}
+          </h4>
         )
       })}
-      <h3>Total ${priceConvert(total)}</h3>
+      <h3 id="total">${priceConvert(total)}</h3>
     </div>
   )
 }

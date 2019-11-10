@@ -75,9 +75,10 @@ export class Cart extends Component {
           })}
         </div>
         <div id="bill">
+          <h1>Total</h1>
           <Bill cart={cartItems} />
           <Link to="/checkout">
-            <button type="button">Checkout</button>
+            <Button type="button">Checkout</Button>
           </Link>
         </div>
       </div>

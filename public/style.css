@@ -156,7 +156,7 @@ body,
 
 /* TEXT STYLES */
 body {
-  font-family: Garamond, 'Times New Roman', Times, serif;
+  font-family: Garamond, 'Times New Roman', Times, serif !important;
 }
 h6 {
   color: rgb(123, 123, 123);
@@ -185,11 +185,12 @@ a {
   background: #fff;
   margin: 20px auto;
   padding: 20px;
+  margin-left: 15vw;
 }
 
 .product {
   width: fit-content;
-  margin: 20px auto;
+  margin: 20px 0;
   display: grid;
   border-top: 1px solid #000000af;
   width: 40vw;
@@ -221,4 +222,18 @@ a {
 
 .product .delete-button:hover {
   cursor: pointer;
+}
+
+#bill {
+  position: fixed;
+  padding: 20px;
+  right: 0;
+  background-color: #fff;
+  margin-right: 14vw;
+  margin-top: 20px;
+  width: 25vw;
+}
+
+#bill-display {
+  margin-left: 20px;
 }
