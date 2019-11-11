@@ -7,6 +7,7 @@ import Search from './Search'
 import UserHome from './UserHome'
 import {Input, Button, Form, Item, Grid, Container} from 'semantic-ui-react'
 
+import './navbar.scss'
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div id="nav-container">
     <Link to="/home">

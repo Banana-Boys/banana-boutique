@@ -59,6 +59,7 @@ router.put('/:id', async (req, res, next) => {
 
 router.get('/distance/:zip', async (req, res, next) => {
   try {
+    console.log('HITTING THE ADDRESSES')
     const originZip = '60654'
     const {data} = await axios.get(
       `https://www.zipcodeapi.com/rest/${
