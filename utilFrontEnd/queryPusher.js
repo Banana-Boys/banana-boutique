@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 export const queryPusher = (state, props) => {
   const {location, history} = props
-  const {categories, search, inStock, sort} = state
+  const {categories, search, inStock, sort, numPerPage} = state
   let queryPush = []
   if (categories.length) {
     queryPush.push(`categories=${categories.join('+')}`)
@@ -34,9 +34,9 @@ export const queryPusher = (state, props) => {
   // if (applyCompletionStatus) {
   //   queryPush.push(`completionStatus=${completionStatus}`);
   // }
-  // if (numPerPage != 10) {
-  //   queryPush.push(`numPerPage=${numPerPage}`);
-  // }
+  if (Number(numPerPage) !== 10) {
+    queryPush.push(`numPerPage=${numPerPage}`)
+  }
   // if (applySearch && searchQuery.length > 0) {
   //   queryPush.push(`searchQuery=${searchQuery}`);
   // }

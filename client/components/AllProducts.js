@@ -4,7 +4,6 @@ import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Categories from './Categories'
 import {Grid, Image, Container, Card} from 'semantic-ui-react'
-import Search from './Search'
 
 export class AllProducts extends Component {
   constructor(props) {

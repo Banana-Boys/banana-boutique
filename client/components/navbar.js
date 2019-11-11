@@ -9,7 +9,6 @@ import {Input, Button, Form, Item, Grid, Container} from 'semantic-ui-react'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div id="nav-container">
-    {console.log('user', user)}
     <Link to="/home">
       <img
         src="https://nanas-image-store.s3.us-east-2.amazonaws.com/nana-logo.png"
