@@ -304,7 +304,14 @@ class Checkout extends React.Component {
               </div>
               <button
                 type="submit"
-                disabled={!this.state.shippingAddress.length}
+                disabled={
+                  !this.state.shippingAddress.length ||
+                  (this.state.shippingAddress === 'new' &&
+                    (!this.state.newShippingAddress.address1.length ||
+                      !this.state.newShippingAddress.city.length ||
+                      !this.state.newShippingAddress.country.length ||
+                      !this.state.newShippingAddress.zip.length))
+                }
               >
                 Submit
               </button>
@@ -374,7 +381,17 @@ class Checkout extends React.Component {
                   )}
                 </div>
               </div>
-              <button type="submit">Submit</button>
+              <button
+                type="submit"
+                disabled={
+                  !this.state.newShippingAddress.address1.length ||
+                  !this.state.newShippingAddress.city.length ||
+                  !this.state.newShippingAddress.country.length ||
+                  !this.state.newShippingAddress.zip.length
+                }
+              >
+                Submit
+              </button>
             </form>
           )
         ) : (
