@@ -59,21 +59,20 @@ router.post('/', async (req, res, next) => {
     }
     req.session.save()
 
-    let cartLineItem
     if (req.user) {
-      sameProduct = await CartLineItem.findOne({where: {productId}})
+      sameProduct = await CartLineItem.findOne({
+        where: {productId, userId: req.user.id}
+      })
       if (sameProduct) {
         await sameProduct.update({quantity: quantity + sameProduct.quantity})
-        cartLineItem = await CartLineItem.findByPk(sameProduct.id)
+        await CartLineItem.findByPk(sameProduct.id)
       } else {
-        cartLineItem = await CartLineItem.create({quantity})
-        await Promise.all([
-          cartLineItem.setProduct(productId),
-          cartLineItem.setUser(req.user.id)
-        ])
-        cartLineItem = await CartLineItem.findByPk(cartLineItem.id)
+        await CartLineItem.create({
+          quantity,
+          productId,
+          userId: req.user.id
+        })
       }
-      console.log(cartLineItem)
     }
     res.status(200).json({product, quantity})
   } catch (error) {
@@ -118,6 +117,7 @@ router.put('/:id', async (req, res, next) => {
       const cartLineItem = await CartLineItem.findOne({
         where: {productId, userId: +req.user.id}
       })
+
       await cartLineItem.update({quantity})
     }
     res.sendStatus(204)
