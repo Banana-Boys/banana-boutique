@@ -51,7 +51,14 @@ class UserHome extends React.Component {
         </div>
         <Item.Group>
           <Item id="user-home-itemgroup">
-            <Item.Image id="userhomeprofileimage" src={imageUrl} />
+            {!imageUrl ? (
+              <img
+                id="userhomeprofileimage"
+                src="http://simpleicon.com/wp-content/uploads/user1.svg"
+              />
+            ) : (
+              <Item.Image id="userhomeprofileimage" src={imageUrl} />
+            )}
 
             <Item.Content id="userhomeitemcontent">
               <Item.Description>
@@ -86,18 +93,19 @@ class UserHome extends React.Component {
                           <span>{country}</span> <span>{zip}</span>
                         </p>
                         <Link to="/addresses/new">
-                          <Button size="mini" type="button">
+                          <Button size="mini" type="button" color="olive">
                             +Add Address
                           </Button>
                         </Link>
                         <Link to={`/addresses/${id}/edit`}>
-                          <Button size="mini" type="button">
+                          <Button size="mini" type="button" color="blue">
                             Edit Address
                           </Button>
                         </Link>
                         <Button
                           size="mini"
                           type="button"
+                          color="red"
                           onClick={() => {
                             this.props.deleteAddress(id)
                           }}
@@ -133,7 +141,7 @@ class UserHome extends React.Component {
         </h5>
 
         <Link to={`/users/${this.props.match.params.id}/edit`}>
-          <Button size="mini" type="button">
+          <Button size="mini" type="button" color="blue">
             Edit Profile
           </Button>
         </Link>
@@ -141,6 +149,7 @@ class UserHome extends React.Component {
         <Button
           size="mini"
           type="button"
+          color="red"
           onClick={() => {
             this.props.deleteUser(this.props.match.params.id)
           }}
