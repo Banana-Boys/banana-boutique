@@ -140,7 +140,7 @@ export class Queries extends Component {
 
     return (
       <div id="products-side-menus">
-        {isAdmin ? (
+        {isAdmin === 'admin' ? (
           <div id="products-admin-actions">
             <div id="submit-product-holder">
               <Link to="/products/new">
