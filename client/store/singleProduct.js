@@ -32,7 +32,6 @@ export const createProduct = (body, history) => async dispatch => {
 export const editProduct = (id, body, history) => async dispatch => {
   try {
     const {data} = await axios.put(`/api/products/${id}`, body)
-    console.log(data)
     history.push(`/products/${data.id}`)
   } catch (error) {
     console.log(error)

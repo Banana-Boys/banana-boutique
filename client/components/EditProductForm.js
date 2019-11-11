@@ -63,7 +63,7 @@ class EditProductForm extends React.Component {
         .filter(option => option.selected)
         .map(option => option.value)
     } else if (e.target.name === 'price') {
-      value = e.target.value
+      value = Math.floor(e.target.value)
     } else {
       value = e.target.value
     }
@@ -72,14 +72,20 @@ class EditProductForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    const submitState = {
-      ...this.state,
-      price: Number(this.state.price * 100).toFixed(0)
+    let state = {}
+    for (let key of Object.keys(this.state)) {
+      if (this.state[key]) {
+        if (key === 'price') {
+          state.price = Number(this.state.price * 100).toFixed(0)
+        } else if (this.state[key].toString().length) {
+          state[key] = this.state[key]
+        }
+      }
     }
 
     this.props.editProduct(
       this.props.match.params.id,
-      submitState,
+      state,
       this.props.history
     )
   }
@@ -126,7 +132,7 @@ class EditProductForm extends React.Component {
             value={this.state.price}
             onChange={this.handleChange}
           />
-          {this.state.price.length > 0 ? null : (
+          {this.state.price.toString().length > 0 ? null : (
             <div>Price cannot be empty</div>
           )}
         </div>
@@ -162,7 +168,16 @@ class EditProductForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <Button size="mini" type="submit" color="blue">
+          <Button
+            size="mini"
+            type="submit"
+            color="blue"
+            disabled={
+              !this.state.name.length ||
+              !this.state.price.toString().length ||
+              !this.state.inventory.toString().length
+            }
+          >
             Submit
           </Button>
         </div>
