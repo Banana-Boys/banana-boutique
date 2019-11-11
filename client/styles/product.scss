@@ -1,0 +1,31 @@
+/* PRODUCT CARD */
+.product-card {
+  margin: 25px -10px;
+  width: 50%;
+}
+
+.product-card {
+  color: #000;
+}
+
+.product-card .image img {
+  width: 100%;
+  xborder-radius: 2% 2% 0 0;
+}
+
+.product-card .content {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .content .header,
+.product-card .content .description {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.product-card .content * {
+  margin: 0px;
+  padding: 0px 3px;
+}
