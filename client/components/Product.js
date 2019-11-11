@@ -33,15 +33,13 @@ const Product = props => {
             ) : (
               <h6>In Stock: {product.inventory}</h6>
             )}
-            {/* <Label>
-              Categories:{' '}
-              <ul>
-                {product.categories.map(category => (
-                  <li key={category.id}>{category.name}</li>
-                ))}
-              </ul>
-            </Label>
-            <h4>Number of ratings: {product.numratings}</h4> */}
+            <h6>
+              Categories:<ul>
+                  {product.categories.map(category => (
+                    <li key={category.id}>{category.name}</li>
+                  ))}
+                </ul>
+            </h6>
           </Item.Description>
         </Item.Content>
       </Link>
