@@ -5,7 +5,7 @@ import axios from 'axios'
  */
 const GET_CATEGORY = 'GET_CATEGORY'
 const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
-const NEW_CATEGORY = 'NEW_CATEGORY'
+export const NEW_CATEGORY = 'NEW_CATEGORY'
 /**
  * INITIAL STATE
  */

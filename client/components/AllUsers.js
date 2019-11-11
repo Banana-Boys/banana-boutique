@@ -19,39 +19,6 @@ const AllUsers = props => {
             <Table.Cell>Email: {user.email}</Table.Cell>
             <Table.Cell>Role: {user.role}</Table.Cell>
 
-            <Table.Cell>
-              <Button
-                floated="right"
-                type="button"
-                onClick={() => {
-                  props.deleteUser(user.id)
-                }}
-              >
-                Delete User
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button
-                floated="right"
-                type="button"
-                onClick={() => {
-                  props.deleteUser(user.id)
-                }}
-              >
-                Delete User
-              </Button>
-            </Table.Cell>
-            <Table.Cell>
-              <Button
-                floated="right"
-                type="button"
-                onClick={() => {
-                  props.triggerReset(user.id)
-                }}
-              >
-                Reset Password
-              </Button>
-            </Table.Cell>
             {/* <Table.Cell>
               <Link
                 to={`/products/${review.productId}/reviews/${review.id}/edit`}
@@ -64,8 +31,10 @@ const AllUsers = props => {
             {user.role === 'user' ? (
               <Table.Cell>
                 <Button
+                  size="mini"
                   floated="right"
                   type="button"
+                  color="yellow"
                   onClick={() => {
                     props.promote(user)
                   }}
@@ -79,8 +48,10 @@ const AllUsers = props => {
             {user.role === 'admin' ? (
               <Table.Cell>
                 <Button
+                  size="mini"
                   floated="right"
                   type="button"
+                  color="olive"
                   onClick={() => {
                     props.demote(user)
                   }}
@@ -91,6 +62,32 @@ const AllUsers = props => {
             ) : (
               <div />
             )}
+            <Table.Cell>
+              <Button
+                size="mini"
+                floated="right"
+                type="button"
+                color="blue"
+                onClick={() => {
+                  props.triggerReset(user.id)
+                }}
+              >
+                Prompt Password
+              </Button>
+            </Table.Cell>
+            <Table.Cell>
+              <Button
+                size="mini"
+                floated="right"
+                type="button"
+                color="red"
+                onClick={() => {
+                  props.deleteUser(user.id)
+                }}
+              >
+                Delete User
+              </Button>
+            </Table.Cell>
           </Table.Row>
         </TableBody>
       </Table>
