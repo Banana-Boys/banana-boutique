@@ -7,7 +7,6 @@ import {fetchAddresses} from './addresses'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-
 /**
  * INITIAL STATE
  */
@@ -18,7 +17,6 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-
 /**
  * THUNK CREATORS
  */
@@ -48,7 +46,9 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     dispatch(getUser(res.data))
     dispatch(fetchAddresses())
-    if (history.location.pathname !== '/checkout') {
+    if (res.data.resetPassword) {
+      history.push('/passwordReset')
+    } else if (history.location.pathname !== '/checkout') {
       history.push(`/users/${res.data.id}`)
     }
   } catch (dispatchOrHistoryErr) {
@@ -82,6 +82,19 @@ export const deleteUser = userId => async dispatch => {
     dispatch(logout())
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const resetPassword = (userId, password, history) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/users/${userId}`, {
+      password,
+      resetPassword: false
+    })
+    dispatch(getUser(res.data))
+    history.push(`/home`)
+  } catch (err) {
+    console.log(err)
   }
 }
 

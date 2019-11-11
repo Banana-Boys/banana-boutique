@@ -4,6 +4,7 @@ import {NEW_CATEGORY} from './singleCategory'
  * ACTION TYPES
  */
 const GET_CATEGORIES = 'GET_CATEGORIES'
+const ADD_CATEGORY = 'ADD_CATEGORY'
 
 /**
  * INITIAL STATE
@@ -14,6 +15,7 @@ const defaultCategories = []
  * ACTION CREATORS
  */
 const getCategories = categories => ({type: GET_CATEGORIES, categories})
+export const addCategory = category => ({type: ADD_CATEGORY, category})
 
 /**
  * THUNK CREATORS
@@ -36,7 +38,7 @@ export default function(categories = [], action) {
   switch (action.type) {
     case GET_CATEGORIES:
       return action.categories
-    case NEW_CATEGORY:
+    case ADD_CATEGORY:
       return [...categories, action.category]
     default:
       return categories

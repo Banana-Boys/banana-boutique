@@ -12,12 +12,19 @@ export class Reviews extends Component {
 
   render() {
     const reviews = this.props.reviews || []
-    console.log('Reviews Props', this.props)
     return (
       <Container>
-        <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
-          <Button type="button">Add Review</Button>
-        </Link>
+        {this.props.user.id ? (
+          <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
+            <Button type="button">Add Review</Button>
+          </Link>
+        ) : (
+          <Link to="/login">
+            <Button type="button">
+              You must be logged in to leave a review
+            </Button>
+          </Link>
+        )}
         <Container>
           {reviews.map(rev => (
             <Review
@@ -34,7 +41,8 @@ export class Reviews extends Component {
 }
 
 const mapStateToProps = state => ({
-  reviews: state.reviews
+  reviews: state.reviews,
+  user: state.user
 })
 
 const mapDispatchToProps = {createReview, destroyReview, editReview}

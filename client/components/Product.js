@@ -35,10 +35,10 @@ const Product = props => {
             )}
             <h6>
               Categories:<ul>
-                  {product.categories.map(category => (
-                    <li key={category.id}>{category.name}</li>
-                  ))}
-                </ul>
+                {product.categories.map(category => (
+                  <li key={category.id}>{category.name}</li>
+                ))}
+              </ul>
             </h6>
           </Item.Description>
         </Item.Content>

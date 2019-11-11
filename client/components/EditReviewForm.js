@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {editReview} from '../store/reviews'
 import {fetchReview} from '../store/review'
+import {Login} from './auth-form'
 
 class EditReviewForm extends React.Component {
   constructor(props) {
@@ -37,7 +38,8 @@ class EditReviewForm extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.user.id === this.props.review.userId ||
+      this.props.user.role === 'admin' ? (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="rating">Rating:</label>
@@ -77,11 +79,16 @@ class EditReviewForm extends React.Component {
           <button type="submit">Submit</button>
         </div>
       </form>
+    ) : (
+      <div>
+        <div>You are not the correct user</div>
+        <Login />
+      </div>
     )
   }
 }
 
-const mapStateToProps = ({review}) => ({review})
+const mapStateToProps = ({review, user}) => ({review, user})
 const mapDispatchToProps = {editReview, fetchReview}
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditReviewForm)

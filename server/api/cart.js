@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
   try {
     let cart
     // might have to play around with the order of this to make sure the session cart persists when a user logs in, and then will need save the session cart to the db
-    if (req.session.cart) {
+    if (req.session.cart && req.session.cart.length) {
       cart = req.session.cart
       cart = await Promise.all(
         cart.map(async cartLineItem => ({
@@ -27,6 +27,8 @@ router.get('/', async (req, res, next) => {
           }
         ]
       })
+      req.session.cart = cart
+      req.session.save()
     } else {
       cart = []
     }
@@ -71,6 +73,7 @@ router.post('/', async (req, res, next) => {
         ])
         cartLineItem = await CartLineItem.findByPk(cartLineItem.id)
       }
+      console.log(cartLineItem)
     }
     res.status(200).json({product, quantity})
   } catch (error) {

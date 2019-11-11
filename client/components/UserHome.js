@@ -5,11 +5,12 @@ import {Link} from 'react-router-dom'
 import {fetchAddresses, deleteAddress} from '../store/addresses'
 import {deleteUser} from '../store/user'
 import {fetchUserReviews, destroyReview} from '../store/reviews'
-import {fetchUserOrders, fetchAllOrders} from '../store/orders'
+import {fetchUserOrders} from '../store/orders'
 import Review from './Review'
 import UserOrder from './UserOrder'
 import AllOrders from './AllOrders'
 import {Button, Container, Item, Image} from 'semantic-ui-react'
+import {Login} from './auth-form'
 
 /**
  * COMPONENT
@@ -20,21 +21,33 @@ class UserHome extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.fetchAddresses()
-    await this.props.fetchUserReviews(this.props.match.params.id)
-    await this.props.fetchUserOrders(this.props.match.params.id)
+  componentDidMount() {
+    if (this.props.user.id) this.props.fetchAddresses()
+    if (this.props.user.id)
+      this.props.fetchUserReviews(this.props.match.params.id)
+    if (this.props.user.id)
+      this.props.fetchUserOrders(this.props.match.params.id)
   }
 
   handleClick(e) {}
 
   render() {
-    const {name, email, phone, imageUrl} = this.props.user
+    const {id, name, email, phone, imageUrl, role} = this.props.user
+    const isUser = id === Number(this.props.match.params.id) || role === 'admin'
     const propsId = this.props.match.params.id
     return (
       <Container id="user-home">
         <div id="userhomewelcomname">
-          <h3>Welcome, {name}</h3>
+          {isUser ? (
+            <h1>Welcome, {name}</h1>
+          ) : (
+            <div>
+              <div>
+                <h1>You are not the correct user</h1>
+              </div>
+              <Login />
+            </div>
+          )}
         </div>
         <Item.Group>
           <Item id="user-home-itemgroup">
@@ -100,7 +113,6 @@ class UserHome extends React.Component {
           </Item>
         </Item.Group>
 
-        {/* <h5>Wishlists: </h5> */}
         <h5>
           Your Orders:{' '}
           {this.props.orders.map(order => (

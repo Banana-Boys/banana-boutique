@@ -69,7 +69,7 @@ const AllUsers = props => {
                 type="button"
                 color="blue"
                 onClick={() => {
-                  //props.demote(user)
+                  props.triggerReset(user.id)
                 }}
               >
                 Prompt Password
