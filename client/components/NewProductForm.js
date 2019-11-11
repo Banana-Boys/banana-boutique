@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import {createProduct} from '../store/singleProduct'
@@ -12,7 +13,8 @@ class NewProductForm extends React.Component {
       imageUrl: '',
       price: '',
       inventory: '',
-      categories: []
+      categories: [],
+      inputError: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -49,17 +51,17 @@ class NewProductForm extends React.Component {
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input type="text" name="name" onChange={this.handleChange} />
-          {this.state.name.length > 0 ? null : <div>Name cannot be empty</div>}
+          {this.state.name.length > 0 ? null : (
+            <div color="red">Name cannot be empty</div>
+          )}
         </div>
 
         <div className="form-group">
           <label htmlFor="description">Description:</label>
           <textarea name="description" onChange={this.handleChange} />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="imageUrl">Image URL:</label>
-          <input type="url" name="imageUrl" onChange={this.handleChange} />
+          {this.state.description.length > 0 ? null : (
+            <div>Description cannot be empty</div>
+          )}
         </div>
 
         <div className="form-group">
@@ -99,6 +101,9 @@ class NewProductForm extends React.Component {
               </option>
             ))}
           </select>
+          {this.state.categories.length > 0 ? null : (
+            <div>At least 1 category must be selected</div>
+          )}
         </div>
 
         <div className="form-group">
@@ -115,6 +120,20 @@ class NewProductForm extends React.Component {
             Submit
           </Button>
         </div>
+
+        {this.state.inventory.length > 0 &&
+        this.state.name.length > 0 &&
+        this.state.description.length > 0 &&
+        this.state.categories.length > 0 &&
+        this.state.price > 0 ? (
+          <div className="form-group">
+            <Button size="mini" type="submit" color="blue">
+              Submit
+            </Button>
+          </div>
+        ) : (
+          <div>Check all required fields</div>
+        )}
       </form>
     )
   }

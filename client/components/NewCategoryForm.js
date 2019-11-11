@@ -4,9 +4,17 @@ import {connect} from 'react-redux'
 import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 export class NewCategoryForm extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = this.buildInitialState()
+    this.updateFormValue = this.updateFormValue.bind(this)
+  }
+
+  buildInitialState() {
+    return {
+      categoryName: ''
+    }
   }
 
   handleSubmit(event) {
@@ -17,6 +25,16 @@ export class NewCategoryForm extends Component {
     })
   }
 
+  updateFormValue = event => {
+    const fieldName = event.target.name
+    const fieldValue = event.target.value
+    const stateUpdate = {
+      [fieldName]: fieldValue
+    }
+    this.setState(stateUpdate)
+    console.log(this.state)
+  }
+
   render() {
     return (
       <form id="new-category-form" onSubmit={this.handleSubmit}>
@@ -24,16 +42,20 @@ export class NewCategoryForm extends Component {
         <Input
           type="text"
           name="categoryName"
-          placeholder="Enter a category name..."
+          placeholder="Create a new category..."
+          value={this.state.categoryName}
+          onChange={this.updateFormValue}
         />
         {/* </div> */}
-        <div id="submit-category-holder">
-          <span>
-            <Button size="mini" type="submit" color="yellow">
-              +Create Category
-            </Button>
-          </span>
-        </div>
+        {this.state.categoryName.length > 0 ? (
+          <div id="submit-category-holder">
+            <span>
+              <Button size="mini" type="submit" color="yellow">
+                +Create Category
+              </Button>
+            </span>
+          </div>
+        ) : null}
       </form>
     )
   }

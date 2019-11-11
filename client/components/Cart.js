@@ -10,6 +10,7 @@ import {Link} from 'react-router-dom'
 import {Button} from 'semantic-ui-react'
 import Bill from './Bill'
 
+import '../styles/cart.scss'
 export class Cart extends Component {
   constructor() {
     super()

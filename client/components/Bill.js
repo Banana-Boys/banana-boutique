@@ -1,5 +1,6 @@
 import React from 'react'
 import priceConvert from '../../utilFrontEnd/priceConvert'
+import '../styles/bill.scss'
 
 const Bill = props => {
   const cart = props.cart

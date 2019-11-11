@@ -6,6 +6,8 @@ import Queries from './Queries'
 import {Link} from 'react-router-dom'
 import {Grid, Image, Container, Card} from 'semantic-ui-react'
 
+import '../styles/allproducts.scss'
+
 export class AllProducts extends Component {
   constructor(props) {
     super(props)

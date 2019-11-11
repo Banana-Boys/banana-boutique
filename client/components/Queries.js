@@ -18,6 +18,7 @@ import {
   Select
 } from 'semantic-ui-react'
 
+import '../styles/queries.scss'
 export class Queries extends Component {
   constructor(props) {
     super(props)
