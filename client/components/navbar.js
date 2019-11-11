@@ -37,6 +37,9 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
       <Link to="/products">
         <h2 className="navbartitle">products</h2>
       </Link>
+      <Link to="/adminboard">
+        <h2 className="navbartitle">admin board</h2>
+      </Link>
     </nav>
     <Container id="nav-profile">
       {isLoggedIn && (

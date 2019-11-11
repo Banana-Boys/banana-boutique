@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 const {
   Address,
   Order,
@@ -8,11 +9,12 @@ const {
 } = require('../db/models')
 const router = require('express').Router()
 const {checkGuest, isAdmin} = require('../middleware')
-const sendmail = require('sendmail')({silent: true})
 const nodemailer = require('nodemailer')
+const stripe = require('stripe')(process.env.STRIPE_KEY)
+const uuid = require('uuid')
 
 // async..await is not allowed in global scope, must use a wrapper
-async function main(email) {
+async function main(email, orderId) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount()
@@ -30,11 +32,11 @@ async function main(email) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    from: '<order-confirmation@nanas.com>', // sender address
     to: email, // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world?', // plain text body
-    html: '<b>Hello world?</b>' // html body
+    subject: `Order Confirmation #${orderId}`, // Subject line
+    text: `Order Confirmation #${orderId}` // plain text body
+    // html: '<b>Hello world?</b>' // html body
   })
 
   console.log('Message sent: %s', info.messageId)
@@ -68,7 +70,6 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    console.log('ID', req.params.id)
     if (req.user) {
       const order = await Order.findByPk(req.params.id, {
         include: [
@@ -76,7 +77,6 @@ router.get('/:id', async (req, res, next) => {
           {model: Address, as: 'shipping'}
         ]
       })
-      console.log('order', order)
       res.json(order)
     } else {
       res.sendStatus(404)
@@ -106,7 +106,7 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
 
 router.post('/', checkGuest(), async (req, res, next) => {
   try {
-    let {cart, user, shippingTax, shippingAddress} = req.body
+    let {cart, user, shippingTax, shippingAddress, token} = req.body
 
     await Promise.all(
       cart.map(async item => {
@@ -167,19 +167,48 @@ router.post('/', checkGuest(), async (req, res, next) => {
     req.session.cart = []
     req.session.save()
 
-    // Send confirmation email
-    // console.log(user.email)
-    // sendmail({
-    //   from: 'test@yourdomain.com',
-    //   to: user.email,
-    //   subject: `Order confirmation ${order.id} from Nana's`,
-    //   html: 'Mail of test sendmail ',
-    // }, function (err, reply) {
-    //   console.log(err && err.stack)
-    //   console.dir(reply)
-    // })
+    let stripeId
+    if (user.stripeId) {
+      stripeId = user.stripeId
+    } else {
+      const stripeCustomer = await stripe.customers.create({
+        email: token.email,
+        source: token.id
+      })
+      stripeId = stripeCustomer.id
+      await User.findByPk(user.id).then(u => u.update({stripeId}))
+    }
 
-    main(user.email).catch(console.error)
+    const idempotency_key = uuid()
+    const charge = await stripe.charges.create(
+      {
+        amount: cart.reduce(
+          (sum, item) => item.quantity * item.product.price + sum,
+          shippingTax
+        ),
+        currency: 'usd',
+        customer: stripeId,
+        receipt_email: token.email,
+        description: `Order #${order.id}`,
+        shipping: {
+          name: token.card.name,
+          address: {
+            line1: token.card.address_line1,
+            line2: token.card.address_line2,
+            city: token.card.address_city,
+            country: token.card.address_country,
+            postal_code: token.card.address_zip
+          }
+        }
+      },
+      {
+        idempotency_key
+      }
+    )
+
+    // console.log("Charge", {charge});
+
+    main(user.email, order.id).catch(console.error)
 
     // Returns Order
     res.json(

@@ -65,7 +65,6 @@ router.get('/distance/:zip', async (req, res, next) => {
         process.env.ZIPCODE_API_KEY
       }/distance.json/${originZip}/${req.params.zip}/mile`
     )
-    console.log(data)
     res.status(200).json(data)
   } catch (error) {
     next(error)
