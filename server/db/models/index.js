@@ -6,6 +6,8 @@ const Category = require('./Category')
 const Address = require('./Address')
 const OrderLineItem = require('./OrderLineItem')
 const Review = require('./Review')
+const Wishlist = require('./Wishlist')
+const WishlistLineItem = require('./WishlistLineItem')
 
 Address.belongsTo(User)
 // User.hasOne(Address, {as: 'defaultShipping'})
@@ -14,6 +16,7 @@ User.hasMany(Address)
 User.hasMany(Review)
 User.hasMany(CartLineItem)
 User.hasMany(Order)
+User.hasMany(Wishlist)
 User.belongsToMany(Product, {as: 'ProductsUserReviewed', through: 'Review'})
 User.belongsToMany(Product, {as: 'ProductsInUserCart', through: 'CartLineItem'})
 User.belongsToMany(Product, {
@@ -25,6 +28,7 @@ Product.belongsToMany(Category, {through: 'ProductCategory'})
 Product.hasMany(Review)
 Product.hasMany(OrderLineItem)
 Product.hasMany(CartLineItem)
+Product.hasMany(WishlistLineItem)
 Product.belongsToMany(User, {as: 'UsersWhoReviewedProduct', through: 'Review'})
 Product.belongsToMany(User, {
   as: 'UsersWithProductInCart',
@@ -41,6 +45,10 @@ Order.hasMany(OrderLineItem)
 Order.belongsTo(Address, {as: 'shipping'})
 Order.belongsTo(Address, {as: 'billing'})
 
+Wishlist.belongsTo(User)
+Wishlist.hasMany(WishlistLineItem)
+Wishlist.belongsTo(Address)
+
 Category.belongsToMany(Product, {through: 'ProductCategory'})
 
 Review.belongsTo(User)
@@ -51,6 +59,9 @@ CartLineItem.belongsTo(Product)
 
 OrderLineItem.belongsTo(Product)
 OrderLineItem.belongsTo(Order)
+
+WishlistLineItem.belongsTo(Product)
+WishlistLineItem.belongsTo(Wishlist)
 
 /**
  * If we had any associations to make, this would be a great place to put them!

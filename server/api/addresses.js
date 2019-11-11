@@ -67,7 +67,7 @@ router.get('/distance/:zip', async (req, res, next) => {
     )
     res.status(200).json(data)
   } catch (error) {
-    next(error)
+    res.json({distance: 1})
   }
 })
 
