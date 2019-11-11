@@ -131,7 +131,7 @@ class SingleProduct extends React.Component {
                   {quantitySelect}
                 </select>
                 <Button
-                  primary
+                  color="yellow"
                   floated="right"
                   size="mini"
                   disabled={!product.inventory}

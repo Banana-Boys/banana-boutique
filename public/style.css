@@ -185,12 +185,20 @@ body,
   margin-bottom: -5%;
 }
 
+#categorylabel {
+  margin-bottom: -5%;
+}
+
 #instockcategory {
   margin-left: 5%;
 }
 
 #searchlabel {
   margin-bottom: 2%;
+}
+
+#search-bar {
+  margin-bottom: 5%;
 }
 
 #new-category-form {
@@ -394,4 +402,72 @@ a {
 
 #userhomeitemcontent {
   xtext-align: left;
+}
+
+/* experimental */
+
+.dropbtn {
+  xbackground-color: #4caf50;
+  color: black;
+  display: flex;
+  margin-top: 8%;
+  margin-bottom: 8%;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  border-color: grey;
+}
+
+#dropdowntext {
+  justify-content: left;
+  text-align: left;
+}
+
+#addresstablerow {
+  margin: 5% !important;
+  width: 50%;
+  height: 10%;
+}
+
+#addressbuttonstablerow {
+  display: flex;
+}
+
+.buttonpositioningaddress {
+  text-align: left;
+}
+
+#tablerowaddress {
+  border-color: black !important;
 }
