@@ -140,56 +140,6 @@ export class Queries extends Component {
 
     return (
       <div id="filters">
-        <div>
-          <div>
-            Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
-              this.state.page * this.state.numPerPage + 1,
-              this.state.numProducts
-            )}{' '}
-            of {this.state.numProducts}
-          </div>
-          <button
-            type="button"
-            id="firstPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === 1}
-          >
-            {'<<'}
-          </button>
-          <button
-            type="button"
-            id="prevPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === 1}
-          >
-            {'<'}
-          </button>
-          <span>{this.state.page}</span>
-          <button
-            type="button"
-            id="nextPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === this.state.lastPage}
-          >
-            {'>'}
-          </button>
-          <button
-            type="button"
-            id="lastPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === this.state.lastPage}
-          >
-            {'>>'}
-          </button>
-        </div>
-        <div>
-          <label htmlFor="numPerPage"># products/page:</label>
-          <select name="numPerPage" onChange={this.handleChange}>
-            <option selected={Number(this.state.numPerPage) === 10}>10</option>
-            <option selected={Number(this.state.numPerPage) === 20}>20</option>
-            <option selected={Number(this.state.numPerPage) === 50}>50</option>
-          </select>
-        </div>
         <div id="search-bar">
           <label id="searchlabel" htmlFor="search">
             Search:{' '}
@@ -293,6 +243,60 @@ export class Queries extends Component {
             # ratings (high to low)
           </option>
         </select>
+        <div id="paginationHolder">
+          <div>
+            Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
+              this.state.page * this.state.numPerPage + 1,
+              this.state.numProducts
+            )}{' '}
+            of {this.state.numProducts}
+          </div>
+          <Button
+            size="mini"
+            type="button"
+            id="firstPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === 1}
+          >
+            {'<<'}
+          </Button>
+          <Button
+            size="mini"
+            type="button"
+            id="prevPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === 1}
+          >
+            {'<'}
+          </Button>
+          <span>{this.state.page}</span>
+          <Button
+            size="mini"
+            type="button"
+            id="nextPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === this.state.lastPage}
+          >
+            {'>'}
+          </Button>
+          <Button
+            size="mini"
+            type="button"
+            id="lastPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === this.state.lastPage}
+          >
+            {'>>'}
+          </Button>
+        </div>
+        <div>
+          <label htmlFor="numPerPage"># products/page:</label>
+          <select name="numPerPage" onChange={this.handleChange}>
+            <option selected={Number(this.state.numPerPage) === 10}>10</option>
+            <option selected={Number(this.state.numPerPage) === 20}>20</option>
+            <option selected={Number(this.state.numPerPage) === 50}>50</option>
+          </select>
+        </div>
       </div>
     )
   }
