@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createProduct} from '../store/singleProduct'
+import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 class NewProductForm extends React.Component {
   constructor(props) {
@@ -95,7 +96,9 @@ class NewProductForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <Button size="mini" type="submit" color="blue">
+            Submit
+          </Button>
         </div>
       </form>
     )

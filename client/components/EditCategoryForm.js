@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {editCategory, fetchCategory} from '../store/singleCategory'
+import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 class EditCategoryForm extends React.Component {
   constructor(props) {
@@ -58,7 +59,9 @@ class EditCategoryForm extends React.Component {
           />
         </div>
         <div className="form-group">
-          <button type="button">Submit</button>
+          <Button size="mini" type="submit" color="blue">
+            Submit
+          </Button>
         </div>
       </form>
     )
