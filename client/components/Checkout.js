@@ -47,12 +47,15 @@ class Checkout extends React.Component {
   }
 
   createOrder() {
-    this.props.createOrder({
-      user: this.state.user,
-      cart: this.state.cart,
-      shippingAddress: this.state.shippingAddress,
-      shippingTax: this.state.shippingTax
-    })
+    this.props.createOrder(
+      {
+        user: this.state.user,
+        cart: this.state.cart,
+        shippingAddress: this.state.shippingAddress,
+        shippingTax: this.state.shippingTax
+      },
+      this.props.history
+    )
   }
 
   handleUserOptions(e) {
@@ -123,8 +126,7 @@ class Checkout extends React.Component {
         // }))
       }
       const distance = await this.props.fetchDistance(shippingAddress.zip)
-      console.log(distance)
-      const shippingTax = distance * 1 // 1 cent per mile
+      const shippingTax = Math.ceil(distance * 1) // 1 cent per mile
       this.setState({shippingAddress, shippingTax})
     }
   }
