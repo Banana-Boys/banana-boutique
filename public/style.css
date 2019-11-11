@@ -324,7 +324,7 @@ a {
 }
 
 #userhomeprofileimage {
-  border-radius: 50% !important;
+  xborder-radius: 50% !important;
   width: 300px;
   height: 300px;
 }
