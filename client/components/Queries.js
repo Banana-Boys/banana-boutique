@@ -201,14 +201,14 @@ export class Queries extends Component {
             onChange={this.handleSearch}
           />
         </div>
-        {isAdmin && (
+        {isAdmin ? (
           <div id="category">
             <label id="newcategorylabel" htmlFor="new-category">
               New Category:{' '}
             </label>
             <NewCategoryForm />
           </div>
-        )}
+        ) : null}
         <label id="categorylabel" htmlFor="categories">
           Categories:{' '}
         </label>

@@ -47,12 +47,15 @@ class Checkout extends React.Component {
   }
 
   createOrder() {
-    this.props.createOrder({
-      user: this.state.user,
-      cart: this.state.cart,
-      shippingAddress: this.state.shippingAddress,
-      shippingTax: this.state.shippingTax
-    })
+    this.props.createOrder(
+      {
+        user: this.state.user,
+        cart: this.state.cart,
+        shippingAddress: this.state.shippingAddress,
+        shippingTax: this.state.shippingTax
+      },
+      this.props.history
+    )
   }
 
   handleUserOptions(e) {

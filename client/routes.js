@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
@@ -28,42 +29,57 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, isAdmin} = this.props
 
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Switch>
+        {/* Admin Routes */}
+        {isAdmin ? (
           <Route path="/categories/:id/edit" component={EditCategoryForm} />
+        ) : null}
+        {isAdmin ? (
+          <Route path="/products/:id/edit" component={EditProductForm} />
+        ) : null}
+        {isAdmin ? (
+          <Route path="/products/new" component={NewProductForm} />
+        ) : (
+          <Route path="/products/new" component={AllProducts} />
+        )}
+        {isAdmin ? <Route path="/adminboard" component={AdminBoard} /> : null}
+
+        {/* LoggedInRoutes */}
+        {isLoggedIn ? (
           <Route
             path="/products/:productId/reviews/:reviewId/edit"
             component={EditReviewForm}
           />
-          <Route path="/checkout" component={Checkout} />
+        ) : null}
+        {isLoggedIn ? (
           <Route path="/products/:id/reviews/new" component={NewReviewForm} />
-          <Route path="/products/:id/edit" component={EditProductForm} />
-          <Route path="/products/new" component={NewProductForm} />
-          <Route path="/products/:id" component={SingleProduct} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/home" component={AllProducts} />
-          <Route path="/products" component={AllProducts} />
+        ) : null}
+        {isLoggedIn ? (
           <Route path="/users/:id/edit" component={EditUserForm} />
-          <Route path="/users/:id" component={UserHome} />
+        ) : null}
+        {isLoggedIn ? <Route path="/users/:id" component={UserHome} /> : null}
+        {isLoggedIn ? (
           <Route path="/addresses/new" component={NewAddressForm} />
+        ) : null}
+        {isLoggedIn ? (
           <Route path="/addresses/:id/edit" component={EditAddressForm} />
-          <Route path="/order/:id" component={SingleOrder} />
-          <Route path="/adminboard" component={AdminBoard} />
-          {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
-        </Switch>
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/users/:id" component={UserHome} />
-          </Switch>
-        )}
-        {/* Displays our Login component as a fallback */}
+        ) : null}
+        {isLoggedIn ? (
+          <Route path="/orders/:id" component={SingleOrder} />
+        ) : null}
+
+        {/* Routes placed here are available to all visitors */}
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/products/:id" component={SingleProduct} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/home" component={AllProducts} />
+        <Route path="/products" component={AllProducts} />
+
         <Route component={Login} />
       </Switch>
     )
@@ -77,7 +93,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.role === 'admin'
   }
 }
 

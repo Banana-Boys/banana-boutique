@@ -5,11 +5,11 @@ import {Link} from 'react-router-dom'
 import {fetchAddresses, deleteAddress} from '../store/addresses'
 import {deleteUser} from '../store/user'
 import {fetchUserReviews, destroyReview} from '../store/reviews'
-import {fetchUserOrders, fetchAllOrders} from '../store/orders'
+import {fetchUserOrders} from '../store/orders'
 import Review from './Review'
 import UserOrder from './UserOrder'
-import AllOrders from './AllOrders'
 import {Button} from 'semantic-ui-react'
+import {Login} from './auth-form'
 
 /**
  * COMPONENT
@@ -20,21 +20,22 @@ class UserHome extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.fetchAddresses()
-    await this.props.fetchUserReviews(this.props.match.params.id)
-    await this.props.fetchUserOrders(this.props.match.params.id)
+  componentDidMount() {
+    if (this.props.user.id) this.props.fetchAddresses()
+    if (this.props.user.id)
+      this.props.fetchUserReviews(this.props.match.params.id)
+    if (this.props.user.id)
+      this.props.fetchUserOrders(this.props.match.params.id)
   }
 
   handleClick(e) {}
 
   render() {
-    const {name, email, phone, imageUrl} = this.props.user
-    const propsId = this.props.match.params.id
-    return (
+    const {id, name, email, phone, imageUrl, role} = this.props.user
+    const isUser = id === Number(this.props.match.params.id) || role === 'admin'
+    return isUser ? (
       <div id="user-home">
         <h3>Welcome, {name}</h3>
-        {}
 
         {this.props.user.role === 'admin' ? (
           <Link to="/adminboard">
@@ -114,6 +115,11 @@ class UserHome extends React.Component {
         >
           Delete Profile
         </Button>
+      </div>
+    ) : (
+      <div>
+        <div>You are not the correct user</div>
+        <Login />
       </div>
     )
   }
