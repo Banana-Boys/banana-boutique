@@ -404,7 +404,7 @@ a {
   xtext-align: left;
 }
 
-/* experimental */
+/* address dropdown feature in profile */
 
 .dropbtn {
   xbackground-color: #4caf50;
@@ -414,11 +414,17 @@ a {
   margin-bottom: 8%;
   font-size: 16px;
   border: none;
+  transition: all 0.1s ease-in-out;
+  border: none;
+  outline: none;
 }
 
 .dropdown {
   position: relative;
   display: inline-block;
+  border: none;
+  outline: none;
+  xtext-decoration: none;
 }
 
 .dropdown-content {
@@ -449,9 +455,16 @@ a {
   border-color: grey;
 }
 
+.dropbtn:hover {
+  transform: scale(1.1);
+}
+
 #dropdowntext {
   justify-content: left;
   text-align: left;
+  border: none;
+  outline: none;
+  text-decoration: none;
 }
 
 #addresstablerow {
