@@ -54,7 +54,7 @@ class Routes extends Component {
           <Route path="/addresses/new" component={NewAddressForm} />
           <Route path="/addresses/:id/edit" component={EditAddressForm} />
           <Route path="/order/:id" component={SingleOrder} />
-          <Route path="/adminboard" component={AdminBoard} />
+          <Route path="/adminboard/:id" component={AdminBoard} />
           {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
         </Switch>
         {isLoggedIn && (

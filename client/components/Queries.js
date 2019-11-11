@@ -151,11 +151,14 @@ export class Queries extends Component {
             onChange={this.handleSearch}
           />
         </div>
+        <Link to="/products/new">
+          <button type="button" id="">
+            Create Product
+          </button>
+        </Link>
         {isAdmin && (
           <div id="category">
-            <label id="newcategorylabel" htmlFor="new-category">
-              New Category:{' '}
-            </label>
+            <label id="newcategorylabel" htmlFor="new-category" />
             <NewCategoryForm />
           </div>
         )}
