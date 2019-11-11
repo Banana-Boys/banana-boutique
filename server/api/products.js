@@ -45,7 +45,7 @@ router.get('/', async (req, res, next) => {
     }
     if (req.query.search) {
       products = products.filter(product =>
-        product.name.includes(req.query.search)
+        product.name.toLowerCase().includes(req.query.search.toLowerCase())
       )
     }
     if (req.query.inStock === 'true') {
@@ -115,7 +115,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id, {
-      include: [Review, Category]
+      include: [Category]
     })
     res.json(product)
   } catch (error) {
@@ -201,7 +201,8 @@ router.get('/:productId/reviews', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.productId)
     const reviews = await product.getReviews({
-      include: [{model: User, attributes: ['name', 'id']}]
+      include: [{model: User, attributes: ['name', 'id']}],
+      order: [['createdAt', 'DESC']]
     })
     res.status(201).json(reviews)
   } catch (error) {

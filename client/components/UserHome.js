@@ -5,11 +5,12 @@ import {Link} from 'react-router-dom'
 import {fetchAddresses, deleteAddress} from '../store/addresses'
 import {deleteUser} from '../store/user'
 import {fetchUserReviews, destroyReview} from '../store/reviews'
-import {fetchUserOrders, fetchAllOrders} from '../store/orders'
+import {fetchUserOrders} from '../store/orders'
 import Review from './Review'
 import UserOrder from './UserOrder'
 import AllOrders from './AllOrders'
-import {Button} from 'semantic-ui-react'
+import {Button, Container, Item, Image} from 'semantic-ui-react'
+import {Login} from './auth-form'
 
 /**
  * COMPONENT
@@ -20,66 +21,106 @@ class UserHome extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.fetchAddresses()
-    await this.props.fetchUserReviews(this.props.match.params.id)
-    await this.props.fetchUserOrders(this.props.match.params.id)
+  componentDidMount() {
+    if (this.props.user.id) this.props.fetchAddresses()
+    if (this.props.user.id)
+      this.props.fetchUserReviews(this.props.match.params.id)
+    if (this.props.user.id)
+      this.props.fetchUserOrders(this.props.match.params.id)
   }
 
   handleClick(e) {}
 
   render() {
-    const {name, email, phone, imageUrl} = this.props.user
+    const {id, name, email, phone, imageUrl, role} = this.props.user
+    const isUser = id === Number(this.props.match.params.id) || role === 'admin'
     const propsId = this.props.match.params.id
     return (
-      <div id="user-home">
-        <h3>Welcome, {name}</h3>
-        {}
-
-        {this.props.user.role === 'admin' ? (
-          <Link to="/adminboard">
-            <Button>Admin Board</Button>
-          </Link>
-        ) : (
-          <div />
-        )}
-        <img id="" src={imageUrl} />
-        <h5>Email: {email}</h5>
-        <h5>Phone #: {phone}</h5>
-        <h5>Your Addresses: </h5>
-        {this.props.addresses.map(address => {
-          const {id, address1, address2, city, state, country, zip} = address
-          return (
-            <div key={id}>
-              <p>{address1}</p>
-              {address2 ? <p>{address2}</p> : null}
-              <p>
-                <span>{city}</span>, {state ? <span>{state},</span> : null}{' '}
-                <span>{country}</span> <span>{zip}</span>
-              </p>
-              <Link to={`/addresses/${id}/edit`}>
-                <Button size="mini" type="button">
-                  Edit Address
-                </Button>
-              </Link>
-              <Button
-                size="mini"
-                type="button"
-                onClick={() => {
-                  this.props.deleteAddress(id)
-                }}
-              >
-                Delete Address
-              </Button>
+      <Container id="user-home">
+        <div id="userhomewelcomname">
+          {isUser ? (
+            <h1>Welcome, {name}</h1>
+          ) : (
+            <div>
+              <div>
+                <h1>You are not the correct user</h1>
+              </div>
+              <Login />
             </div>
-          )
-        })}
-        <Link to="/addresses/new">
-          <Button size="mini" type="button">
-            +Add Address
-          </Button>
-        </Link>
-        {/* <h5>Wishlists: </h5> */}
+          )}
+        </div>
+        <Item.Group>
+          <Item id="user-home-itemgroup">
+            {!imageUrl ? (
+              <img
+                id="userhomeprofileimage"
+                src="http://simpleicon.com/wp-content/uploads/user1.svg"
+              />
+            ) : (
+              <Item.Image id="userhomeprofileimage" src={imageUrl} />
+            )}
+
+            <Item.Content id="userhomeitemcontent">
+              <Item.Description>
+                <div id="userhomeitemcontent">
+                  {this.props.user.role === 'admin' ? (
+                    <Link to="/adminboard">
+                      <Button>Admin Board</Button>
+                    </Link>
+                  ) : (
+                    <div />
+                  )}
+                  <h5>Email: {email}</h5>
+                  <h5>Phone #: {phone}</h5>
+                  <h5>Your Addresses: </h5>
+                  {this.props.addresses.map(address => {
+                    const {
+                      id,
+                      address1,
+                      address2,
+                      city,
+                      state,
+                      country,
+                      zip
+                    } = address
+                    return (
+                      <div key={id}>
+                        <p>{address1}</p>
+                        {address2 ? <p>{address2}</p> : null}
+                        <p>
+                          <span>{city}</span>,{' '}
+                          {state ? <span>{state},</span> : null}{' '}
+                          <span>{country}</span> <span>{zip}</span>
+                        </p>
+                        <Link to="/addresses/new">
+                          <Button size="mini" type="button" color="olive">
+                            +Add Address
+                          </Button>
+                        </Link>
+                        <Link to={`/addresses/${id}/edit`}>
+                          <Button size="mini" type="button" color="blue">
+                            Edit Address
+                          </Button>
+                        </Link>
+                        <Button
+                          size="mini"
+                          type="button"
+                          color="red"
+                          onClick={() => {
+                            this.props.deleteAddress(id)
+                          }}
+                        >
+                          Delete Address
+                        </Button>
+                      </div>
+                    )
+                  })}
+                </div>
+              </Item.Description>
+            </Item.Content>
+          </Item>
+        </Item.Group>
+
         <h5>
           Your Orders:{' '}
           {this.props.orders.map(order => (
@@ -100,7 +141,7 @@ class UserHome extends React.Component {
         </h5>
 
         <Link to={`/users/${this.props.match.params.id}/edit`}>
-          <Button size="mini" type="button">
+          <Button size="mini" type="button" color="blue">
             Edit Profile
           </Button>
         </Link>
@@ -116,13 +157,14 @@ class UserHome extends React.Component {
         <Button
           size="mini"
           type="button"
+          color="red"
           onClick={() => {
             this.props.deleteUser(this.props.match.params.id)
           }}
         >
           Delete Profile
         </Button>
-      </div>
+      </Container>
     )
   }
 }

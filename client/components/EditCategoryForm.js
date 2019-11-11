@@ -58,7 +58,7 @@ class EditCategoryForm extends React.Component {
           />
         </div>
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <button type="button">Submit</button>
         </div>
       </form>
     )

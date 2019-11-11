@@ -14,13 +14,16 @@ class App extends React.Component {
   render() {
     return (
       <div id="mount">
-        <Navbar />
+        {!this.props.user.id || !this.props.user.resetPassword ? (
+          <Navbar />
+        ) : null}
         <Routes />
       </div>
     )
   }
 }
 
+const mapStateToProps = ({user}) => ({user})
 const mapDispatchToProps = {fetchAllCategories, fetchCart}
 
-export default connect(null, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
