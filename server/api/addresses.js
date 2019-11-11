@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Address = require('../db/models/Address')
+const axios = require('axios')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -47,13 +48,25 @@ router.delete('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    console.log('----------', req.params.id)
     let address = await Address.findByPk(req.params.id)
-    console.log('found address', address)
     await address.update(req.body)
-    console.log('updated')
     address = await Address.findByPk(req.params.id)
     res.status(200).json(address)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/distance/:zip', async (req, res, next) => {
+  try {
+    const originZip = '60654'
+    const {data} = await axios.get(
+      `https://www.zipcodeapi.com/rest/${
+        process.env.ZIPCODE_API_KEY
+      }/distance.json/${originZip}/${req.params.zip}/mile`
+    )
+    console.log(data)
+    res.status(200).json(data)
   } catch (error) {
     next(error)
   }

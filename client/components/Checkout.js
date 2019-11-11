@@ -3,7 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {Login, Signup} from './auth-form'
-import {fetchAddresses} from '../store/addresses'
+import {fetchAddresses, fetchDistance} from '../store/addresses'
 import {createOrder} from '../store/singleOrder'
 import {states, countries} from '../../utilFrontEnd/address'
 
@@ -94,28 +94,38 @@ class Checkout extends React.Component {
     }
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
     if (e.target.id === 'guestEmailForm') {
       this.setState({user: {email: e.target.email.value}})
     } else if (e.target.id === 'shippingAddressForm') {
+      let shippingAddress
       if (e.target.shippingAddress) {
         if (e.target.shippingAddress.value === 'new') {
-          this.setState(prevState => ({
-            shippingAddress: prevState.newShippingAddress
-          }))
+          shippingAddress = this.state.newShippingAddress
+          // this.setState(prevState => ({
+          //   shippingAddress: prevState.newShippingAddress
+          // }))
         } else {
-          this.setState({
-            shippingAddress: this.props.addresses.find(
-              address => address.id === Number(e.target.shippingAddress.value)
-            )
-          })
+          shippingAddress = this.props.addresses.find(
+            address => address.id === Number(e.target.shippingAddress.value)
+          )
+          // this.setState({
+          //   shippingAddress: this.props.addresses.find(
+          //     address => address.id === Number(e.target.shippingAddress.value)
+          //   )
+          // })
         }
       } else {
-        this.setState(prevState => ({
-          shippingAddress: prevState.newShippingAddress
-        }))
+        shippingAddress = this.state.newShippingAddress
+        // this.setState(prevState => ({
+        //   shippingAddress: prevState.newShippingAddress
+        // }))
       }
+      const distance = await this.props.fetchDistance(shippingAddress.zip)
+      console.log(distance)
+      const shippingTax = distance * 1 // 1 cent per mile
+      this.setState({shippingAddress, shippingTax})
     }
   }
 
@@ -405,6 +415,6 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = ({cart, user, addresses}) => ({cart, user, addresses})
-const mapDispatchToProps = {fetchAddresses, createOrder}
+const mapDispatchToProps = {fetchAddresses, createOrder, fetchDistance}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

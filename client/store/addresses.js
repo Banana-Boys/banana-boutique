@@ -25,6 +25,15 @@ export const editAddressOnAddresses = address => ({type: EDIT_ADDRESS, address})
  * THUNK CREATORS
  */
 
+export const fetchDistance = zip => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/addresses/distance/${zip}`)
+    return data.distance
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const fetchAddresses = () => async dispatch => {
   try {
     const response = await axios.get('/api/addresses')
