@@ -123,6 +123,16 @@ body,
   margin: 0 auto !important;
 }
 
+/* PRODUCTS admin actions */
+#products-admin-actions {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 15px;
+  top: 0px;
+  margin-top: 85px;
+}
+
 /* FILTERS */
 #filters {
   display: flex;

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Queries from './Queries'
+import {Link} from 'react-router-dom'
 import {Grid, Image, Container, Card} from 'semantic-ui-react'
 
 export class AllProducts extends Component {
