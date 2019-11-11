@@ -23,6 +23,7 @@ nav {
 
 html,
 body,
+#app,
 #mount {
   height: 100%;
   margin: 0px;
@@ -47,6 +48,9 @@ body,
 
 /* height accomodation */
 #all-products,
+#new-product-form,
+#edit-category-form,
+#edit-product-form,
 #cart,
 #single-product,
 #checkout,
@@ -155,10 +159,25 @@ body,
   float: right;
 }
 
-#categor {
+#category {
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
+}
+
+#new-product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#edit-product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#edit-category-form {
+  display: flex;
+  flex-direction: column;
 }
 
 #newcategorylabel {
@@ -278,6 +297,21 @@ a {
   margin: 20px auto;
   padding: 20px;
   margin-left: 15vw;
+  height: fit-content;
+}
+
+#products.empty {
+  height: 300px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+#products .empty-message {
+  position: relative;
+  top: -20px;
+  margin: auto auto;
+  color: lightgrey;
 }
 
 .product {
