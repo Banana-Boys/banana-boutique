@@ -30,6 +30,28 @@ const AllUsers = props => {
                 Delete User
               </Button>
             </Table.Cell>
+            <Table.Cell>
+              <Button
+                floated="right"
+                type="button"
+                onClick={() => {
+                  props.deleteUser(user.id)
+                }}
+              >
+                Delete User
+              </Button>
+            </Table.Cell>
+            <Table.Cell>
+              <Button
+                floated="right"
+                type="button"
+                onClick={() => {
+                  props.triggerReset(user.id)
+                }}
+              >
+                Reset Password
+              </Button>
+            </Table.Cell>
             {/* <Table.Cell>
               <Link
                 to={`/products/${review.productId}/reviews/${review.id}/edit`}
