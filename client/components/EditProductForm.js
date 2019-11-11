@@ -1,6 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {editProduct, fetchProduct} from '../store/singleProduct'
+import {
+  Input,
+  Button,
+  Form,
+  Item,
+  Grid,
+  Container,
+  Select
+} from 'semantic-ui-react'
 
 class EditProductForm extends React.Component {
   constructor(props) {
@@ -77,7 +86,7 @@ class EditProductForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id="edit-product-form">
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
@@ -153,7 +162,9 @@ class EditProductForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <Button size="mini" type="submit" color="blue">
+            Submit
+          </Button>
         </div>
       </form>
     )
