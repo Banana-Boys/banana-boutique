@@ -4,7 +4,6 @@ import {Table, Button, Container, TableBody} from 'semantic-ui-react'
 
 const Review = props => {
   const review = props.review
-  console.log('Review Props', props)
   return (
     <Container>
       <Table>

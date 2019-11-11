@@ -45,7 +45,7 @@ router.get('/', async (req, res, next) => {
     }
     if (req.query.search) {
       products = products.filter(product =>
-        product.name.includes(req.query.search)
+        product.name.toLowerCase().includes(req.query.search.toLowerCase())
       )
     }
     if (req.query.inStock === 'true') {
