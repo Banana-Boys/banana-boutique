@@ -41,8 +41,11 @@ export class Cart extends Component {
     }
     return (
       <div id="cart">
-        <div id="products">
+        <div id="products" className={cartItems.length === 0 ? 'empty' : ''}>
           <h1>Cart</h1>
+          {cartItems.length === 0 && (
+            <div className="empty-message">An empty cart, so sad...</div>
+          )}
           {cartItems.map(item => {
             return (
               <div className="product" key={item.product.id}>
