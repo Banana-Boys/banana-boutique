@@ -1,0 +1,43 @@
+/* ALL PRODUCTS */
+.ui.grid {
+  width: 80%;
+  margin: 0 auto !important;
+}
+
+/* PRODUCTS admin actions */
+#products-admin-actions {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 15px;
+  top: 0px;
+  margin-top: 85px;
+}
+
+/* FILTERS */
+#filters {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 15px;
+  top: 0;
+  margin-top: 85px;
+}
+
+#categories {
+  margin: 10px 0px;
+}
+
+#filters .category {
+  margin: 5px 0px;
+}
+.categoryeditbutton {
+  float: right;
+  font-size: x-small !important;
+}
+
+#category {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+}
