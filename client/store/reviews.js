@@ -104,7 +104,7 @@ export default (reviews = [], action) => {
     case PRODUCT_REVIEWS:
       return action.reviews
     case ADD_REVIEW:
-      return [...reviews, action.review]
+      return [action.review, ...reviews]
     case GET_MAKER:
       return action.user
     case REMOVE_REVIEW:
