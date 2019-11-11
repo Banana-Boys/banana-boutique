@@ -18,7 +18,7 @@ import {
   Select
 } from 'semantic-ui-react'
 
-export class Categories extends Component {
+export class Queries extends Component {
   constructor(props) {
     super(props)
     const query = queryParser(this.props.location.search)
@@ -309,4 +309,4 @@ const mapState = (state, props) => {
 
 const mapDispatch = {fetchAllCategories, fetchProducts, fetchCategory}
 
-export default withRouter(connect(mapState, mapDispatch)(Categories))
+export default withRouter(connect(mapState, mapDispatch)(Queries))

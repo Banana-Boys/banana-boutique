@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import Product from './Product'
-import Categories from './Categories'
+import Queries from './Queries'
 import {Grid, Image, Container, Card} from 'semantic-ui-react'
 
 export class AllProducts extends Component {
@@ -18,7 +18,7 @@ export class AllProducts extends Component {
     const products = this.props.products
     return (
       <Container id="all-products">
-        <Categories />
+        <Queries />
         {products.length > 0 && (
           <Grid centered>
             {products.map(product => (
