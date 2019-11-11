@@ -18,6 +18,7 @@ import EditReviewForm from './components/EditReviewForm'
 import Checkout from './components/Checkout'
 import SingleOrder from './components/SingleOrder'
 import AdminBoard from './components/AdminBoard'
+import resetForm from './components/reset-form'
 
 /**
  * COMPONENT
@@ -55,6 +56,7 @@ class Routes extends Component {
           <Route path="/addresses/:id/edit" component={EditAddressForm} />
           <Route path="/order/:id" component={SingleOrder} />
           <Route path="/adminboard" component={AdminBoard} />
+          <Route path="/passwordReset" component={resetForm} />
           {/* ABOVE ROUTES ARE FOR TESTING, WILL NEED TO BE MOVED AROUND */}
         </Switch>
         {isLoggedIn && (
