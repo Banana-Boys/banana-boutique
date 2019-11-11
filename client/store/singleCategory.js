@@ -6,6 +6,7 @@ import {addCategory} from './categories'
  */
 const GET_CATEGORY = 'GET_CATEGORY'
 const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
+
 /**
  * INITIAL STATE
  */

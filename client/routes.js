@@ -19,6 +19,7 @@ import EditReviewForm from './components/EditReviewForm'
 import Checkout from './components/Checkout'
 import SingleOrder from './components/SingleOrder'
 import AdminBoard from './components/AdminBoard'
+import resetForm from './components/reset-form'
 
 /**
  * COMPONENT
@@ -29,10 +30,12 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn, isAdmin} = this.props
+    const {isLoggedIn, isAdmin, resetPassword} = this.props
 
     return (
       <Switch>
+        {isLoggedIn && resetPassword ? <Route component={resetForm} /> : null}
+
         {/* Admin Routes */}
         {isAdmin ? (
           <Route path="/categories/:id/edit" component={EditCategoryForm} />
@@ -70,6 +73,9 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Route path="/orders/:id" component={SingleOrder} />
         ) : null}
+        {isLoggedIn ? (
+          <Route path="/passwordReset" component={resetForm} />
+        ) : null}
 
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
@@ -80,6 +86,7 @@ class Routes extends Component {
         <Route path="/home" component={AllProducts} />
         <Route path="/products" component={AllProducts} />
 
+        {/* Fallback route */}
         <Route component={Login} />
       </Switch>
     )
@@ -94,7 +101,8 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    isAdmin: state.user.role === 'admin'
+    isAdmin: state.user.role === 'admin',
+    resetPassword: state.user.resetPassword || false
   }
 }
 

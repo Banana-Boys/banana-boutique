@@ -4,11 +4,13 @@ const GET_USERS = 'GET_USERS'
 const REMOVE = 'REMOVE'
 const PROMOTE = 'PROMOTE'
 const DEMOTE = 'DEMOTE'
+const TRIGGER_PASSWORD_RESET = 'TRIGGER_PASSWORD_RESET'
 
 const getUsers = users => ({type: GET_USERS, users})
 const removeU = userId => ({type: REMOVE, userId})
 const promoteUser = user => ({type: PROMOTE, user})
 const demoteUser = user => ({type: DEMOTE, user})
+const triggerPasswordReset = userId => ({type: TRIGGER_PASSWORD_RESET, userId})
 
 const defaultUsers = []
 
@@ -58,6 +60,17 @@ export const removeUserFromBoard = userId => async dispatch => {
   }
 }
 
+export const sendTriggerReset = userId => async dispatch => {
+  try {
+    await axios.put(`/api/users/${userId}`, {
+      resetPassword: true
+    })
+    dispatch(triggerPasswordReset(userId))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export default function(state = defaultUsers, action) {
   switch (action.type) {
     case GET_USERS:
@@ -84,6 +97,18 @@ export default function(state = defaultUsers, action) {
       ]
     case REMOVE:
       return [...state.filter(user => user.id !== action.userId)]
+    case TRIGGER_PASSWORD_RESET:
+      console.log('triggered!')
+      return [
+        ...state.map(user => {
+          if (user.id === action.userId) {
+            user.passwordReset = true
+            return user
+          } else {
+            return user
+          }
+        })
+      ]
     default:
       return state
   }
