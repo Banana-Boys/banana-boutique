@@ -49,8 +49,8 @@ const User = db.define('user', {
       isNumeric: true
     }
   },
-  stripeTokens: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+  stripeId: {
+    type: Sequelize.STRING
   },
   resetPassword: {
     type: Sequelize.BOOLEAN,

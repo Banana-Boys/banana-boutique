@@ -73,7 +73,6 @@ router.post('/', async (req, res, next) => {
         ])
         cartLineItem = await CartLineItem.findByPk(cartLineItem.id)
       }
-      console.log(cartLineItem)
     }
     res.status(200).json({product, quantity})
   } catch (error) {
