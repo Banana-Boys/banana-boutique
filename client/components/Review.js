@@ -1,10 +1,10 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {Table, Button, Container, TableBody} from 'semantic-ui-react'
+import {connect} from 'react-redux'
 
 const Review = props => {
   const review = props.review
-  console.log('Review Props', props)
   return (
     <Container>
       <Table>
@@ -23,21 +23,25 @@ const Review = props => {
             </Table.Cell>
             <Table.Cell>{/* <p>Author:{review.user.name}</p> */}</Table.Cell>
             <Table.Cell>
-              <Button
-                type="button"
-                onClick={() => {
-                  props.destroyReview(review.productId, review.id)
-                }}
-              >
-                Delete Review
-              </Button>
+              {props.user.id === review.userId ? (
+                <Button
+                  type="button"
+                  onClick={() => {
+                    props.destroyReview(review.productId, review.id)
+                  }}
+                >
+                  Delete Review
+                </Button>
+              ) : null}
             </Table.Cell>
             <Table.Cell>
-              <Link
-                to={`/products/${review.productId}/reviews/${review.id}/edit`}
-              >
-                <Button type="button">Edit Review</Button>
-              </Link>
+              {props.user.id === review.userId ? (
+                <Link
+                  to={`/products/${review.productId}/reviews/${review.id}/edit`}
+                >
+                  <Button type="button">Edit Review</Button>
+                </Link>
+              ) : null}
             </Table.Cell>
           </Table.Row>
         </TableBody>
@@ -46,4 +50,6 @@ const Review = props => {
   )
 }
 
-export default Review
+const mapStateToProps = ({user}) => ({user})
+
+export default withRouter(connect(mapStateToProps)(Review))

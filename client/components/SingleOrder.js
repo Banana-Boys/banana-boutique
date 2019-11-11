@@ -6,8 +6,8 @@ import {fetchOrder} from '../store/singleOrder'
 import OrderLineItem from './OrderLineItem'
 
 export class SingleOrder extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
   }
 
   componentDidMount() {
@@ -16,8 +16,6 @@ export class SingleOrder extends Component {
 
   render() {
     const order = this.props.singleOrder || {}
-    //console.log(order.orderLineItems)
-    console.log('props', order)
     return (
       <Container>
         <Table>

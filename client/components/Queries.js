@@ -140,7 +140,7 @@ export class Queries extends Component {
 
     return (
       <div id="products-side-menus">
-        {isAdmin && (
+        {isAdmin ? (
           <div id="products-admin-actions">
             <div id="submit-product-holder">
               <Link to="/products/new">
@@ -156,7 +156,7 @@ export class Queries extends Component {
               <NewCategoryForm />
             </div>
           </div>
-        )}
+        ) : null}
         <div id="filters">
           <div id="search-bar">
             <label id="searchlabel" htmlFor="search">
@@ -169,7 +169,6 @@ export class Queries extends Component {
               onChange={this.handleSearch}
             />
           </div>
-
           <label id="categorylabel" htmlFor="categories">
             Categories:{' '}
           </label>
