@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import {createProduct} from '../store/singleProduct'
@@ -26,7 +27,7 @@ class NewProductForm extends React.Component {
         .filter(option => option.selected)
         .map(option => option.value)
     } else if (e.target.name === 'price') {
-      value = Number(e.target.value) * 100
+      value = Math.floor(Number(e.target.value) * 100)
     } else {
       value = e.target.value
     }
@@ -35,7 +36,13 @@ class NewProductForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.props.createProduct(this.state, this.props.history)
+    let state = {}
+    for (let key of Object.keys(this.state)) {
+      if (this.state[key].toString().length) {
+        state[key] = this.state[key]
+      }
+    }
+    this.props.createProduct(state, this.props.history)
   }
 
   render() {
@@ -66,7 +73,9 @@ class NewProductForm extends React.Component {
             step="0.01"
             onChange={this.handleChange}
           />
-          {this.state.price > 0 ? null : <div>Price cannot be empty</div>}
+          {this.state.price.toString().length > 0 ? null : (
+            <div>Price cannot be empty</div>
+          )}
         </div>
 
         <div className="form-group">
@@ -98,13 +107,18 @@ class NewProductForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="imageUrl">Image URL:</label>
-          <input
-            type="url"
-            name="imageUrl"
-            onChange={this.handleChange}
-            placeholder=""
-          />
+          <Button
+            size="mini"
+            type="submit"
+            color="blue"
+            disabled={
+              !this.state.name.length ||
+              !this.state.price.toString().length ||
+              !this.state.inventory.toString().length
+            }
+          >
+            Submit
+          </Button>
         </div>
 
         {this.state.inventory.length > 0 &&
