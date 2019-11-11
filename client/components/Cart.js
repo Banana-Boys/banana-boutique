@@ -81,9 +81,16 @@ export class Cart extends Component {
           <h1>Total</h1>
           <Bill cart={cartItems} />
           {cartItems.length ? (
-            <Link to="/checkout">
-              <Button type="button">Checkout</Button>
-            </Link>
+            <div>
+              <Link to="/checkout">
+                <Button type="button">Checkout</Button>
+              </Link>
+              {this.props.user.id ? (
+                <Link to="wishlists/new">
+                  <Button type="button">Create Wishlist</Button>
+                </Link>
+              ) : null}
+            </div>
           ) : (
             <Button type="button" disabled>
               Nothing in cart

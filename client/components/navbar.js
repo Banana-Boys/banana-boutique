@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import Search from './Search'
 import UserHome from './UserHome'
 import {Input, Button, Form, Item, Grid, Container} from 'semantic-ui-react'
 
