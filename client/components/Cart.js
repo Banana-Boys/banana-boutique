@@ -41,8 +41,11 @@ export class Cart extends Component {
     }
     return (
       <div id="cart">
-        <div id="products">
+        <div id="products" className={cartItems.length === 0 ? 'empty' : ''}>
           <h1>Cart</h1>
+          {cartItems.length === 0 && (
+            <div className="empty-message">An empty cart, so sad...</div>
+          )}
           {cartItems.map(item => {
             return (
               <div className="product" key={item.product.id}>
@@ -77,9 +80,15 @@ export class Cart extends Component {
         <div id="bill">
           <h1>Total</h1>
           <Bill cart={cartItems} />
-          <Link to="/checkout">
-            <Button type="button">Checkout</Button>
-          </Link>
+          {cartItems.length ? (
+            <Link to="/checkout">
+              <Button type="button">Checkout</Button>
+            </Link>
+          ) : (
+            <Button type="button" disabled>
+              Nothing in cart
+            </Button>
+          )}
         </div>
       </div>
     )

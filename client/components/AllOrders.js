@@ -14,19 +14,21 @@ const AllOrders = props => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell singleLine>
-              Order Number : {order.id} <br /> Date Placed : {order.datePlaced}{' '}
-              <br /> User Name: {buyer.name} <br /> User Email: {buyer.email}{' '}
-              <br />
-              Status:
-              <select
-                value={order.status}
-                onChange={event => handleStatusChange(event, order.id)}
-              >
-                <option value="created">Created</option>
-                <option value="processing">Processing</option>
-                <option value="cancelled">Cancelled</option>
-                <option value="completed">Completed</option>
-              </select>
+              <Link to={`/orders/${order.id}`}>
+                Order Number : {order.id} <br /> Date Placed :{' '}
+                {order.datePlaced} <br /> User Name: {buyer.name} <br /> User
+                Email: {buyer.email} <br />
+                Status:
+                <select
+                  value={order.status}
+                  onChange={event => handleStatusChange(event, order.id)}
+                >
+                  <option value="created">Created</option>
+                  <option value="processing">Processing</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </Link>
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -34,9 +36,7 @@ const AllOrders = props => {
           <Table.Row>
             <Table.Cell>
               {order.orderLineItems.map(ord => (
-                <Link key={order.id} to={`/order/${order.id}`}>
-                  <OrderLineItem order={ord} />
-                </Link>
+                <OrderLineItem key={order.id} order={ord} />
               ))}
             </Table.Cell>
           </Table.Row>

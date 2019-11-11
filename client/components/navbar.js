@@ -16,17 +16,14 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
       />
     </Link>
     <nav>
-      {/* <Link to="/home">
-        <h2 className="navbartitle">home</h2>
-      </Link> */}
       <Link to="/products">
         <h2 className="navbartitle">products</h2>
       </Link>
-      {user.role === 'admin' && (
+      {user.role === 'admin' ? (
         <Link to="/adminboard">
           <h2 className="navbartitle">admin board</h2>
         </Link>
-      )}
+      ) : null}
       {isLoggedIn && (
         <a href="#" onClick={handleClick}>
           <h2 className="navbartitle">logout</h2>
@@ -42,6 +39,9 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
           <h2 className="navbartitle">sign up</h2>
         </Link>
       )}
+      {/* <Link to="/home">
+        <h2 className="navbartitle">home</h2>
+      </Link> */}
     </nav>
     <Container id="nav-profile">
       {isLoggedIn && (
