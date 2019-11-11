@@ -6,6 +6,7 @@ import {Login, Signup} from './auth-form'
 import {fetchAddresses, fetchDistance} from '../store/addresses'
 import {createOrder} from '../store/singleOrder'
 import {states, countries} from '../../utilFrontEnd/address'
+import StripeCheckout from 'react-stripe-checkout'
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -46,13 +47,15 @@ class Checkout extends React.Component {
     this.setState({cart: newProps.cart, user: newProps.user})
   }
 
-  createOrder() {
+  createOrder(token, addresses) {
     this.props.createOrder(
       {
         user: this.state.user,
         cart: this.state.cart,
         shippingAddress: this.state.shippingAddress,
-        shippingTax: this.state.shippingTax
+        shippingTax: this.state.shippingTax,
+        token,
+        addresses
       },
       this.props.history
     )
@@ -106,24 +109,13 @@ class Checkout extends React.Component {
       if (e.target.shippingAddress) {
         if (e.target.shippingAddress.value === 'new') {
           shippingAddress = this.state.newShippingAddress
-          // this.setState(prevState => ({
-          //   shippingAddress: prevState.newShippingAddress
-          // }))
         } else {
           shippingAddress = this.props.addresses.find(
             address => address.id === Number(e.target.shippingAddress.value)
           )
-          // this.setState({
-          //   shippingAddress: this.props.addresses.find(
-          //     address => address.id === Number(e.target.shippingAddress.value)
-          //   )
-          // })
         }
       } else {
         shippingAddress = this.state.newShippingAddress
-        // this.setState(prevState => ({
-        //   shippingAddress: prevState.newShippingAddress
-        // }))
       }
       const distance = await this.props.fetchDistance(shippingAddress.zip)
       const shippingTax = Math.ceil(distance * 1) // 1 cent per mile
@@ -401,16 +393,19 @@ class Checkout extends React.Component {
             </p>
           </div>
         )}
-        <button
-          type="button"
+        <StripeCheckout
+          stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
+          token={this.createOrder}
+          billingAddress
+          amount={cart.reduce(
+            (sum, item) => item.quantity * item.product.price + sum,
+            this.state.shippingTax
+          )}
           disabled={
             typeof this.state.shippingAddress !== 'object' ||
             !this.state.user.email
           }
-          onClick={this.createOrder}
-        >
-          Process Order
-        </button>
+        />
       </div>
     )
   }

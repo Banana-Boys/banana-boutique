@@ -34,6 +34,7 @@ export const fetchUserOrders = userId => {
 }
 
 export const createOrder = (order, history) => {
+  console.log(order)
   return async dispatch => {
     try {
       const {data} = await axios.post(`/api/orders`, order)
