@@ -38,7 +38,7 @@ class NewProductForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id="new-product-form">
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input type="text" name="name" onChange={this.handleChange} />

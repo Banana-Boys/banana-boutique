@@ -47,7 +47,7 @@ class EditCategoryForm extends React.Component {
 
     return (
       <form onSubmit={this.invokeOnSubmit}>
-        <div className="form-group">
+        <div className="form-group" id="edit-category-form">
           <label htmlFor="name">Category Name: {category.name}</label>
           <input
             type="text"

@@ -154,10 +154,22 @@ body,
   float: right;
 }
 
-#categor {
+#category {
   display: flex;
   flex-direction: column;
   margin-bottom: 5%;
+}
+
+#new-product-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+}
+
+#edit-category-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
 }
 
 #newcategorylabel {
