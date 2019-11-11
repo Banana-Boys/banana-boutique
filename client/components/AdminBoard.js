@@ -6,7 +6,8 @@ import {
   fetchUsers,
   removeUserFromBoard,
   promoteUserBoard,
-  demoteUserBoard
+  demoteUserBoard,
+  sendTriggerReset
 } from '../store/users'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
@@ -75,6 +76,7 @@ export class AdminBoard extends Component {
                 deleteUser={this.props.removeUserFromBoard}
                 promote={this.props.promoteUserBoard}
                 demote={this.props.demoteUserBoard}
+                triggerReset={this.props.triggerReset}
               />
             ))
           )}
@@ -96,7 +98,8 @@ const mapDispatchToProps = {
   fetchUsers,
   promoteUserBoard,
   demoteUserBoard,
-  sendUpdateOrder
+  sendUpdateOrder,
+  triggerReset: sendTriggerReset
 }
 
 export default withRouter(
