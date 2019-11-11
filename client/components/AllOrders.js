@@ -7,6 +7,7 @@ const AllOrders = props => {
   const order = props.order || []
   const buyer = props.order.buyer || {}
   const handleStatusChange = props.handleStatusChange
+  console.log(props)
   return (
     <Container>
       <Table>
@@ -33,7 +34,7 @@ const AllOrders = props => {
           <Table.Row>
             <Table.Cell>
               {order.orderLineItems.map(ord => (
-                <Link key={ord.id} to={`/order/${ord.id}`}>
+                <Link key={order.id} to={`/order/${order.id}`}>
                   <OrderLineItem order={ord} />
                 </Link>
               ))}

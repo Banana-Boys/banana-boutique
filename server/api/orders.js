@@ -68,6 +68,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
+    console.log('ID', req.params.id)
     if (req.user) {
       const order = await Order.findByPk(req.params.id, {
         include: [
@@ -75,6 +76,7 @@ router.get('/:id', async (req, res, next) => {
           {model: Address, as: 'shipping'}
         ]
       })
+      console.log('order', order)
       res.json(order)
     } else {
       res.sendStatus(404)

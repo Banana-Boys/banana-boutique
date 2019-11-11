@@ -17,7 +17,7 @@ export class SingleOrder extends Component {
   render() {
     const order = this.props.singleOrder || {}
     //console.log(order.orderLineItems)
-    console.log('props', order)
+    console.log('props', this.props)
     return (
       <Container>
         <Table>
