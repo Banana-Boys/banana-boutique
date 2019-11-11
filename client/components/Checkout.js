@@ -7,6 +7,7 @@ import {fetchAddresses, fetchDistance} from '../store/addresses'
 import {createOrder} from '../store/singleOrder'
 import {states, countries} from '../../utilFrontEnd/address'
 import StripeCheckout from 'react-stripe-checkout'
+import {Button} from 'semantic-ui-react'
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -393,19 +394,25 @@ class Checkout extends React.Component {
             </p>
           </div>
         )}
-        <StripeCheckout
-          stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
-          token={this.createOrder}
-          billingAddress
-          amount={cart.reduce(
-            (sum, item) => item.quantity * item.product.price + sum,
-            this.state.shippingTax
-          )}
-          disabled={
-            typeof this.state.shippingAddress !== 'object' ||
-            !this.state.user.email
-          }
-        />
+        {cart.length ? (
+          <StripeCheckout
+            stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
+            token={this.createOrder}
+            billingAddress
+            amount={cart.reduce(
+              (sum, item) => item.quantity * item.product.price + sum,
+              this.state.shippingTax
+            )}
+            disabled={
+              typeof this.state.shippingAddress !== 'object' ||
+              !this.state.user.email
+            }
+          />
+        ) : (
+          <Button type="button" disabled>
+            Nothing in cart
+          </Button>
+        )}
       </div>
     )
   }
