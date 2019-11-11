@@ -185,11 +185,6 @@ class UserHome extends React.Component {
           ))}
         </h5>
 
-        <Link to={`/users/${this.props.match.params.id}/edit`}>
-          <Button size="mini" type="button" color="blue">
-            Edit Profile
-          </Button>
-        </Link>
         <Button
           size="mini"
           type="button"
@@ -199,6 +194,11 @@ class UserHome extends React.Component {
         >
           Reset Password
         </Button>
+        <Link to={`/users/${this.props.match.params.id}/edit`}>
+          <Button size="mini" type="button" color="blue">
+            Edit Profile
+          </Button>
+        </Link>
         <Button
           size="mini"
           type="button"
