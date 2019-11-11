@@ -484,33 +484,3 @@ a {
 #tablerowaddress {
   border-color: black !important;
 }
-
-/* FORM STYLES */
-
-#account-form {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  align-items: center;
-  background-color: peachpuff;
-}
-
-#form-container {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  width: 500px;
-  height: fit-content;
-}
-
-#form-container > form {
-  display: flex;
-  flex-direction: column;
-}
-
-#account-form input {
-  border: 1px solid rgba(34, 36, 38, 0.15);
-  border-radius: 5%;
-}

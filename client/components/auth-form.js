@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {withRouter} from 'react-router-dom'
 
+import '../styles/auth-from.scss'
 /**
  * COMPONENT
  */
