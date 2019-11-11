@@ -17,7 +17,10 @@ import {
   Accordion,
   Table,
   Dropdown,
-  TableBody
+  TableBody,
+  Header,
+  Comment,
+  Label
 } from 'semantic-ui-react'
 import {Login} from './auth-form'
 
@@ -42,6 +45,7 @@ class UserHome extends React.Component {
 
   render() {
     const {id, name, email, phone, imageUrl, role} = this.props.user
+    console.log(this.props)
     const isUser = id === Number(this.props.match.params.id) || role === 'admin'
     const propsId = this.props.match.params.id
     return (
@@ -166,49 +170,69 @@ class UserHome extends React.Component {
           </Item>
         </Item.Group>
 
-        <h5>
-          Your Orders:{' '}
-          {this.props.orders.map(order => (
-            <UserOrder key={order.id} order={order} />
-          ))}
-        </h5>
+        <Container>
+          <Container className="userhomedetailholder">
+            <Comment.Group>
+              <Header as="h3" dividing>
+                YOUR ORDERS
+              </Header>
+              {this.props.orders.map(order => (
+                <UserOrder key={order.id} order={order} />
+              ))}
+            </Comment.Group>
+          </Container>
 
-        <h5>
-          Your Reviews:{' '}
-          {this.props.reviews.map(rev => (
-            <Review
-              key={rev.id}
-              destroyReview={this.props.destroyReview}
-              review={rev}
-              //fetchUser={this.props.fetchUser}
-            />
-          ))}
-        </h5>
+          <Container className="userhomedetailholder">
+            <Comment.Group>
+              <Header as="h3" dividing>
+                YOUR REVIEWS
+              </Header>
+              {this.props.reviews.map(rev => (
+                <div id="userreviewuserprofilepage" key={rev.id}>
+                  <div id="userreview">
+                    <Review
+                      destroyReview={this.props.destroyReview}
+                      review={rev}
+                    />
+                  </div>
+                  {/* <div id="userreviewproduct">{<Label />}</div> */}
+                </div>
+              ))}
+            </Comment.Group>
+          </Container>
+        </Container>
 
-        <Button
-          size="mini"
-          type="button"
-          onClick={() => {
-            this.props.history.push('/passwordReset')
-          }}
-        >
-          Reset Password
-        </Button>
-        <Link to={`/users/${this.props.match.params.id}/edit`}>
-          <Button size="mini" type="button" color="blue">
-            Edit Profile
+        <Container id="nonozone">
+          <Comment.Group>
+            <Header as="h3" dividing>
+              MISC
+            </Header>
+          </Comment.Group>
+          <Button
+            size="mini"
+            type="button"
+            onClick={() => {
+              this.props.history.push('/passwordReset')
+            }}
+          >
+            Reset Password
           </Button>
-        </Link>
-        <Button
-          size="mini"
-          type="button"
-          color="red"
-          onClick={() => {
-            this.props.deleteUser(this.props.match.params.id)
-          }}
-        >
-          Delete Profile
-        </Button>
+          <Link to={`/users/${this.props.match.params.id}/edit`}>
+            <Button size="mini" type="button" color="blue">
+              Edit Profile
+            </Button>
+          </Link>
+          <Button
+            size="mini"
+            type="button"
+            color="red"
+            onClick={() => {
+              this.props.deleteUser(this.props.match.params.id)
+            }}
+          >
+            Delete Profile
+          </Button>
+        </Container>
       </Container>
     )
   }

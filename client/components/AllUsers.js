@@ -1,6 +1,5 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import UserView from './UserView'
 import {Table, TableBody, Container, Button} from 'semantic-ui-react'
 
 const AllUsers = props => {
