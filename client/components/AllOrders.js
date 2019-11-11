@@ -34,7 +34,7 @@ const AllOrders = props => {
           <Table.Row>
             <Table.Cell>
               {order.orderLineItems.map(ord => (
-                <Link key={order.id} to={`/order/${order.id}`}>
+                <Link key={order.id} to={`/orders/${order.id}`}>
                   <OrderLineItem order={ord} />
                 </Link>
               ))}
