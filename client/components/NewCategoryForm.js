@@ -50,8 +50,8 @@ export class NewCategoryForm extends Component {
         {this.state.categoryName.length > 0 ? (
           <div id="submit-category-holder">
             <span>
-              <Button size="mini" type="submit" color="blue">
-                Create Category
+              <Button size="mini" type="submit" color="yellow">
+                +Create Category
               </Button>
             </span>
           </div>
