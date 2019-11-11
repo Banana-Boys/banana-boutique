@@ -145,8 +145,8 @@ export class Queries extends Component {
             <div id="submit-product-holder">
               <Link to="/products/new">
                 <span>
-                  <Button size="mini" type="submit">
-                    Create Product
+                  <Button color="yellow" size="mini" type="submit">
+                    +Create Product
                   </Button>
                 </span>
               </Link>
@@ -193,6 +193,7 @@ export class Queries extends Component {
                     <Button
                       size="mini"
                       type="button"
+                      color="blue"
                       className="categoryeditbutton"
                     >
                       Edit

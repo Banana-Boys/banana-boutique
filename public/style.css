@@ -165,12 +165,20 @@ body,
   margin-bottom: -5%;
 }
 
+#categorylabel {
+  margin-bottom: -5%;
+}
+
 #instockcategory {
   margin-left: 5%;
 }
 
 #searchlabel {
   margin-bottom: 2%;
+}
+
+#search-bar {
+  margin-bottom: 5%;
 }
 
 #new-category-form {
