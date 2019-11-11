@@ -34,6 +34,12 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
           <h2 className="navbartitle">sign up</h2>
         </Link>
       )}
+      {/* <Link to="/home">
+        <h2 className="navbartitle">home</h2>
+      </Link> */}
+      <Link to="/adminboard">
+        <h2 className="navbartitle">admin board</h2>
+      </Link>
     </nav>
     <Container id="nav-profile">
       {isLoggedIn && (

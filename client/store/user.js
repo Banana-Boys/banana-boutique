@@ -85,16 +85,23 @@ export const deleteUser = userId => async dispatch => {
   }
 }
 
-export const resetPassword = (userId, password, history) => async dispatch => {
+export const resetPassword = (
+  userId,
+  oldPassword,
+  password,
+  appHistory
+) => async dispatch => {
+  let res
   try {
-    const res = await axios.put(`/api/users/${userId}`, {
+    res = await axios.put(`/api/users/${userId}`, {
+      oldPassword,
       password,
       resetPassword: false
     })
     dispatch(getUser(res.data))
-    history.push(`/home`)
+    appHistory.push(`/home`)
   } catch (err) {
-    console.log(err)
+    dispatch(getUser({id: userId, error: err}))
   }
 }
 

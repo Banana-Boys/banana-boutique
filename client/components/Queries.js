@@ -195,6 +195,7 @@ export class Queries extends Component {
                       type="button"
                       color="blue"
                       className="categoryeditbutton"
+                      color="blue"
                     >
                       Edit
                     </Button>

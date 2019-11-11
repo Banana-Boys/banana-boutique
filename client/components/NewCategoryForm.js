@@ -29,7 +29,7 @@ export class NewCategoryForm extends Component {
         {/* </div> */}
         <div id="submit-category-holder">
           <span>
-            <Button color="yellow" size="mini" type="submit">
+            <Button size="mini" type="submit" color="yellow">
               +Create Category
             </Button>
           </span>

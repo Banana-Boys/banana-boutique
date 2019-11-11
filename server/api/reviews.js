@@ -5,7 +5,8 @@ const {Product, Category, User, Review} = require('../db')
 router.get('/', async (req, res, next) => {
   try {
     const reviews = await Review.findAll({
-      include: {model: User, Product}
+      include: {model: User, Product},
+      order: ['createdAt', 'DESC']
     })
     res.json(reviews)
   } catch (error) {

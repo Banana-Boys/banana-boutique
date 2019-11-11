@@ -59,10 +59,8 @@ class SingleProduct extends React.Component {
 
   render() {
     const product = this.props.singleProduct || {}
-    //console.log('thisprops', this.props)
     const categories = product.categories || []
     const quantitySelect = []
-    console.log(this.props)
     const user = this.props.user || {}
 
     // quantity select dropdown options
@@ -139,7 +137,7 @@ class SingleProduct extends React.Component {
                   disabled={!product.inventory}
                   onClick={this.handleAddToCart}
                 >
-                  Add Product to Cart
+                  {product.inventory ? 'Add Product to Cart' : 'Out of Stock'}
                   <Icon name="right chevron" />
                 </Button>
               </Item.Extra>
