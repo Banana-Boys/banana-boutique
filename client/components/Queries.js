@@ -139,166 +139,183 @@ export class Queries extends Component {
     const isAdmin = this.props.user.role
 
     return (
-      <div id="filters">
-        <div id="search-bar">
-          <label id="searchlabel" htmlFor="search">
-            Search:{' '}
-          </label>
-          <Input
-            type="text"
-            id="search"
-            value={this.state.search}
-            onChange={this.handleSearch}
-          />
-        </div>
-        <Link to="/products/new">
-          <button type="button" id="">
-            Create Product
-          </button>
-        </Link>
+      <div id="products-side-menus">
         {isAdmin && (
-          <div id="category">
-            <label id="newcategorylabel" htmlFor="new-category" />
-            <NewCategoryForm />
+          <div id="products-admin-actions">
+            <div id="submit-product-holder">
+              <Link to="/products/new">
+                <span>
+                  <Button size="mini" type="submit">
+                    Create Product
+                  </Button>
+                </span>
+              </Link>
+            </div>
+            <div id="category">
+              <label id="newcategorylabel" htmlFor="new-category" />
+              <NewCategoryForm />
+            </div>
           </div>
         )}
-        <label id="categorylabel" htmlFor="categories">
-          Categories:{' '}
-        </label>
-        <div id="categories">
-          {categories.map(category => (
-            <div key={category.id} className="category">
-              <Input
-                name="category-selected"
-                type="checkbox"
-                value={category.id}
-                checked={this.state.categories.includes(category.id.toString())}
-                onChange={this.updateCategorySelected}
-              />{' '}
-              {category.name}
-              {this.props.user.role === 'admin' ? (
-                <Link
-                  to={`/categories/${category.id}/edit`}
-                  params={{category}}
-                >
-                  <Button
-                    size="mini"
-                    type="button"
-                    className="categoryeditbutton"
-                  >
-                    Edit
-                  </Button>
-                </Link>
-              ) : (
-                <div />
-              )}
-            </div>
-          ))}
-          <div id="instockcategory">
+        <div id="filters">
+          <div id="search-bar">
+            <label id="searchlabel" htmlFor="search">
+              Search:{' '}
+            </label>
             <Input
-              name="inStock"
-              type="checkbox"
-              onChange={this.handleInStock}
-              checked={this.state.inStock}
-            />{' '}
-            In Stock
+              type="text"
+              id="search"
+              value={this.state.search}
+              onChange={this.handleSearch}
+            />
           </div>
-          {/* <label htmlFor="inStock">In stock</label> */}
-        </div>
 
-        <select id="sort" name="sort" onChange={this.handleSort}>
-          {/* <option value="name_0" selected={this.state.sort === ''} /> */}
-
-          <option value="name_0" selected={this.state.sort === 'name_0'}>
-            Name (A to Z)
-          </option>
-          <option value="name_1" selected={this.state.sort === 'name_1'}>
-            Name (Z to A)
-          </option>
-          <option value="price_0" selected={this.state.sort === 'price_0'}>
-            Price (low to high)
-          </option>
-          <option value="price_1" selected={this.state.sort === 'price_1'}>
-            Price (low to high)
-          </option>
-          <option
-            value="avgrating_0"
-            selected={this.state.sort === 'avgrating_0'}
-          >
-            Avg. rating (low to high)
-          </option>
-          <option
-            value="avgrating_1"
-            selected={this.state.sort === 'avgrating_1'}
-          >
-            Avg. rating (high to low)
-          </option>
-          <option
-            value="numratings_0"
-            selected={this.state.sort === 'numratings_0'}
-          >
-            # ratings (low to high)
-          </option>
-          <option
-            value="numratings_1"
-            selected={this.state.sort === 'numratings_1'}
-          >
-            # ratings (high to low)
-          </option>
-        </select>
-        <div id="paginationHolder">
-          <div>
-            Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
-              this.state.page * this.state.numPerPage + 1,
-              this.state.numProducts
-            )}{' '}
-            of {this.state.numProducts}
+          <label id="categorylabel" htmlFor="categories">
+            Categories:{' '}
+          </label>
+          <div id="categories">
+            {categories.map(category => (
+              <div key={category.id} className="category">
+                <Input
+                  name="category-selected"
+                  type="checkbox"
+                  value={category.id}
+                  checked={this.state.categories.includes(
+                    category.id.toString()
+                  )}
+                  onChange={this.updateCategorySelected}
+                />{' '}
+                {category.name}
+                {this.props.user.role === 'admin' ? (
+                  <Link
+                    to={`/categories/${category.id}/edit`}
+                    params={{category}}
+                  >
+                    <Button
+                      size="mini"
+                      type="button"
+                      className="categoryeditbutton"
+                    >
+                      Edit
+                    </Button>
+                  </Link>
+                ) : (
+                  <div />
+                )}
+              </div>
+            ))}
+            <div id="instockcategory">
+              <Input
+                name="inStock"
+                type="checkbox"
+                onChange={this.handleInStock}
+                checked={this.state.inStock}
+              />{' '}
+              In Stock
+            </div>
+            {/* <label htmlFor="inStock">In stock</label> */}
           </div>
-          <Button
-            size="mini"
-            type="button"
-            id="firstPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === 1}
-          >
-            {'<<'}
-          </Button>
-          <Button
-            size="mini"
-            type="button"
-            id="prevPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === 1}
-          >
-            {'<'}
-          </Button>
-          <span>{this.state.page}</span>
-          <Button
-            size="mini"
-            type="button"
-            id="nextPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === this.state.lastPage}
-          >
-            {'>'}
-          </Button>
-          <Button
-            size="mini"
-            type="button"
-            id="lastPage"
-            onClick={this.handleClick}
-            disabled={this.state.page === this.state.lastPage}
-          >
-            {'>>'}
-          </Button>
-        </div>
-        <div>
-          <label htmlFor="numPerPage"># products/page:</label>
-          <select name="numPerPage" onChange={this.handleChange}>
-            <option selected={Number(this.state.numPerPage) === 10}>10</option>
-            <option selected={Number(this.state.numPerPage) === 20}>20</option>
-            <option selected={Number(this.state.numPerPage) === 50}>50</option>
+
+          <select id="sort" name="sort" onChange={this.handleSort}>
+            {/* <option value="name_0" selected={this.state.sort === ''} /> */}
+
+            <option value="name_0" selected={this.state.sort === 'name_0'}>
+              Name (A to Z)
+            </option>
+            <option value="name_1" selected={this.state.sort === 'name_1'}>
+              Name (Z to A)
+            </option>
+            <option value="price_0" selected={this.state.sort === 'price_0'}>
+              Price (low to high)
+            </option>
+            <option value="price_1" selected={this.state.sort === 'price_1'}>
+              Price (low to high)
+            </option>
+            <option
+              value="avgrating_0"
+              selected={this.state.sort === 'avgrating_0'}
+            >
+              Avg. rating (low to high)
+            </option>
+            <option
+              value="avgrating_1"
+              selected={this.state.sort === 'avgrating_1'}
+            >
+              Avg. rating (high to low)
+            </option>
+            <option
+              value="numratings_0"
+              selected={this.state.sort === 'numratings_0'}
+            >
+              # ratings (low to high)
+            </option>
+            <option
+              value="numratings_1"
+              selected={this.state.sort === 'numratings_1'}
+            >
+              # ratings (high to low)
+            </option>
           </select>
+          <div id="paginationHolder">
+            <div>
+              Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
+                this.state.page * this.state.numPerPage + 1,
+                this.state.numProducts
+              )}{' '}
+              of {this.state.numProducts}
+            </div>
+            <Button
+              size="mini"
+              type="button"
+              id="firstPage"
+              onClick={this.handleClick}
+              disabled={this.state.page === 1}
+            >
+              {'<<'}
+            </Button>
+            <Button
+              size="mini"
+              type="button"
+              id="prevPage"
+              onClick={this.handleClick}
+              disabled={this.state.page === 1}
+            >
+              {'<'}
+            </Button>
+            <span>{this.state.page}</span>
+            <Button
+              size="mini"
+              type="button"
+              id="nextPage"
+              onClick={this.handleClick}
+              disabled={this.state.page === this.state.lastPage}
+            >
+              {'>'}
+            </Button>
+            <Button
+              size="mini"
+              type="button"
+              id="lastPage"
+              onClick={this.handleClick}
+              disabled={this.state.page === this.state.lastPage}
+            >
+              {'>>'}
+            </Button>
+          </div>
+          <div>
+            <label htmlFor="numPerPage"># products/page:</label>
+            <select name="numPerPage" onChange={this.handleChange}>
+              <option selected={Number(this.state.numPerPage) === 10}>
+                10
+              </option>
+              <option selected={Number(this.state.numPerPage) === 20}>
+                20
+              </option>
+              <option selected={Number(this.state.numPerPage) === 50}>
+                50
+              </option>
+            </select>
+          </div>
         </div>
       </div>
     )
