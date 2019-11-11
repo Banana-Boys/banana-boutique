@@ -4,7 +4,6 @@ import priceConvert from '../../utilFrontEnd/priceConvert'
 
 const OrderLineItem = props => {
   const product = props.order.product || {}
-  console.log('orderlineitem', props)
   return (
     <Table>
       <Card>
