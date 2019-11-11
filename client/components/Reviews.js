@@ -16,11 +16,13 @@ export class Reviews extends Component {
       <Container>
         {this.props.user.id ? (
           <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
-            <Button type="button">Add Review</Button>
+            <Button size="mini" color="blue" type="button">
+              +Add Review
+            </Button>
           </Link>
         ) : (
           <Link to="/login">
-            <Button type="button">
+            <Button size="mini" color="blue" type="button">
               You must be logged in to leave a review
             </Button>
           </Link>
