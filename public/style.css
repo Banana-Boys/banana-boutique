@@ -50,7 +50,6 @@ body,
 #cart,
 #single-product,
 #checkout,
-#user-home,
 #account-form,
 #admin-board {
   top: 0;
@@ -122,6 +121,16 @@ body,
 .ui.grid {
   width: 80%;
   margin: 0 auto !important;
+}
+
+/* PRODUCTS admin actions */
+#products-admin-actions {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 15px;
+  top: 0px;
+  margin-top: 85px;
 }
 
 /* FILTERS */
@@ -322,4 +331,32 @@ a {
 
 #paginationHolder {
   margin-top: 5%;
+}
+
+#userhomeprofileimage {
+  xborder-radius: 50% !important;
+  width: 300px;
+  height: 300px;
+}
+
+#userhomewelcomname {
+  text-align: center;
+  margin: 5%;
+}
+
+#user-home {
+  margin: 6%;
+  display: fixed;
+}
+
+#user-home-itemgroup {
+  display: flex;
+}
+
+#userhomeitemcontent {
+  justify-content: center;
+}
+
+#userhomeitemcontent {
+  xtext-align: left;
 }

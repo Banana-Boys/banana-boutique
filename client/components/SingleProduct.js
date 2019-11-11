@@ -62,6 +62,8 @@ class SingleProduct extends React.Component {
     //console.log('thisprops', this.props)
     const categories = product.categories || []
     const quantitySelect = []
+    console.log(this.props)
+    const user = this.props.user || {}
 
     // quantity select dropdown options
     let i = 1
@@ -94,22 +96,30 @@ class SingleProduct extends React.Component {
                 </h6>
               </Item.Description>
               <Item.Extra>
-                <Button
-                  primary
-                  floated="right"
-                  type="button"
-                  onClick={this.handleDelete}
-                >
-                  Delete Product
-                </Button>
-                <Button
-                  primary
-                  floated="right"
-                  type="button"
-                  onClick={this.handleEdit}
-                >
-                  Edit Product
-                </Button>
+                {user.role === 'admin' ? (
+                  <div>
+                    <Button
+                      color="red"
+                      floated="right"
+                      size="mini"
+                      type="button"
+                      onClick={this.handleDelete}
+                    >
+                      Delete Product
+                    </Button>
+                    <Button
+                      primary
+                      floated="right"
+                      size="mini"
+                      type="button"
+                      onClick={this.handleEdit}
+                    >
+                      Edit Product
+                    </Button>
+                  </div>
+                ) : (
+                  <div />
+                )}
                 <Label>
                   {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
                 </Label>
@@ -125,6 +135,7 @@ class SingleProduct extends React.Component {
                 <Button
                   primary
                   floated="right"
+                  size="mini"
                   disabled={!product.inventory}
                   onClick={this.handleAddToCart}
                 >
