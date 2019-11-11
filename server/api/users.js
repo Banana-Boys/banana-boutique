@@ -2,6 +2,20 @@ const router = require('express').Router()
 const {User, Review, Product, Order, OrderLineItem} = require('../db/models')
 module.exports = router
 
+const passwordReset = async (req, res, next) => {
+  if (!req.body.password) {
+    next()
+  } else {
+    const user = await User.findByPk(req.user.id)
+    if (!user.correctPassword(req.body.oldPassword)) {
+      res.status(401).send('Your password was incorrect')
+    } else {
+      delete req.body.oldPassword
+      next()
+    }
+  }
+}
+
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -16,9 +30,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', passwordReset, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id)
+    console.log(req.body)
     await user.update(req.body)
     const newUser = await User.findByPk(req.params.id)
     res.status(200).json(newUser)

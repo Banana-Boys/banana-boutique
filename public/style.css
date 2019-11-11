@@ -52,7 +52,8 @@ body,
 #checkout,
 #user-home,
 #account-form,
-#admin-board {
+#admin-board,
+#form-page {
   top: 0;
   margin-top: 55px;
 }

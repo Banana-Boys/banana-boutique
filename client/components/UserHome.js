@@ -104,7 +104,15 @@ class UserHome extends React.Component {
             Edit Profile
           </Button>
         </Link>
-
+        <Button
+          size="mini"
+          type="button"
+          onClick={() => {
+            this.props.history.push('/passwordReset')
+          }}
+        >
+          Reset Password
+        </Button>
         <Button
           size="mini"
           type="button"
