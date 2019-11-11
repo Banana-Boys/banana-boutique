@@ -77,9 +77,15 @@ export class Cart extends Component {
         <div id="bill">
           <h1>Total</h1>
           <Bill cart={cartItems} />
-          <Link to="/checkout">
-            <Button type="button">Checkout</Button>
-          </Link>
+          {cartItems.length ? (
+            <Link to="/checkout">
+              <Button type="button">Checkout</Button>
+            </Link>
+          ) : (
+            <Button type="button" disabled>
+              Nothing in cart
+            </Button>
+          )}
         </div>
       </div>
     )

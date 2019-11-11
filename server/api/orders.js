@@ -14,7 +14,7 @@ const stripe = require('stripe')(process.env.STRIPE_KEY)
 const uuid = require('uuid')
 
 // async..await is not allowed in global scope, must use a wrapper
-async function main(email, orderId) {
+async function main(email, orderId, status) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount()
@@ -34,8 +34,8 @@ async function main(email, orderId) {
   let info = await transporter.sendMail({
     from: '<order-confirmation@nanas.com>', // sender address
     to: email, // list of receivers
-    subject: `Order Confirmation #${orderId}`, // Subject line
-    text: `Order Confirmation #${orderId}` // plain text body
+    subject: `Order #${orderId} ${status}`, // Subject line
+    text: `Order #${orderId} ${status}` // plain text body
     // html: '<b>Hello world?</b>' // html body
   })
 
@@ -90,6 +90,7 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.id)
     await order.update(req.body)
+    main(req.user.email, order.id, order.status).catch(console.error)
     res.send(
       await Order.findByPk(req.params.id, {
         include: [
@@ -107,6 +108,12 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
 router.post('/', checkGuest(), async (req, res, next) => {
   try {
     let {cart, user, shippingTax, shippingAddress, token} = req.body
+
+    if (!cart.length) {
+      const error = new Error()
+      error.message = 'Cannot create order with no products'
+      throw error
+    }
 
     await Promise.all(
       cart.map(async item => {
@@ -208,7 +215,7 @@ router.post('/', checkGuest(), async (req, res, next) => {
 
     // console.log("Charge", {charge});
 
-    main(user.email, order.id).catch(console.error)
+    main(user.email, order.id, order.status).catch(console.error)
 
     // Returns Order
     res.json(
