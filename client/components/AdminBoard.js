@@ -15,7 +15,7 @@ export class AdminBoard extends Component {
   constructor() {
     super()
     this.onFilter = this.onFilter.bind(this)
-    this.handeStatusChange = this.handeStatusChange.bind(this)
+    this.handleStatusChange = this.handleStatusChange.bind(this)
   }
 
   async componentDidMount() {
@@ -33,7 +33,7 @@ export class AdminBoard extends Component {
     }
   }
 
-  async handeStatusChange(event, id) {
+  async handleStatusChange(event, id) {
     const order = {id, status: event.target.value}
     await this.props.sendUpdateOrder(order)
   }
@@ -58,7 +58,7 @@ export class AdminBoard extends Component {
             <AllOrders
               key={order.id}
               order={order}
-              handleStatusChange={this.handeStatusChange}
+              handleStatusChange={this.handleStatusChange}
             />
           ))}
         </h5>

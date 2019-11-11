@@ -18,32 +18,39 @@ import {
   Select
 } from 'semantic-ui-react'
 
-export class Categories extends Component {
+export class Queries extends Component {
   constructor(props) {
     super(props)
     const query = queryParser(this.props.location.search)
-    const {categories, search, inStock, sort} = query
+    const {categories, search, inStock, sort, numPerPage} = query
     this.state = {
       categories: categories || [],
       search: search || '',
       inStock: Boolean(inStock) || false,
       sort: sort || '',
       editCategory: {},
-      isAdmin: ''
+      isAdmin: '',
+      page: Number(this.props.location.hash.slice(1)) || 1,
+      numPerPage: numPerPage || 10,
+      lastPage: 1,
+      numProducts: 0
     }
     this.handleEdit = this.handleEdit.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.handleInStock = this.handleInStock.bind(this)
     this.handleSort = this.handleSort.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.fetchAllCategories()
-    this.props.fetchProducts(this.state)
+    const {lastPage, numProducts} = await this.props.fetchProducts(this.state)
+    this.setState({lastPage, numProducts})
   }
 
-  updateCategorySelected = event => {
+  updateCategorySelected = async event => {
     event.persist()
     let newState
     if (event.target.checked) {
@@ -61,22 +68,25 @@ export class Categories extends Component {
       }
       this.setState(newState)
     }
-    this.props.fetchProducts(newState)
+    const {lastPage, numProducts} = await this.props.fetchProducts(newState)
+    this.setState({lastPage, numProducts})
     queryPusher(newState, this.props)
   }
 
-  handleSearch(e) {
+  async handleSearch(e) {
     const newState = {...this.state, search: e.target.value}
     this.setState(newState)
-    this.props.fetchProducts(newState)
+    const lastPage = await this.props.fetchProducts(newState)
     queryPusher(newState, this.props)
+    this.setState(lastPage)
   }
 
-  handleInStock() {
+  async handleInStock() {
     const newState = {...this.state, inStock: !this.state.inStock}
     this.setState(newState)
-    this.props.fetchProducts(newState)
+    const {lastPage, numProducts} = await this.props.fetchProducts(newState)
     queryPusher(newState, this.props)
+    this.setState({lastPage, numProducts})
   }
 
   handleSort(e) {
@@ -94,6 +104,34 @@ export class Categories extends Component {
     this.props.gotoCategory(this.props.category.id)
   }
 
+  handleClick(e) {
+    e.persist()
+    let page
+    if (e.target.id === 'prevPage') {
+      page = Math.max(this.state.page - 1, 1)
+    } else if (e.target.id === 'firstPage') {
+      page = 1
+    } else if (e.target.id === 'nextPage') {
+      page = Math.min(this.state.page + 1, this.state.lastPage)
+    } else {
+      page = this.state.lastPage
+    }
+    this.setState({page})
+    this.props.fetchProducts({...this.state, page})
+    this.props.history.push({
+      hash: `#${page}`,
+      search: this.props.location.search
+    })
+  }
+
+  async handleChange(e) {
+    e.persist()
+    const newState = {...this.state, numPerPage: e.target.value}
+    const {lastPage, numProducts} = await this.props.fetchProducts(newState)
+    this.setState({...newState, lastPage, numProducts})
+    queryPusher(newState, this.props)
+  }
+
   handleAdd() {}
 
   render() {
@@ -102,7 +140,57 @@ export class Categories extends Component {
 
     return (
       <div id="filters">
-        <div id="seach-bar">
+        <div>
+          <div>
+            Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
+              this.state.page * this.state.numPerPage + 1,
+              this.state.numProducts
+            )}{' '}
+            of {this.state.numProducts}
+          </div>
+          <button
+            type="button"
+            id="firstPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === 1}
+          >
+            {'<<'}
+          </button>
+          <button
+            type="button"
+            id="prevPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === 1}
+          >
+            {'<'}
+          </button>
+          <span>{this.state.page}</span>
+          <button
+            type="button"
+            id="nextPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === this.state.lastPage}
+          >
+            {'>'}
+          </button>
+          <button
+            type="button"
+            id="lastPage"
+            onClick={this.handleClick}
+            disabled={this.state.page === this.state.lastPage}
+          >
+            {'>>'}
+          </button>
+        </div>
+        <div>
+          <label htmlFor="numPerPage"># products/page:</label>
+          <select name="numPerPage" onChange={this.handleChange}>
+            <option selected={Number(this.state.numPerPage) === 10}>10</option>
+            <option selected={Number(this.state.numPerPage) === 20}>20</option>
+            <option selected={Number(this.state.numPerPage) === 50}>50</option>
+          </select>
+        </div>
+        <div id="search-bar">
           <label id="searchlabel" htmlFor="search">
             Search:{' '}
           </label>
@@ -114,14 +202,14 @@ export class Categories extends Component {
           />
         </div>
         {isAdmin && (
-          <div id="categor">
+          <div id="category">
             <label id="newcategorylabel" htmlFor="new-category">
               New Category:{' '}
             </label>
             <NewCategoryForm />
           </div>
         )}
-        <label id="categorylable" htmlFor="categories">
+        <label id="categorylabel" htmlFor="categories">
           Categories:{' '}
         </label>
         <div id="categories">
@@ -221,4 +309,4 @@ const mapState = (state, props) => {
 
 const mapDispatch = {fetchAllCategories, fetchProducts, fetchCategory}
 
-export default withRouter(connect(mapState, mapDispatch)(Categories))
+export default withRouter(connect(mapState, mapDispatch)(Queries))

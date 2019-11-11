@@ -19,7 +19,8 @@ export const fetchProducts = query => {
   return async dispatch => {
     try {
       const {data} = await axios.get('/api/products', {params: query}) //looked cute, might change later
-      return dispatch(getProducts(data))
+      dispatch(getProducts(data.products))
+      return {lastPage: data.lastPage, numProducts: data.numProducts}
     } catch (err) {
       console.log(err)
     }

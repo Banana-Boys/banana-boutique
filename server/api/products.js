@@ -54,6 +54,11 @@ router.get('/', async (req, res, next) => {
     if (req.query.sort) {
       products.sort(sorter(req.query.sort))
     }
+    const numPerPage = req.query.numPerPage ? req.query.numPerPage : 10
+    const page = req.query.page ? req.query.page : 1
+    const lastPage = Math.ceil(products.length / numPerPage)
+    const numProducts = products.length
+    products = products.slice((page - 1) * numPerPage, page * numPerPage)
     // if (req.query.categories) {
     //   req.query.categories.forEach(async categoryId => {
     //     const category = await Category.findByPk(categoryId)
@@ -101,7 +106,7 @@ router.get('/', async (req, res, next) => {
     //     ]
     //   })
     // }
-    res.json(products)
+    res.json({products, lastPage, numProducts})
   } catch (error) {
     next(error)
   }
