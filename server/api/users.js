@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {User, Review, Product, Order, OrderLineItem} = require('../db/models')
-const {passwordReset, isAdmin} = require('../middleware')
+const {passwordReset, isAdmin, ownsProfile} = require('../middleware')
 module.exports = router
 
 router.get('/', isAdmin, async (req, res, next) => {
@@ -14,7 +14,7 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.put('/:id', passwordReset, async (req, res, next) => {
+router.put('/:id', ownsProfile, passwordReset, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id)
     console.log(req.body)
@@ -26,7 +26,7 @@ router.put('/:id', passwordReset, async (req, res, next) => {
   }
 })
 
-router.delete('/:id', isAdmin, async (req, res, next) => {
+router.delete('/:id', ownsProfile, async (req, res, next) => {
   try {
     await User.destroy({where: {id: req.params.id}})
     res.sendStatus(200)

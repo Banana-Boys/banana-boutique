@@ -31,7 +31,7 @@ const canEditReview = async (req, res, next) => {
   const review = await Review.findByPk(req.params.id)
   if (req.user && req.user.role === 'admin') {
     next()
-  } else if (req.user.id === review.userId) {
+  } else if (req.user.id === +review.userId) {
     next()
   } else {
     res.sendStatus(403)
@@ -42,7 +42,7 @@ const ownsAddress = async (req, res, next) => {
   const address = await Address.findByPk(req.params.id)
   if (req.user && req.user.role === 'admin') {
     next()
-  } else if (req.user.id === address.userId) {
+  } else if (req.user.id === +address.userId) {
     next()
   } else {
     res.sendStatus(403)
@@ -53,7 +53,17 @@ const ownsOrder = async (req, res, next) => {
   const order = await Order.findByPk(req.params.id)
   if (req.user && req.user.role === 'admin') {
     next()
-  } else if (req.user.id === order.userId) {
+  } else if (req.user.id === +order.userId) {
+    next()
+  } else {
+    res.sendStatus(403)
+  }
+}
+
+const ownsProfile = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next()
+  } else if (req.user && req.user.id === +req.params.id) {
     next()
   } else {
     res.sendStatus(403)
@@ -63,7 +73,7 @@ const ownsOrder = async (req, res, next) => {
 const canViewOrders = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
     next()
-  } else if (req.query && req.query.userId === req.user.id) {
+  } else if (req.query && req.query.userId === +req.user.id) {
     next()
   } else {
     res.sendStatus(403)
@@ -77,5 +87,6 @@ module.exports = {
   canEditReview,
   ownsAddress,
   ownsOrder,
-  canViewOrders
+  canViewOrders,
+  ownsProfile
 }

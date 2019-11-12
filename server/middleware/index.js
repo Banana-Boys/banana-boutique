@@ -5,7 +5,8 @@ const {
   canEditReview,
   ownsAddress,
   ownsOrder,
-  canViewOrders
+  canViewOrders,
+  ownsProfile
 } = require('./UserAuthentication')
 const {passwordReset} = require('./ActionCheck')
 
@@ -17,5 +18,6 @@ module.exports = {
   canEditReview,
   ownsAddress,
   ownsOrder,
-  canViewOrders
+  canViewOrders,
+  ownsProfile
 }
