@@ -1,27 +1,11 @@
 const router = require('express').Router()
 const {User, Review, Product, Order, OrderLineItem} = require('../db/models')
+const {passwordReset, isAdmin} = require('../middleware')
 module.exports = router
 
-const passwordReset = async (req, res, next) => {
-  if (!req.body.password) {
-    next()
-  } else {
-    const user = await User.findByPk(req.user.id)
-    if (!user.correctPassword(req.body.oldPassword)) {
-      res.status(401).send('Your password was incorrect')
-    } else {
-      delete req.body.oldPassword
-      next()
-    }
-  }
-}
-
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
       attributes: ['id', 'email', 'role', 'name', 'id']
     })
     res.json(users)
@@ -42,7 +26,7 @@ router.put('/:id', passwordReset, async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     await User.destroy({where: {id: req.params.id}})
     res.sendStatus(200)
@@ -70,6 +54,7 @@ router.get('/:id/reviews', async (req, res, next) => {
   }
 })
 
+// not very secure, fix need to fix redux request to /orders
 router.get('/:id/orders', async (req, res, next) => {
   try {
     const orders = await Order.findAll({

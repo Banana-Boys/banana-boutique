@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const Address = require('../db/models/Address')
 const axios = require('axios')
+const {isUser, ownsAddress} = require('../middleware')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -11,7 +12,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', ownsAddress, async (req, res, next) => {
   try {
     const address = await Address.findByPk(req.params.id)
     res.status(200).json(address)
@@ -20,7 +21,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isUser, async (req, res, next) => {
   try {
     let address = {}
     for (let key in req.body) {
@@ -36,7 +37,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', ownsAddress, async (req, res, next) => {
   try {
     const address = await Address.findByPk(req.params.id)
     await address.destroy()
@@ -46,7 +47,7 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', ownsAddress, async (req, res, next) => {
   try {
     let address = await Address.findByPk(req.params.id)
     await address.update(req.body)
