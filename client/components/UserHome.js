@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -52,7 +53,7 @@ class UserHome extends React.Component {
       <Container id="user-home">
         <Container id="userhomeitem">
           <Item.Group>
-            <Item>
+            <Item style={{alignItems: 'center'}}>
               {!imageUrl ? (
                 <img
                   id="userhomeprofileimage"
@@ -81,98 +82,6 @@ class UserHome extends React.Component {
                   <div id="userhomeitemcontent">
                     <h5>Email: {email}</h5>
                     <h5>Phone #: {phone}</h5>
-
-                    <div id="addressinfoholder">
-                      <div
-                        role="listbox"
-                        aria-expanded="false"
-                        className="dropdown"
-                        tabIndex="0"
-                      >
-                        <div className="drp">
-                          <h5 id="dropdowntext">
-                            Addresses:{' '}
-                            {/* <i aria-hidden="true" className="dropdown icon" /> */}
-                          </h5>
-                        </div>
-
-                        <div className="dropdown-content">
-                          {this.props.addresses.map(address => {
-                            const {
-                              id,
-                              address1,
-                              address2,
-                              city,
-                              state,
-                              country,
-                              zip
-                            } = address
-                            return (
-                              <Container
-                                className="addressdropdowncontainer"
-                                key={id}
-                              >
-                                <Table>
-                                  <Table.Body>
-                                    <Table.Row id="tablerowaddress">
-                                      <div id="addresstablerow">
-                                        <p>{address1}</p>
-                                        {address2 ? <p>{address2}</p> : null}
-                                        <p>
-                                          <span>{city}</span>,{' '}
-                                          {state ? <span>{state},</span> : null}{' '}
-                                          <span>{country}</span>{' '}
-                                          <span>{zip}</span>
-                                        </p>
-                                      </div>
-                                      <Table.Cell floated="left">
-                                        <div id="addressbuttons">
-                                          <div id="addressbuttonstablerow">
-                                            <Button
-                                              size="mini"
-                                              type="button"
-                                              color="blue"
-                                            >
-                                              <Link
-                                                to={`/addresses/${id}/edit`}
-                                              >
-                                                Edit Address
-                                              </Link>
-                                            </Button>
-
-                                            <Button
-                                              size="mini"
-                                              type="button"
-                                              color="red"
-                                              onClick={() => {
-                                                this.props.deleteAddress(id)
-                                              }}
-                                            >
-                                              Delete Address
-                                            </Button>
-                                          </div>
-                                        </div>
-                                      </Table.Cell>
-                                    </Table.Row>
-                                  </Table.Body>
-                                </Table>
-                              </Container>
-                            )
-                          })}
-                        </div>
-                      </div>
-
-                      <Link to="/addresses/new">
-                        <Button
-                          id="addressbutton"
-                          size="mini"
-                          type="button"
-                          color="black"
-                        >
-                          +Add Address
-                        </Button>
-                      </Link>
-                    </div>
                   </div>
                 </Item.Description>
               </Item.Content>
@@ -183,67 +92,137 @@ class UserHome extends React.Component {
             <Container className="userhomedetailholder">
               <Comment.Group>
                 <Header as="h3" dividing>
-                  YOUR ORDERS
+                  YOUR ADDRESSES
                 </Header>
-                <Item.Group>
-                  {this.props.orders.map(order => (
-                    <UserOrder key={order.id} order={order} />
+                <Item.Group
+                  className="scrolling content"
+                  style={{
+                    display: 'flex',
+                    overflowY: 'auto',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {this.props.addresses.map(address => (
+                    <div
+                      key={address.id}
+                      style={{margin: '0 2px 15px 2px', padding: '0 15px'}}
+                    >
+                      <div>
+                        <p>{address.address1}</p>
+                        {address.address2 ? <p>{address.address2}</p> : null}
+                        <p>
+                          {address.city},{' '}
+                          {address.state ? `${address.state}` : null}
+                        </p>
+                        <p>
+                          {address.country} {address.zip}
+                        </p>
+                      </div>
+                      <Table.Cell floated="left">
+                        <div id="addressbuttons">
+                          <div id="addressbuttonstablerow">
+                            <Button size="mini" type="button" color="blue">
+                              <Link to={`/addresses/${id}/edit`}>
+                                Edit Address
+                              </Link>
+                            </Button>
+                            <Button
+                              size="mini"
+                              type="button"
+                              color="red"
+                              onClick={() => {
+                                this.props.deleteAddress(id)
+                              }}
+                            >
+                              Delete Address
+                            </Button>
+                          </div>
+                        </div>
+                      </Table.Cell>
+                    </div>
                   ))}
                 </Item.Group>
               </Comment.Group>
+              <Container>
+                <Link to="/addresses/new">
+                  <Button
+                    id="addressbutton"
+                    size="mini"
+                    type="button"
+                    color="black"
+                  >
+                    +Add Address
+                  </Button>
+                </Link>
+              </Container>
             </Container>
 
-            <Container className="userhomedetailholder">
+            <Container>
+              <Container className="userhomedetailholder">
+                <Comment.Group>
+                  <Header as="h3" dividing>
+                    YOUR ORDERS
+                  </Header>
+                  <Item.Group>
+                    {this.props.orders.map(order => (
+                      <UserOrder key={order.id} order={order} />
+                    ))}
+                  </Item.Group>
+                </Comment.Group>
+              </Container>
+
+              <Container className="userhomedetailholder">
+                <Comment.Group>
+                  <Header as="h3" dividing>
+                    YOUR REVIEWS
+                  </Header>
+                  {this.props.reviews.map(rev => (
+                    <div id="userreviewuserprofilepage" key={rev.id}>
+                      <div id="userreview">
+                        <UsersReview
+                          destroyReview={this.props.destroyReview}
+                          review={rev}
+                        />
+                      </div>
+                      {/* <div id="userreviewproduct">{<Label />}</div> */}
+                    </div>
+                  ))}
+                </Comment.Group>
+              </Container>
+            </Container>
+
+            <Container id="nonozone">
               <Comment.Group>
                 <Header as="h3" dividing>
-                  YOUR REVIEWS
+                  MISC
                 </Header>
-                {this.props.reviews.map(rev => (
-                  <div id="userreviewuserprofilepage" key={rev.id}>
-                    <div id="userreview">
-                      <UsersReview
-                        destroyReview={this.props.destroyReview}
-                        review={rev}
-                      />
-                    </div>
-                    {/* <div id="userreviewproduct">{<Label />}</div> */}
-                  </div>
-                ))}
               </Comment.Group>
-            </Container>
-          </Container>
-
-          <Container id="nonozone">
-            <Comment.Group>
-              <Header as="h3" dividing>
-                MISC
-              </Header>
-            </Comment.Group>
-            <Container id="userhomebuttons">
-              <Button
-                size="mini"
-                type="button"
-                onClick={() => {
-                  this.props.history.push('/passwordReset')
-                }}
-              >
-                Reset Password
-              </Button>
-              <Link to={`/users/${this.props.match.params.id}/edit`}>
-                <Button size="mini" type="button" color="blue">
-                  Edit Profile
+              <Container id="userhomebuttons">
+                <Button
+                  size="mini"
+                  type="button"
+                  onClick={() => {
+                    this.props.history.push('/passwordReset')
+                  }}
+                >
+                  Reset Password
                 </Button>
-              </Link>
-              <Button
-                size="mini"
-                type="button"
-                color="red"
-                onClick={() => {
-                  this.props.deleteUser(this.props.match.params.id)
-                }}
-              >
-                Delete Profile
-              </Button>
+                <Link to={`/users/${this.props.match.params.id}/edit`}>
+                  <Button size="mini" type="button" color="blue">
+                    Edit Profile
+                  </Button>
+                </Link>
+                <Button
+                  size="mini"
+                  type="button"
+                  color="red"
+                  onClick={() => {
+                    this.props.deleteUser(this.props.match.params.id)
+                  }}
+                >
+                  Delete Profile
+                </Button>
+              </Container>
             </Container>
           </Container>
         </Container>
