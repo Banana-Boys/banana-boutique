@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {logout} from '../store'
-import UserHome from './UserHome'
-import {Input, Button, Form, Item, Grid, Container} from 'semantic-ui-react'
-
+import {Container} from 'semantic-ui-react'
+import Search from './Search'
 import '../styles/navbar.scss'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
@@ -16,6 +15,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         id="logo"
       />
     </Link>
+    <Search />
     <nav>
       <Link to="/products">
         <h2 className="navbartitle">products</h2>
@@ -87,7 +87,7 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default withRouter(connect(mapState, mapDispatch)(Navbar))
 
 /**
  * PROP TYPES

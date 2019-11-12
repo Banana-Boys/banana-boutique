@@ -22,4 +22,6 @@ export const queryPusher = (state, props) => {
     search: queryPush.length > 0 ? `?${queryPush.join('&')}` : '',
     hash: location.hash
   })
+
+  return history
 }

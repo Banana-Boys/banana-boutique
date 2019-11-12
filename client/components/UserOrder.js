@@ -12,19 +12,26 @@ import {
   Header
 } from 'semantic-ui-react'
 import OrderLineItem from './OrderLineItem'
+import priceConvert from '../../utilFrontEnd/priceConvert'
+import dateFormat from '../../utilFrontEnd/dateformat'
 
 const UserOrder = props => {
   const order = props.order || {}
+  let total = 0
+  const ordertotal =
+    order.orderLineItems.map(item => (total += item.product.price)) || []
   return (
     <div className="userhomeorderholder">
-      <Header as="a" singleLine>
-        Order Number : {order.id} <br /> Date Placed : {order.datePlaced}
-      </Header>
+      <Link to={`/orders/${order.id}`}>
+        <Header as="a" singleLine>
+          Order Number : {order.id} <br /> Date Placed :{' '}
+          {dateFormat(order.datePlaced)} <br />
+          Order Total: ${priceConvert(total)}
+        </Header>
+      </Link>
       <Container id="containuserhomeproduct">
         {order.orderLineItems.map(ord => (
-          <Link key={ord.id} to={`/order/${ord.id}`}>
-            <OrderLineItem order={ord} />
-          </Link>
+          <OrderLineItem key={order.id} order={ord} />
         ))}
       </Container>
     </div>

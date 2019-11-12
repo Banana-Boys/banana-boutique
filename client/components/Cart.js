@@ -33,10 +33,14 @@ export class Cart extends Component {
 
   render() {
     let cartItems = this.props.cart
-    const quantityOptions = inventory => {
+    const quantityOptions = (inventory, quantity) => {
       const options = []
       for (let i = 1; i <= inventory; i++) {
-        options.push(<option key={i}>{i}</option>)
+        options.push(
+          <option key={i} selected={i == quantity}>
+            {i}
+          </option>
+        )
       }
       return options
     }
@@ -50,10 +54,14 @@ export class Cart extends Component {
           {cartItems.map(item => {
             return (
               <div className="product" key={item.product.id}>
-                <img src={item.product.imageUrl} />
+                <Link to={`/products/${item.product.id}`}>
+                  <img src={item.product.imageUrl} />
+                </Link>
                 <div className="product-info">
                   <h2>${priceConvert(item.product.price)}</h2>
-                  <p>{item.product.name}</p>
+                  <Link to={`/products/${item.product.id}`}>
+                    {item.product.name}
+                  </Link>
                   <div className="quantity-select">
                     <p>Qty:</p>
                     <select
@@ -62,7 +70,7 @@ export class Cart extends Component {
                       value={item.quantity}
                       onChange={this.handleQuantityChange}
                     >
-                      {quantityOptions(item.product.inventory)}
+                      {quantityOptions(item.product.inventory, item.quantity)}
                     </select>
                   </div>
                 </div>

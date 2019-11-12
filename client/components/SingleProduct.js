@@ -69,7 +69,11 @@ class SingleProduct extends React.Component {
     // quantity select dropdown options
     let i = 1
     while (i <= product.inventory) {
-      quantitySelect.push(<option key={i}>{i}</option>)
+      quantitySelect.push(
+        <option key={i} selected={this.state.quantity == i}>
+          {i}
+        </option>
+      )
       i++
     }
 
@@ -101,45 +105,31 @@ class SingleProduct extends React.Component {
                 <RatingsDistribution reviews={this.props.reviews} />
               </Item.Description>
               <Item.Extra>
-                {user.role === 'admin' ? (
-                  <div>
-                    <Button
-                      color="red"
-                      floated="right"
-                      size="mini"
-                      type="button"
-                      onClick={this.handleDelete}
-                    >
-                      Delete Product
-                    </Button>
-                    <Button
-                      primary
-                      floated="right"
-                      size="mini"
-                      type="button"
-                      onClick={this.handleEdit}
-                    >
-                      Edit Product
-                    </Button>
-                  </div>
-                ) : (
-                  <div />
-                )}
-                <Label>
-                  Categories:
-                  {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
-                </Label>
-                <div id="add-to-cart-qty">
-                  <div>Qty:</div>
-                  <select
-                    float="right"
-                    id="quantitysort"
-                    name="quantity"
-                    value={this.state.quantity}
-                    onChange={this.handleChange}
-                  >
-                    {quantitySelect}
-                  </select>
+                <Container>
+                  {user.role === 'admin' ? (
+                    <div>
+                      <Button
+                        color="red"
+                        floated="right"
+                        size="mini"
+                        type="button"
+                        onClick={this.handleDelete}
+                      >
+                        Delete Product
+                      </Button>
+                      <Button
+                        primary
+                        floated="right"
+                        size="mini"
+                        type="button"
+                        onClick={this.handleEdit}
+                      >
+                        Edit Product
+                      </Button>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
 
                   <Button
                     color="black"
@@ -151,6 +141,23 @@ class SingleProduct extends React.Component {
                     {product.inventory ? 'Add Product to Cart' : 'Out of Stock'}
                     <Icon name="right chevron" />
                   </Button>
+                </Container>
+                <div id="add-to-cart-qty">
+                  <Label>
+                    Categories:{' '}
+                    {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
+                  </Label>
+                  <div id="qty">Qty:</div>
+                  <select
+                    float="right"
+                    id="quantitysort"
+                    name="quantity"
+                    value={this.state.quantity}
+                    onChange={this.handleChange}
+                    style={{width: '70px'}}
+                  >
+                    {quantitySelect}
+                  </select>
                 </div>
               </Item.Extra>
             </Item.Content>

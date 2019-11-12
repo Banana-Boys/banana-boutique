@@ -68,57 +68,69 @@ export class Reviews extends Component {
             <Header as="h3" dividing>
               REVIEWS
             </Header>
-            {this.props.user.id ? (
-              <div>
-                <Button
-                  size="mini"
-                  color="yellow"
-                  type="button"
-                  onClick={() =>
-                    this.setState(prevState => ({
-                      ...prevState,
-                      showAddReview: !prevState.showAddReview
-                    }))
-                  }
-                >
-                  {this.state.showAddReview
-                    ? 'Hide review form'
-                    : reviews.length ? '+Add Review' : 'Leave the first review'}
-                </Button>
-                {this.state.showAddReview ? (
-                  <NewReviewForm hideAddReview={this.hideAddReview} />
-                ) : null}
-              </div>
-            ) : (
-              <Link to="/login">
-                <Button size="mini" color="yellow" type="button">
-                  You must be logged in to leave a review
-                </Button>
-              </Link>
-            )}
-            <div>
-              <label htmlFor="rating">Filter by rating:</label>
-              <select name="rating" onChange={this.handleChange}>
-                <option value="">Show all</option>
-                {[1, 2, 3, 4, 5].map(r => (
-                  <option
-                    key={r}
-                    value={r}
-                    selected={r === Number(this.state.rating)}
+            <Container id="reviewsmisc">
+              {this.props.user.id ? (
+                <div className="reviewmiscitem">
+                  <Button
+                    size="mini"
+                    color="yellow"
+                    type="button"
+                    onClick={() =>
+                      this.setState(prevState => ({
+                        ...prevState,
+                        showAddReview: !prevState.showAddReview
+                      }))
+                    }
                   >
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="search">Search reviews:</label>
-              <input
-                name="search"
-                onChange={this.handleChange}
-                value={this.state.search}
-              />
-            </div>
+                    {this.state.showAddReview
+                      ? 'Hide review form'
+                      : reviews.length
+                        ? '+Add Review'
+                        : 'Leave the first review'}
+                  </Button>
+                  {this.state.showAddReview ? (
+                    <NewReviewForm hideAddReview={this.hideAddReview} />
+                  ) : null}
+                </div>
+              ) : (
+                <Link to="/login">
+                  <div className="reviewmiscitem" />
+                  <Button size="mini" color="yellow" type="button">
+                    You must be logged in to leave a review
+                  </Button>
+                  <div className="reviewmiscitem" />
+                </Link>
+              )}
+              <div className="reviewmiscitem">
+                {/* <label htmlFor="rating">Filter by rating:</label> */}
+                <select
+                  id="ratingselect"
+                  name="rating"
+                  onChange={this.handleChange}
+                >
+                  <option value="">Show all</option>
+                  {[1, 2, 3, 4, 5].map(r => (
+                    <option
+                      key={r}
+                      value={r}
+                      selected={r === Number(this.state.rating)}
+                    >
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="reviewmiscitem">
+                {/* <label htmlFor="search">Search reviews:</label> */}
+                <input
+                  id="ratingsearch"
+                  name="search"
+                  placeholder="Search Review..."
+                  onChange={this.handleChange}
+                  value={this.state.search}
+                />
+              </div>
+            </Container>
             {reviews.map(
               rev =>
                 rev.user ? (
