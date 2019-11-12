@@ -124,13 +124,14 @@ class SingleProduct extends React.Component {
                 </Label>
                 <select
                   float="right"
-                  id="quantity"
+                  id="quantitysort"
                   name="quantity"
                   value={this.state.quantity}
                   onChange={this.handleChange}
                 >
                   {quantitySelect}
                 </select>
+
                 <Button
                   color="black"
                   floated="right"

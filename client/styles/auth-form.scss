@@ -1,0 +1,67 @@
+/* FORM STYLES */
+
+#account-form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  background-color: #ffeecf;
+}
+
+#auth-form-logo {
+  border-radius: 5px !important;
+}
+
+#form-container {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  width: 400px;
+  height: fit-content;
+  align-items: center;
+  border-radius: 5px;
+}
+
+#logo-image {
+  border-radius: 5px;
+}
+
+#form-container > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#account-form input {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 5%;
+}
+
+#nana-login-signup-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#login {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#input-fields {
+  display: flex;
+
+  flex-direction: row;
+}
+
+#nana-login-button {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  background-color: white !important;
+}

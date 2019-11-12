@@ -8,7 +8,7 @@ const {
   Product
 } = require('../db/models')
 const router = require('express').Router()
-const {checkGuest, isAdmin} = require('../middleware')
+const {checkGuest, isAdmin, ownsOrder, canViewOrders} = require('../middleware')
 const nodemailer = require('nodemailer')
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 const uuid = require('uuid')
@@ -47,7 +47,7 @@ async function main(email, orderId, status) {
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
-router.get('/', async (req, res, next) => {
+router.get('/', canViewOrders, async (req, res, next) => {
   try {
     const query = req.query || {}
     if (req.user.role) {
@@ -68,7 +68,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', ownsOrder, async (req, res, next) => {
   try {
     if (req.user) {
       const order = await Order.findByPk(req.params.id, {
@@ -86,7 +86,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.put('/:id', isAdmin(), async (req, res, next) => {
+router.put('/:id', isAdmin, async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.id)
     await order.update(req.body)
@@ -105,7 +105,7 @@ router.put('/:id', isAdmin(), async (req, res, next) => {
   }
 })
 
-router.post('/', checkGuest(), async (req, res, next) => {
+router.post('/', checkGuest, async (req, res, next) => {
   try {
     let {cart, user, shippingTax, shippingAddress, token} = req.body
 
@@ -228,7 +228,7 @@ router.post('/', checkGuest(), async (req, res, next) => {
   }
 })
 
-router.delete('/:id', isAdmin(), async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     const orderId = req.params.id
     await OrderLineItem.destroy({
