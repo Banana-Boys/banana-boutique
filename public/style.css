@@ -61,7 +61,7 @@ a {
 /* put into scss */
 #admin-board {
   margin: 6%;
-  position: fixed;
+  position: relative;
 }
 
 #singleorder {
