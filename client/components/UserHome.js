@@ -46,7 +46,6 @@ class UserHome extends React.Component {
 
   render() {
     const {id, name, email, phone, imageUrl, role} = this.props.user
-
     const isUser = id === Number(this.props.match.params.id) || role === 'admin'
     const propsId = this.props.match.params.id
     return (

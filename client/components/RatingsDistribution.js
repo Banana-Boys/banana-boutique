@@ -21,6 +21,7 @@ export const RatingsDistribution = props => {
     <div style={{width: '80%', maxWidth: '250px'}}>
       {ratingsDistribution.map((percent, i) => (
         <div
+          key={i}
           style={{
             width: '100%',
             display: 'flex',
@@ -28,7 +29,6 @@ export const RatingsDistribution = props => {
           }}
         >
           <span
-            key={i}
             style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -47,7 +47,6 @@ export const RatingsDistribution = props => {
                 borderRadius: '5px',
                 overflow: 'hidden',
                 margin: '3px 0'
-                //   justifySelf: 'center'
               }}
             >
               <div
