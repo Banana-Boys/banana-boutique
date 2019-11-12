@@ -284,13 +284,30 @@ module.exports.sorter = sortBy => (A, B) => {
   const [attribute, reverse] = sortBy.split('_')
   let result
   if (attribute === 'avgrating') {
-    if (A.sumratings / A.numratings < B.sumratings / B.numratings) {
-      result = -1
-    } else if (A.sumratings / A.numratings > B.sumratings / B.numratings) {
+    if (A.numratings && B.numratings) {
+      if (A.sumratings / A.numratings < B.sumratings / B.numratings) {
+        result = -1
+      } else if (A.sumratings / A.numratings > B.sumratings / B.numratings) {
+        result = 1
+      } else {
+        result = 0
+      }
+    } else if (A.numratings) {
       result = 1
+    } else if (B.numratings) {
+      result = -1
     } else {
       result = 0
     }
+    console.log(
+      A.sumratings,
+      A.numratings,
+      A.sumratings / A.numratings,
+      B.sumratings,
+      B.numratings,
+      B.sumratings / B.numratings,
+      result
+    )
   } else if (typeof A[attribute] === 'string') {
     if (A[attribute].toLowerCase() < B[attribute].toLowerCase()) {
       result = -1

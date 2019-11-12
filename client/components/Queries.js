@@ -221,6 +221,9 @@ export class Queries extends Component {
           <select id="sort" name="sort" onChange={this.handleSort}>
             {/* <option value="name_0" selected={this.state.sort === ''} /> */}
 
+            <option value="" selected={this.state.sort === ''}>
+              Sort by:
+            </option>
             <option value="name_0" selected={this.state.sort === 'name_0'}>
               Name (A to Z)
             </option>
@@ -231,7 +234,7 @@ export class Queries extends Component {
               Price (low to high)
             </option>
             <option value="price_1" selected={this.state.sort === 'price_1'}>
-              Price (low to high)
+              Price (high to low)
             </option>
             <option
               value="avgrating_0"
