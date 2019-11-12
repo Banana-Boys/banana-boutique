@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {createReview} from '../store/reviews'
 import {withRouter} from 'react-router-dom'
+import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 class NewReviewForm extends React.Component {
   constructor(props) {
@@ -31,7 +32,15 @@ class NewReviewForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        onSubmit={this.handleSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: '#ffeecf',
+          borderRadius: '5px'
+        }}
+      >
         <div className="form-group">
           <label htmlFor="rating">Rating:</label>
           <select name="rating" onChange={this.handleChange}>
@@ -49,16 +58,32 @@ class NewReviewForm extends React.Component {
 
         <div className="form-group">
           <label htmlFor="title">Title:</label>
-          <input type="text" name="title" onChange={this.handleChange} />
+          <input
+            type="text"
+            name="title"
+            onChange={this.handleChange}
+            style={{width: '100%'}}
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="body">Body:</label>
-          <textarea name="body" onChange={this.handleChange} />
+          <textarea
+            name="body"
+            onChange={this.handleChange}
+            style={{width: '100%'}}
+          />
         </div>
 
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <Button
+            size="mini"
+            type="submit"
+            color="blue"
+            disabled={!this.state.rating.length}
+          >
+            Submit
+          </Button>
         </div>
       </form>
     )

@@ -6,7 +6,7 @@ import {fetchAddresses, deleteAddress} from '../store/addresses'
 import {deleteUser} from '../store/user'
 import {fetchUserReviews, destroyReview} from '../store/reviews'
 import {fetchUserOrders} from '../store/orders'
-import Review from './Review'
+import UsersReview from './UsersReview'
 import UserOrder from './UserOrder'
 import AllOrders from './AllOrders'
 import {
@@ -201,7 +201,7 @@ class UserHome extends React.Component {
                 {this.props.reviews.map(rev => (
                   <div id="userreviewuserprofilepage" key={rev.id}>
                     <div id="userreview">
-                      <Review
+                      <UsersReview
                         destroyReview={this.props.destroyReview}
                         review={rev}
                       />

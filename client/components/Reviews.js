@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {destroyReview} from '../store/reviews'
@@ -11,10 +12,11 @@ export class Reviews extends Component {
   constructor(props) {
     super(props)
     const query = queryParser(this.props.location.search)
-    const {rating, search} = query
+    const {rating, search, myReviews} = query
     this.state = {
       rating: rating || '',
       search: search || '',
+      myReviews: myReviews || false,
       showAddReview: false
     }
     this.handleChange = this.handleChange.bind(this)
@@ -23,7 +25,12 @@ export class Reviews extends Component {
 
   handleChange(e) {
     e.persist()
-    const newState = {...this.state, [e.target.name]: e.target.value}
+    let newState
+    if (e.target.name === 'myReviews') {
+      newState = {...this.state, [e.target.name]: e.target.checked}
+    } else {
+      newState = {...this.state, [e.target.name]: e.target.value}
+    }
     this.queryPusher(newState)
     this.setState(newState)
   }
@@ -33,13 +40,16 @@ export class Reviews extends Component {
   }
 
   queryPusher(state) {
-    const {rating, search} = state
+    const {rating, search, myReviews} = state
     let queryPush = []
     if (Number(rating)) {
       queryPush.push(`rating=${rating}`)
     }
     if (search.length) {
       queryPush.push(`search=${search}`)
+    }
+    if (myReviews) {
+      queryPush.push(`myReviews=${myReviews}`)
     }
     this.props.history.push({
       search: queryPush.length > 0 ? `?${queryPush.join('&')}` : '',
@@ -61,6 +71,9 @@ export class Reviews extends Component {
             review.user.name.includes(search.toLowerCase())
         )
       : reviews
+    reviews = this.state.myReviews
+      ? reviews.filter(review => review.userId === this.props.user.id)
+      : reviews
     return (
       <Container>
         <Container>
@@ -68,7 +81,13 @@ export class Reviews extends Component {
             <Header as="h3" dividing>
               REVIEWS
             </Header>
-            <Container id="reviewsmisc">
+            <Container
+              id="reviewsmisc"
+              style={{
+                alignItems: this.state.showAddReview ? null : 'center',
+                flexDirection: this.state.showAddReview ? 'column' : null
+              }}
+            >
               {this.props.user.id ? (
                 <div className="reviewmiscitem">
                   <Button
@@ -101,14 +120,21 @@ export class Reviews extends Component {
                   <div className="reviewmiscitem" />
                 </Link>
               )}
-              <div className="reviewmiscitem">
+              <div
+                className="reviewmiscitem form-group"
+                style={
+                  this.state.showAddReview
+                    ? {margin: '10px', width: '150px'}
+                    : null
+                }
+              >
                 {/* <label htmlFor="rating">Filter by rating:</label> */}
                 <select
                   id="ratingselect"
                   name="rating"
                   onChange={this.handleChange}
                 >
-                  <option value="">Show all</option>
+                  <option value="">Filter by rating</option>
                   {[1, 2, 3, 4, 5].map(r => (
                     <option
                       key={r}
@@ -120,16 +146,42 @@ export class Reviews extends Component {
                   ))}
                 </select>
               </div>
-              <div className="reviewmiscitem">
+              <div
+                className="reviewmiscitem form-group"
+                style={
+                  this.state.showAddReview
+                    ? {margin: '10px', width: '150px'}
+                    : null
+                }
+              >
                 {/* <label htmlFor="search">Search reviews:</label> */}
                 <input
                   id="ratingsearch"
                   name="search"
-                  placeholder="Search Review..."
+                  placeholder="Search Reviews..."
                   onChange={this.handleChange}
                   value={this.state.search}
                 />
               </div>
+              {this.props.user.id ? (
+                <div
+                  className="reviewmiscitem form-group"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    margin: this.state.showAddReview ? '10px' : null,
+                    width: this.state.showAddReview ? '150px' : null
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    name="myReviews"
+                    onChange={this.handleChange}
+                    checked={this.state.myReviews}
+                  />
+                  <label htmlFor="myReviews">My reviews</label>
+                </div>
+              ) : null}
             </Container>
             {reviews.map(
               rev =>
