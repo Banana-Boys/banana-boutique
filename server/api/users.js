@@ -41,10 +41,7 @@ router.get('/:id/reviews', async (req, res, next) => {
       where: {
         userId: req.params.id
       },
-      include: {
-        model: User,
-        Product
-      },
+      include: [Product],
       order: [['createdAt', 'DESC']]
     })
 
