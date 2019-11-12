@@ -61,7 +61,7 @@ const AllUsers = props => {
             ) : (
               <div />
             )}
-            <Table.Cell>
+            {/* <Table.Cell>
               <Button
                 size="mini"
                 floated="right"
@@ -73,7 +73,7 @@ const AllUsers = props => {
               >
                 Prompt Password
               </Button>
-            </Table.Cell>
+            </Table.Cell> */}
             <Table.Cell>
               <Button
                 size="mini"

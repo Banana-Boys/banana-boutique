@@ -15,6 +15,7 @@ import {
   Icon,
   Label
 } from 'semantic-ui-react'
+import '../styles/singleproduct.scss'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -72,7 +73,7 @@ class SingleProduct extends React.Component {
 
     return (
       <Container id="single-product">
-        <Item.Group>
+        <Item.Group id="singleproduct-itemgroup">
           <Item>
             <Item.Image size="large" src={product.imageUrl} />
             <Item.Content>
@@ -131,7 +132,7 @@ class SingleProduct extends React.Component {
                   {quantitySelect}
                 </select>
                 <Button
-                  color="yellow"
+                  color="black"
                   floated="right"
                   size="mini"
                   disabled={!product.inventory}

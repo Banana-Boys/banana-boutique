@@ -36,13 +36,12 @@ body,
 #edit-category-form,
 #edit-product-form,
 #cart,
-#single-product,
 #checkout,
 #account-form,
 #admin-board,
-#form-page {
+#single-product #form-page {
   top: 0;
-  margin-top: 55px;
+  margin-top: 4%;
 }
 
 /* TEXT STYLES */
@@ -88,7 +87,7 @@ a {
 }
 
 #reviewcontainer {
-  margin-bottom: 2%;
+  margin-bottom: 3%;
 }
 
 #reivewmetadataholder {

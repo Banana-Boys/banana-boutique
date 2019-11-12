@@ -8,19 +8,18 @@ import ratingconverter from '../../utilFrontEnd/ratingcoverter.js'
 const Review = props => {
   const review = props.review
   const stars = ratingconverter(props.review.rating)
-  console.log(stars)
 
-  const user = props.review.user
+  const user = props.review.user || {}
   return (
     <Container id="reviewcontainer">
       <Comment>
-        {user.imageUrl ? (
-          <Comment.Avatar id="user-home-profilepic" src={user.imageUrl} />
-        ) : (
+        {!user.imageUrl ? (
           <Comment.Avatar
             id="user-icon"
             src="http://simpleicon.com/wp-content/uploads/user1.svg"
           />
+        ) : (
+          <Comment.Avatar id="user-home-profilepic" src={user.imageUrl} />
         )}
 
         <Comment.Content>

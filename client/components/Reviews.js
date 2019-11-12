@@ -19,14 +19,17 @@ export class Reviews extends Component {
             <Header as="h3" dividing>
               REVIEWS
             </Header>
-            {reviews.map(rev => (
-              <Review
-                key={rev.id}
-                destroyReview={this.props.destroyReview}
-                review={rev}
-                //fetchUser={this.props.fetchUser}
-              />
-            ))}
+            {reviews.map(
+              rev =>
+                rev.user ? (
+                  <Review
+                    key={rev.id}
+                    destroyReview={this.props.destroyReview}
+                    review={rev}
+                    //fetchUser={this.props.fetchUser}
+                  />
+                ) : null
+            )}
           </Comment.Group>
         </Container>
         {this.props.user.id ? (
