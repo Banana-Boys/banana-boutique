@@ -69,7 +69,11 @@ class SingleProduct extends React.Component {
     // quantity select dropdown options
     let i = 1
     while (i <= product.inventory) {
-      quantitySelect.push(<option key={i}>{i}</option>)
+      quantitySelect.push(
+        <option key={i} selected={this.state.quantity == i}>
+          {i}
+        </option>
+      )
       i++
     }
 
@@ -150,6 +154,7 @@ class SingleProduct extends React.Component {
                     name="quantity"
                     value={this.state.quantity}
                     onChange={this.handleChange}
+                    style={{width: '70px'}}
                   >
                     {quantitySelect}
                   </select>

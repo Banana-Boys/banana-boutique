@@ -3,7 +3,7 @@ const CartLineItem = require('../db/models/CartLineItem')
 const Product = require('../db/models/Product')
 
 //GET
-router.get('/', async (req, res, next) => {
+router.get('/merge', async (req, res, next) => {
   try {
     let sessionCart = req.session.cart || []
     let savedCart = []
@@ -13,34 +13,49 @@ router.get('/', async (req, res, next) => {
       })
     }
     let cart = []
-    sessionCart.forEach(async sessionItem => {
+    await sessionCart.forEach(async sessionItem => {
+      cart.push(sessionItem)
       let sameSavedItem = savedCart.find(
         savedItem => savedItem.productId === sessionItem.productId
       )
       if (sameSavedItem) {
-        let newQuantity = sameSavedItem.quantity + sessionItem.quantity
-        cart.push({productId: sameSavedItem.productId, quantity: newQuantity})
         savedCart = savedCart.filter(
           savedItem => savedItem.productId !== sessionItem.productId
         )
-        sameSavedItem.update({quantity: newQuantity})
-      } else {
-        cart.push(sessionItem)
-        if (req.user) {
-          await CartLineItem.create({
-            quantity: sessionItem.quantity,
-            productId: sessionItem.productId,
-            userId: req.user.id
-          })
-        }
+        await sameSavedItem.update({quantity: sessionItem.quantity})
+      } else if (req.user) {
+        await CartLineItem.create({
+          quantity: sessionItem.quantity,
+          productId: sessionItem.productId,
+          userId: req.user.id
+        })
       }
     })
     savedCart.forEach(savedItem => {
-      cart.push(savedItem)
+      cart.push({productId: savedItem.productId, quantity: savedItem.quantity})
     })
     req.session.cart = cart
     req.session.save()
 
+    let cartWithProducts = await Promise.all(
+      cart.map(async cartLineItem => ({
+        quantity: cartLineItem.quantity,
+        product: await Product.findByPk(cartLineItem.productId, {
+          attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
+        })
+      }))
+    )
+
+    res.status(200).json(cartWithProducts)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/', async (req, res, next) => {
+  try {
+    let cart = req.session.cart || []
+    console.log('session cart after get /', cart)
     let cartWithProducts = await Promise.all(
       cart.map(async cartLineItem => ({
         quantity: cartLineItem.quantity,
@@ -70,7 +85,10 @@ router.post('/', async (req, res, next) => {
       lineItem => lineItem.productId === productId
     )
     if (sameProduct) {
-      sameProduct.quantity += quantity
+      sameProduct.quantity = Math.min(
+        product.inventory,
+        quantity + sameProduct.quantity
+      )
       quantity = sameProduct.quantity
     } else {
       req.session.cart.push(req.body)
@@ -82,7 +100,7 @@ router.post('/', async (req, res, next) => {
         where: {productId, userId: req.user.id}
       })
       if (sameProduct) {
-        await sameProduct.update({quantity: quantity + sameProduct.quantity})
+        await sameProduct.update({quantity})
         await CartLineItem.findByPk(sameProduct.id)
       } else {
         await CartLineItem.create({
