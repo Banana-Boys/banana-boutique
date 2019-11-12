@@ -5,6 +5,7 @@ import Product from './Product'
 import Queries from './Queries'
 import {Link} from 'react-router-dom'
 import {Grid, Image, Container, Card} from 'semantic-ui-react'
+import {queryParser} from '../../utilFrontEnd/queryParser'
 
 import '../styles/allproducts.scss'
 
@@ -13,9 +14,7 @@ export class AllProducts extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    this.props.loadProducts()
-  }
+  async componentDidMount() {}
 
   render() {
     const products = this.props.products
@@ -39,8 +38,4 @@ const mapStateToProps = state => ({
   products: state.products
 })
 
-const mapDispatchToProps = dispatch => ({
-  loadProducts: () => dispatch(fetchProducts())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+export default connect(mapStateToProps, null)(AllProducts)
