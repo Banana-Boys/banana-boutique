@@ -1,5 +1,7 @@
 import React from 'react'
 import {Login, Signup} from '../auth-form'
+import {Button} from 'semantic-ui-react'
+import '../../styles/checkoutlogin.scss'
 
 const CheckoutLogin = props => {
   const handleUserOptions = props.handleUserOptions
@@ -8,22 +10,22 @@ const CheckoutLogin = props => {
 
   return (
     <div id="checkout-login">
-      <button type="button" name="login" onClick={handleUserOptions}>
+      <Button type="button" name="login" onClick={handleUserOptions}>
         {login ? 'Hide' : 'Login'}
-      </button>
+      </Button>
       {login ? <Login /> : null}
-      <button type="button" name="signup" onClick={handleUserOptions}>
+      <Button type="button" name="signup" onClick={handleUserOptions}>
         {signup ? 'Hide' : 'Signup'}
-      </button>
+      </Button>
       {signup ? <Signup /> : null}
-      <button type="button" name="continueAsGuest" onClick={handleUserOptions}>
+      <Button type="button" name="continueAsGuest" onClick={handleUserOptions}>
         {continueAsGuest ? 'Hide' : 'Continue as Guest'}
-      </button>
+      </Button>
       {continueAsGuest ? (
         <form id="guestEmailForm" onSubmit={handleSubmit}>
           <label htmlFor="email">Email:</label>
           <input type="email" name="email" />
-          <button type="submit">Submit</button>
+          <Button type="submit">Submit</Button>
         </form>
       ) : null}
     </div>

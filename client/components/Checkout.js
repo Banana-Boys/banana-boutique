@@ -8,6 +8,8 @@ import {createOrder} from '../store/singleOrder'
 import StripeCheckout from 'react-stripe-checkout'
 import {Button} from 'semantic-ui-react'
 
+import '../styles/checkout.scss'
+
 import CheckoutLogin from './checkout/CheckoutLogin'
 import ShippingInfo from './checkout/ShippingInfo'
 import CartReview from './checkout/CartReview'
@@ -49,12 +51,17 @@ class Checkout extends React.Component {
   componentWillReceiveProps(newProps) {
     if (newProps.user.id !== this.state.user.id) {
       this.props.fetchAddresses()
+      this.setState({
+        cart: newProps.cart,
+        user: newProps.user,
+        formOnDisplay: 1
+      })
+    } else {
+      this.setState({
+        cart: newProps.cart,
+        user: newProps.user
+      })
     }
-    this.setState({
-      cart: newProps.cart,
-      user: newProps.user,
-      formOnDisplay: 1
-    })
   }
 
   createOrder(token, addresses) {

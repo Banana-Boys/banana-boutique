@@ -10,7 +10,7 @@ import '../styles/navbar.scss'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div id="nav-container">
-    <Link to="/home">
+    <Link to="/">
       <img
         src="https://nanas-image-store.s3.us-east-2.amazonaws.com/nana-logo.png"
         id="logo"

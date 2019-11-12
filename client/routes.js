@@ -33,7 +33,6 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn, isAdmin, resetPassword, madeOrder} = this.props
-    console.log(madeOrder)
     return (
       <Switch>
         {isLoggedIn && resetPassword ? <Route component={resetForm} /> : null}
