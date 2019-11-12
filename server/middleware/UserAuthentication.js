@@ -53,7 +53,7 @@ const ownsOrder = async (req, res, next) => {
   const order = await Order.findByPk(req.params.id)
   if (req.user && req.user.role === 'admin') {
     next()
-  } else if (req.user.id === +order.userId) {
+  } else if (req.user.id === +order.buyerId) {
     next()
   } else {
     res.sendStatus(403)

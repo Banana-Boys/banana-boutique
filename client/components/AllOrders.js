@@ -23,6 +23,7 @@ const AllOrders = props => {
                   Order Number : {order.id} <br /> Date Placed :{' '}
                   {order.datePlaced} <br /> User Name: {buyer.name} <br /> User
                   Email: {buyer.email} <br />
+                  Order Total: ${priceConvert(total)}
                 </div>
               </Link>
               Status:
