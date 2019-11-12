@@ -83,7 +83,17 @@ class NewAddressForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            disabled={
+              !this.state.address1.length ||
+              !this.state.city.length ||
+              !this.state.country.length ||
+              !this.state.zip.length
+            }
+          >
+            Submit
+          </button>
         </div>
       </form>
     )

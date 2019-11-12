@@ -11,9 +11,8 @@ const Product = db.define('product', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    allowNull: false,
     defaultValue:
-      'https://nanas-image-store.s3.us-east-2.amazonaws.com/banana-group-yellow.jpg'
+      'https://cdn.mos.cms.futurecdn.net/42E9as7NaTaAi4A6JcuFwG-320-80.jpg'
   },
   price: {
     type: Sequelize.INTEGER,
