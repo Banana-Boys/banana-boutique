@@ -47,7 +47,7 @@ class EditCategoryForm extends React.Component {
     let category = this.props.singleCategory
 
     return (
-      <form onSubmit={this.invokeOnSubmit} id="edit-category-form">
+      <form onSubmit={this.invokeOnSubmit} id="new-edit-x-form">
         <div className="form-group">
           <label htmlFor="name">Category Name: {category.name}</label>
           <input
@@ -56,10 +56,16 @@ class EditCategoryForm extends React.Component {
             placeholder="New category name..."
             onChange={this.updateFormValue}
             value={this.state.formValues.name}
+            required
           />
         </div>
         <div className="form-group">
-          <Button size="mini" type="submit" color="blue">
+          <Button
+            size="mini"
+            type="submit"
+            color="blue"
+            disabled={!this.state.formValues.name}
+          >
             Submit
           </Button>
         </div>

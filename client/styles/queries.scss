@@ -1,10 +1,11 @@
 /* FORMS */
-#new-product-form {
+#new-edit-x-form {
   display: flex;
   flex-direction: column;
 }
 
-#edit-product-form {
+#stock-sort-pagination {
+  margin-top: 20%;
   display: flex;
   flex-direction: column;
 }
@@ -41,6 +42,10 @@
   margin-bottom: 5%;
 }
 
+#search {
+  xbackground-color: #ffeecf;
+}
+
 #category-form-holder {
   justify-content: left;
 }
@@ -60,7 +65,7 @@
   display: inline-block;
   height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
