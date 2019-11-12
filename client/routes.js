@@ -32,8 +32,8 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn, isAdmin, resetPassword} = this.props
-
+    const {isLoggedIn, isAdmin, resetPassword, madeOrder} = this.props
+    console.log(madeOrder)
     return (
       <Switch>
         {isLoggedIn && resetPassword ? <Route component={resetForm} /> : null}
@@ -72,7 +72,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Route path="/addresses/:id/edit" component={EditAddressForm} />
         ) : null}
-        {isLoggedIn ? (
+        {isLoggedIn || madeOrder ? (
           <Route path="/orders/:id" component={SingleOrder} />
         ) : null}
         {isLoggedIn ? (
@@ -108,7 +108,8 @@ const mapState = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     isAdmin: state.user.role === 'admin',
-    resetPassword: state.user.resetPassword || false
+    resetPassword: state.user.resetPassword || false,
+    madeOrder: !!state.singleOrder.id
   }
 }
 
