@@ -317,7 +317,8 @@ export class Queries extends Component {
               </div>
               <div id="productperpagepagination">
                 <label htmlFor="numPerPage">
-                  <h4># products/page: </h4>{' '}
+                  <h4>#products/page: </h4>
+                  {'  '}
                 </label>
                 <select
                   id="selectpagination"
