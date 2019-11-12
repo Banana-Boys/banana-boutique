@@ -15,6 +15,7 @@ class Checkout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      formOnDisplay: this.props.user.id ? 1 : 0,
       showUserOptions: {
         login: false,
         signup: false,
@@ -47,7 +48,11 @@ class Checkout extends React.Component {
     if (newProps.user.id !== this.state.user.id) {
       this.props.fetchAddresses()
     }
-    this.setState({cart: newProps.cart, user: newProps.user})
+    this.setState({
+      cart: newProps.cart,
+      user: newProps.user,
+      formOnDisplay: 1
+    })
   }
 
   createOrder(token, addresses) {
@@ -106,7 +111,7 @@ class Checkout extends React.Component {
   async handleSubmit(e) {
     e.preventDefault()
     if (e.target.id === 'guestEmailForm') {
-      this.setState({user: {email: e.target.email.value}})
+      this.setState({user: {email: e.target.email.value}, formOnDisplay: 1})
     } else if (e.target.id === 'shippingAddressForm') {
       let shippingAddress
       if (e.target.shippingAddress) {
@@ -122,56 +127,67 @@ class Checkout extends React.Component {
       }
       const distance = await this.props.fetchDistance(shippingAddress.zip)
       const shippingTax = Math.ceil(distance * 1) // 1 cent per mile
-      this.setState({shippingAddress, shippingTax})
+      this.setState({shippingAddress, shippingTax, formOnDisplay: 2})
     }
   }
 
   render() {
     const cart = this.props.cart
-    let {showUserOptions} = this.state
+    let {showUserOptions, formOnDisplay} = this.state
 
     return (
       <div id="checkout">
         {/* Ask for Login */}
-        <CheckoutLogin
-          showUserOptions={showUserOptions}
-          user={this.state.user}
-          handleUserOptions={this.handleUserOptions}
-          handleSubmit={this.handleSubmit}
-        />
+
+        {formOnDisplay === 0 && (
+          <CheckoutLogin
+            showUserOptions={showUserOptions}
+            user={this.state.user}
+            handleUserOptions={this.handleUserOptions}
+            handleSubmit={this.handleSubmit}
+          />
+        )}
 
         {/* Get Shipping Information */}
-        <ShippingInfo
-          shippingAddress={this.state.shippingAddress}
-          newShippingAddress={this.state.newShippingAddress}
-          user={this.state.user}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          addresses={this.props.addresses}
-        />
+        {formOnDisplay === 1 && (
+          <ShippingInfo
+            shippingAddress={this.state.shippingAddress}
+            newShippingAddress={this.state.newShippingAddress}
+            user={this.state.user}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            addresses={this.props.addresses}
+          />
+        )}
 
         {/* Review Cart Items */}
-        <CartReview cart={cart} shippingTax={this.state.shippingTax} />
+        {formOnDisplay === 2 && (
+          <CartReview cart={cart} shippingTax={this.state.shippingTax} />
+        )}
 
         {/* Stripe checkout */}
-        {cart.length ? (
-          <StripeCheckout
-            stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
-            token={this.createOrder}
-            billingAddress
-            amount={cart.reduce(
-              (sum, item) => item.quantity * item.product.price + sum,
-              this.state.shippingTax
-            )}
-            disabled={
-              typeof this.state.shippingAddress !== 'object' ||
-              !this.state.user.email
-            }
-          />
+        {formOnDisplay === 2 ? (
+          cart.length ? (
+            <StripeCheckout
+              stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
+              token={this.createOrder}
+              billingAddress
+              amount={cart.reduce(
+                (sum, item) => item.quantity * item.product.price + sum,
+                this.state.shippingTax
+              )}
+              disabled={
+                typeof this.state.shippingAddress !== 'object' ||
+                !this.state.user.email
+              }
+            />
+          ) : (
+            <Button type="button" disabled>
+              Nothing in cart
+            </Button>
+          )
         ) : (
-          <Button type="button" disabled>
-            Nothing in cart
-          </Button>
+          ''
         )}
       </div>
     )
