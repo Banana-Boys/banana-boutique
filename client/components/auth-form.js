@@ -2,6 +2,16 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {
+  Button,
+  Container,
+  Grid,
+  Header,
+  Card,
+  Item,
+  Icon,
+  Label
+} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
 
 import '../styles/auth-form.scss'
@@ -10,6 +20,7 @@ import '../styles/auth-form.scss'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
+  console.log(displayName)
 
   return (
     <div id="account-form">
@@ -40,7 +51,7 @@ const AuthForm = props => {
               </div>
             </div>
             <div>
-              <button type="submit" id="nana-login-button">
+              <Button type="submit" id="nana-login-button">
                 <img
                   src="https://nanas-image-store.s3.us-east-2.amazonaws.com/nana-symbol.jpg"
                   alt="Nanas sysmbol"
@@ -48,7 +59,7 @@ const AuthForm = props => {
                   width="24"
                 />
                 {displayName}{' '}
-              </button>
+              </Button>
             </div>
           </div>
           {error && error.response && <div> {error.response.data} </div>}

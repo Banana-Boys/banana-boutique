@@ -5,7 +5,8 @@
 }
 
 #stock-sort-pagination {
-  margin-top: 20%;
+  margin-top: 5%;
+  margin-bottom: 5%;
   display: flex;
   flex-direction: column;
 }
@@ -32,6 +33,33 @@
 
 #instockcategory {
   margin-left: 5%;
+  margin-bottom: 5%;
+}
+
+#pageshowing {
+  margin-bottom: 3%;
+}
+
+#productperpagepagination {
+  margin-top: 5%;
+  margin-bottom: 3%;
+  display: inline-flex;
+}
+
+#selectpagination {
+  width: 20%;
+  display: inline-block;
+  height: 20px;
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  margin-left: 2%;
 }
 
 #searchlabel {
@@ -68,5 +96,10 @@
 }
 
 #paginationHolder {
-  margin-top: 5%;
+  margin-top: 10%;
+}
+
+.paginationbutton {
+  height: 20px;
+  width: 20px;
 }
