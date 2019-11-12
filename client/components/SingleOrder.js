@@ -4,6 +4,7 @@ import {Table, TableBody, Container} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {fetchOrder} from '../store/singleOrder'
 import OrderLineItem from './OrderLineItem'
+import priceConvert from '../../utilFrontEnd/priceConvert'
 
 export class SingleOrder extends Component {
   constructor(props) {
@@ -16,14 +17,20 @@ export class SingleOrder extends Component {
 
   render() {
     const order = this.props.singleOrder || {}
+    const orderlineitems = this.props.singleOrder.orderLineItems || []
+    let total = 0
+    const ordertotal =
+      orderlineitems.map(item => (total += item.product.price)) || []
+
     return (
-      <Container>
+      <Container id="singleorder">
         <Table>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell singleLine>
                 Order Number : {order.id} <br /> Date Placed :{' '}
-                {order.datePlaced}
+                {order.datePlaced} <br />
+                Order Total: ${priceConvert(total)}
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>

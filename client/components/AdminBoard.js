@@ -57,17 +57,21 @@ export class AdminBoard extends Component {
     const users = this.props.users || []
     return (
       <Container id="admin-board">
-        <div id="order-filters">
-          <select onChange={this.onFilter}>
-            <option value="all">All</option>
-            <option value="created">Created</option>
-            <option value="processing">Processing</option>
-            <option value="cancelled">Cancelled</option>
-            <option value="completed">Completed</option>
-          </select>
-        </div>
         <h5>
-          <Header as="h5">All Orders:</Header>
+          <div>
+            <Header as="h2" dividing>
+              All Orders:{' '}
+            </Header>
+            <Container id="adminboard-orderfilters">
+              <select id="order-filters" onChange={this.onFilter}>
+                <option value="all">All</option>
+                <option value="created">Created</option>
+                <option value="processing">Processing</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="completed">Completed</option>
+              </select>
+            </Container>
+          </div>
           {orders.map(order => (
             <AllOrders
               key={order.id}
@@ -78,7 +82,9 @@ export class AdminBoard extends Component {
         </h5>
 
         <h5>
-          <Header as="h5">All Users:</Header>
+          <Header as="h2" dividing>
+            All Users:
+          </Header>
           {!users.length ? (
             <div>No users in database</div>
           ) : (
