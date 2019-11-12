@@ -54,7 +54,7 @@ export const RatingsDistribution = props => {
                 style={{
                   width: `${percent}%`,
                   height: '100%',
-                  background: 'yellow'
+                  background: '#ffeecf'
                 }}
               />
               <div

@@ -14,79 +14,60 @@ const AllUsers = props => {
         </Table.Header>
         <TableBody>
           <Table.Row>
-            <Table.Cell>Id: {user.id}</Table.Cell>
-            <Table.Cell>Email: {user.email}</Table.Cell>
-            <Table.Cell>Role: {user.role}</Table.Cell>
-
-            {/* <Table.Cell>
-              <Link
-                to={`/products/${review.productId}/reviews/${review.id}/edit`}
-              >
-              <Button floated="right" type="button">
-                Edit User
-              </Button>
-              </Table.Cell></Link>
-            </Table.Cell> */}
-            {user.role === 'user' ? (
+            <div id="alluserstext">
+              <Table.Cell>Id: {user.id}</Table.Cell>
+              <Table.Cell>Email: {user.email}</Table.Cell>
+              <Table.Cell>Role: {user.role}</Table.Cell>
+            </div>
+            <div id="allusersbuttons">
+              {user.role === 'user' ? (
+                <Table.Cell>
+                  <Button
+                    size="mini"
+                    floated="right"
+                    type="button"
+                    color="yellow"
+                    onClick={() => {
+                      props.promote(user)
+                    }}
+                  >
+                    Promote
+                  </Button>
+                </Table.Cell>
+              ) : (
+                <div />
+              )}
+              {user.role === 'admin' ? (
+                <Table.Cell>
+                  <Button
+                    size="mini"
+                    floated="right"
+                    type="button"
+                    color="olive"
+                    onClick={() => {
+                      props.demote(user)
+                    }}
+                  >
+                    Demote
+                  </Button>
+                </Table.Cell>
+              ) : (
+                <div />
+              )}
               <Table.Cell>
                 <Button
                   size="mini"
                   floated="right"
                   type="button"
-                  color="yellow"
+                  color="red"
                   onClick={() => {
-                    props.promote(user)
+                    props.deleteUser(user.id)
                   }}
                 >
-                  Promote
+                  Delete User
                 </Button>
               </Table.Cell>
-            ) : (
-              <div />
-            )}
-            {user.role === 'admin' ? (
-              <Table.Cell>
-                <Button
-                  size="mini"
-                  floated="right"
-                  type="button"
-                  color="olive"
-                  onClick={() => {
-                    props.demote(user)
-                  }}
-                >
-                  Demote
-                </Button>
-              </Table.Cell>
-            ) : (
-              <div />
-            )}
-            {/* <Table.Cell>
-              <Button
-                size="mini"
-                floated="right"
-                type="button"
-                color="blue"
-                onClick={() => {
-                  props.triggerReset(user.id)
-                }}
-              >
-                Prompt Password
-              </Button>
-            </Table.Cell> */}
-            <Table.Cell>
-              <Button
-                size="mini"
-                floated="right"
-                type="button"
-                color="red"
-                onClick={() => {
-                  props.deleteUser(user.id)
-                }}
-              >
-                Delete User
-              </Button>
-            </Table.Cell>
+            </div>
           </Table.Row>
         </TableBody>
       </Table>
