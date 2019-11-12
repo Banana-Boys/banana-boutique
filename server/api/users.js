@@ -41,10 +41,7 @@ router.get('/:id/reviews', async (req, res, next) => {
       where: {
         userId: req.params.id
       },
-      include: {
-        model: User,
-        Product
-      },
+      include: [Product],
       order: [['createdAt', 'DESC']]
     })
 
@@ -54,8 +51,7 @@ router.get('/:id/reviews', async (req, res, next) => {
   }
 })
 
-// not very secure, fix need to fix redux request to /orders
-router.get('/:id/orders', async (req, res, next) => {
+router.get('/:id/orders', ownsProfile, async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: {

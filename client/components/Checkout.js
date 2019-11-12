@@ -14,6 +14,8 @@ import CheckoutLogin from './checkout/CheckoutLogin'
 import ShippingInfo from './checkout/ShippingInfo'
 import CartReview from './checkout/CartReview'
 import EmailInfo from './checkout/EmailInfo'
+import EnteredShippingInfo from './checkout/EnteredShippingInfo'
+
 class Checkout extends React.Component {
   constructor(props) {
     super(props)
@@ -199,7 +201,16 @@ class Checkout extends React.Component {
           {/* Review Cart Items */}
 
           {formOnDisplay === 2 && (
-            <CartReview cart={cart} shippingTax={this.state.shippingTax} />
+            <div>
+              <div>
+                <EnteredShippingInfo
+                  shippingAddress={this.state.shippingAddress}
+                />
+              </div>
+              <div>
+                <CartReview cart={cart} shippingTax={this.state.shippingTax} />
+              </div>
+            </div>
           )}
 
           {/* Stripe checkout */}
