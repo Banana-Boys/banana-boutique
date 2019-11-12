@@ -11,6 +11,7 @@ import {Button} from 'semantic-ui-react'
 import CheckoutLogin from './checkout/CheckoutLogin'
 import ShippingInfo from './checkout/ShippingInfo'
 import CartReview from './checkout/CartReview'
+import EmailInfo from './checkout/EmailInfo'
 class Checkout extends React.Component {
   constructor(props) {
     super(props)
@@ -38,6 +39,7 @@ class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.createOrder = this.createOrder.bind(this)
+    this.handleBack = this.handleBack.bind(this)
   }
 
   componentDidMount() {
@@ -108,6 +110,29 @@ class Checkout extends React.Component {
     }
   }
 
+  handleBack() {
+    this.setState(state => {
+      const {formOnDisplay, user} = state
+      let newState
+      if (formOnDisplay)
+        if (formOnDisplay === 2) {
+          newState = {user, formOnDisplay: 1, shippingAddress: ''}
+        } else if (!user.id && formOnDisplay === 1) {
+          newState = {
+            user: {},
+            showUserOptions: {
+              login: false,
+              signup: false,
+              continueAsGuest: false
+            },
+            formOnDisplay: 0
+          }
+        }
+
+      return newState
+    })
+  }
+
   async handleSubmit(e) {
     e.preventDefault()
     if (e.target.id === 'guestEmailForm') {
@@ -133,16 +158,16 @@ class Checkout extends React.Component {
 
   render() {
     const cart = this.props.cart
-    let {showUserOptions, formOnDisplay} = this.state
+    let {showUserOptions, formOnDisplay, user} = this.state
 
     return (
       <div id="checkout">
         {/* Ask for Login */}
-
+        {user.email && formOnDisplay > 0 && <EmailInfo user={user} />}
         {formOnDisplay === 0 && (
           <CheckoutLogin
             showUserOptions={showUserOptions}
-            user={this.state.user}
+            user={user}
             handleUserOptions={this.handleUserOptions}
             handleSubmit={this.handleSubmit}
           />
@@ -153,7 +178,7 @@ class Checkout extends React.Component {
           <ShippingInfo
             shippingAddress={this.state.shippingAddress}
             newShippingAddress={this.state.newShippingAddress}
-            user={this.state.user}
+            user={user}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
             addresses={this.props.addresses}
@@ -177,8 +202,7 @@ class Checkout extends React.Component {
                 this.state.shippingTax
               )}
               disabled={
-                typeof this.state.shippingAddress !== 'object' ||
-                !this.state.user.email
+                typeof this.state.shippingAddress !== 'object' || !user.email
               }
             />
           ) : (
@@ -189,6 +213,12 @@ class Checkout extends React.Component {
         ) : (
           ''
         )}
+        {(formOnDisplay > 0 && !user.id) ||
+          (formOnDisplay > 1 && (
+            <Button type="button " onClick={this.handleBack}>
+              Back
+            </Button>
+          ))}
       </div>
     )
   }
