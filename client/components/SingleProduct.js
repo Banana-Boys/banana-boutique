@@ -154,6 +154,7 @@ class SingleProduct extends React.Component {
                     name="quantity"
                     value={this.state.quantity}
                     onChange={this.handleChange}
+                    style={{width: '70px'}}
                   >
                     {quantitySelect}
                   </select>
