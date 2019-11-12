@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
+const {isUser, canEditReview} = require('../middleware')
 
 //GET
 router.get('/', async (req, res, next) => {
@@ -54,7 +55,7 @@ router.get('/user/:id', async (req, res, next) => {
 })
 
 //POST review
-router.post('/:productId/:reviewId', async (req, res, next) => {
+router.post('/:productId/:reviewId', isUser, async (req, res, next) => {
   try {
     const review = await Review.create(req.body)
     const rev = await Review.find({
@@ -84,7 +85,7 @@ router.post('/:productId/:reviewId', async (req, res, next) => {
 })
 
 // DELETE product
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', canEditReview, async (req, res, next) => {
   try {
     await Review.destroy({where: {id: req.params.id}})
     res.sendStatus(200)
@@ -94,7 +95,7 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 //UPDATE product by id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', canEditReview, async (req, res, next) => {
   try {
     const review = await Review.find({
       where: {

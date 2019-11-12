@@ -39,9 +39,10 @@ body,
 #checkout,
 #account-form,
 #singleorder,
-#single-product #form-page {
+#single-product #form-page,
+#landing {
   top: 0;
-  margin-top: 4%;
+  margin-top: 55px; /* if you're going to touch this you also need to change the navbar height */
 }
 
 /* TEXT STYLES */

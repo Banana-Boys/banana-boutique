@@ -3,10 +3,10 @@ const router = require('express').Router()
 const {Product, Category, User, Review} = require('../db')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
-const {isUser} = require('../middleware')
+const {isUser, isAdmin, canEditReview} = require('../middleware')
 const {overlap, sorter} = require('../../utilBackEnd/util')
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const {name, description, imageUrl, price, inventory, categories} = req.body
     const product = await Product.create({
@@ -124,7 +124,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // DELETE product
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     const id = req.params.id
     await Product.destroy({where: {id: id}})
@@ -135,7 +135,7 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 //UPDATE product by id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isAdmin, async (req, res, next) => {
   try {
     const {name, description, imageUrl, price, inventory, categories} = req.body
     const product = await Product.findByPk(req.params.id)
@@ -163,7 +163,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/:id/reviews', isUser(), async (req, res, next) => {
+router.post('/:id/reviews', isUser, async (req, res, next) => {
   try {
     let review = await Review.create(req.body)
     await review.setUser(req.user.id)
@@ -182,20 +182,24 @@ router.post('/:id/reviews', isUser(), async (req, res, next) => {
   }
 })
 
-router.delete('/:productId/reviews/:reviewId', async (req, res, next) => {
-  try {
-    const review = await Review.findByPk(req.params.reviewId)
-    const product = await Product.findByPk(req.params.productId)
-    await review.destroy()
-    await product.update({
-      numratings: product.numratings - 1,
-      sumratings: product.sumratings - Number(review.rating)
-    })
-    res.sendStatus(201)
-  } catch (error) {
-    next(error)
+router.delete(
+  '/:productId/reviews/:reviewId',
+  canEditReview,
+  async (req, res, next) => {
+    try {
+      const review = await Review.findByPk(req.params.reviewId)
+      const product = await Product.findByPk(req.params.productId)
+      await review.destroy()
+      await product.update({
+        numratings: product.numratings - 1,
+        sumratings: product.sumratings - Number(review.rating)
+      })
+      res.sendStatus(201)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 router.get('/:productId/reviews', async (req, res, next) => {
   try {
@@ -210,22 +214,26 @@ router.get('/:productId/reviews', async (req, res, next) => {
   }
 })
 
-router.put('/:productId/reviews/:reviewId', async (req, res, next) => {
-  try {
-    let review = await Review.findByPk(req.params.reviewId)
-    const product = await Product.findByPk(req.params.productId)
-    const newSumRatings =
-      product.sumratings - Number(review.rating) + Number(req.body.rating)
-    console.log(newSumRatings)
-    await review.update(req.body)
-    await product.update({sumratings: newSumRatings})
-    review = await Review.findByPk(req.params.reviewId, {
-      include: [{model: User, attributes: ['name', 'id']}]
-    })
-    res.status(201).json(review)
-  } catch (error) {
-    next(error)
+router.put(
+  '/:productId/reviews/:reviewId',
+  canEditReview,
+  async (req, res, next) => {
+    try {
+      let review = await Review.findByPk(req.params.reviewId)
+      const product = await Product.findByPk(req.params.productId)
+      const newSumRatings =
+        product.sumratings - Number(review.rating) + Number(req.body.rating)
+      console.log(newSumRatings)
+      await review.update(req.body)
+      await product.update({sumratings: newSumRatings})
+      review = await Review.findByPk(req.params.reviewId, {
+        include: [{model: User, attributes: ['name', 'id']}]
+      })
+      res.status(201).json(review)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 module.exports = router
