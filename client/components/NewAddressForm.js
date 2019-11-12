@@ -1,7 +1,9 @@
+/* eslint-disable complexity */
 import React from 'react'
 import {connect} from 'react-redux'
 import {createAddress} from '../store/addresses'
 import {states, countries} from '../../utilFrontEnd/address'
+import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 class NewAddressForm extends React.Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class NewAddressForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id="new-edit-x-form">
         <div className="form-group">
           <label htmlFor="address1">Street Address:</label>
           <input type="text" name="address1" onChange={this.handleChange} />
@@ -83,8 +85,10 @@ class NewAddressForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <button
+          <Button
+            size="mini"
             type="submit"
+            color="blue"
             disabled={
               !this.state.address1.length ||
               !this.state.city.length ||
@@ -93,7 +97,7 @@ class NewAddressForm extends React.Component {
             }
           >
             Submit
-          </button>
+          </Button>
         </div>
       </form>
     )

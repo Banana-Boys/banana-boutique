@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {NEW_CATEGORY} from './singleCategory'
+import {sorter} from '../../utilBackEnd/util'
 /**
  * ACTION TYPES
  */
@@ -39,7 +40,7 @@ export default function(categories = [], action) {
     case GET_CATEGORIES:
       return action.categories
     case ADD_CATEGORY:
-      return [...categories, action.category]
+      return [...categories, action.category].sort(sorter('name_0'))
     default:
       return categories
   }

@@ -26,8 +26,10 @@ const Product = props => {
             <h6>
               Avg Rating:
               {isNaN(product.sumratings / product.numratings)
-                ? 'No ratings'
-                : (product.sumratings / product.numratings).toFixed(1)}
+                ? ' No ratings'
+                : ` ${(product.sumratings / product.numratings).toFixed(1)} (${
+                    product.numratings
+                  } ${Number(product.numratings) > 1 ? 'ratings' : 'rating'})`}
             </h6>
             {!product.inventory ? (
               <h6>OUT OF STOCK</h6>

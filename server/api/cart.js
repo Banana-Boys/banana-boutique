@@ -5,34 +5,52 @@ const Product = require('../db/models/Product')
 //GET
 router.get('/', async (req, res, next) => {
   try {
-    let cart
-    // might have to play around with the order of this to make sure the session cart persists when a user logs in, and then will need save the session cart to the db
-    if (req.session.cart && req.session.cart.length) {
-      cart = req.session.cart
-      cart = await Promise.all(
-        cart.map(async cartLineItem => ({
-          quantity: cartLineItem.quantity,
-          product: await Product.findByPk(cartLineItem.productId, {
-            attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
-          })
-        }))
-      )
-    } else if (req.user) {
-      cart = await CartLineItem.findAll({
-        where: {userId: req.user.id},
-        include: [
-          {
-            model: Product,
-            attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
-          }
-        ]
+    let sessionCart = req.session.cart || []
+    let savedCart = []
+    if (req.user) {
+      savedCart = await CartLineItem.findAll({
+        where: {userId: req.user.id}
       })
-      req.session.cart = cart
-      req.session.save()
-    } else {
-      cart = []
     }
-    res.status(200).json(cart)
+    let cart = []
+    sessionCart.forEach(async sessionItem => {
+      let sameSavedItem = savedCart.find(
+        savedItem => savedItem.productId === sessionItem.productId
+      )
+      if (sameSavedItem) {
+        let newQuantity = sameSavedItem.quantity + sessionItem.quantity
+        cart.push({productId: sameSavedItem.productId, quantity: newQuantity})
+        savedCart = savedCart.filter(
+          savedItem => savedItem.productId !== sessionItem.productId
+        )
+        sameSavedItem.update({quantity: newQuantity})
+      } else {
+        cart.push(sessionItem)
+        if (req.user) {
+          await CartLineItem.create({
+            quantity: sessionItem.quantity,
+            productId: sessionItem.productId,
+            userId: req.user.id
+          })
+        }
+      }
+    })
+    savedCart.forEach(savedItem => {
+      cart.push(savedItem)
+    })
+    req.session.cart = cart
+    req.session.save()
+
+    let cartWithProducts = await Promise.all(
+      cart.map(async cartLineItem => ({
+        quantity: cartLineItem.quantity,
+        product: await Product.findByPk(cartLineItem.productId, {
+          attributes: ['id', 'imageUrl', 'inventory', 'name', 'price']
+        })
+      }))
+    )
+
+    res.status(200).json(cartWithProducts)
   } catch (error) {
     next(error)
   }

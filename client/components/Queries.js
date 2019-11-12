@@ -19,6 +19,7 @@ import {
 } from 'semantic-ui-react'
 
 import '../styles/queries.scss'
+
 export class Queries extends Component {
   constructor(props) {
     super(props)
@@ -206,120 +207,128 @@ export class Queries extends Component {
                 )}
               </div>
             ))}
-            <div id="instockcategory">
-              <Input
-                name="inStock"
-                type="checkbox"
-                onChange={this.handleInStock}
-                checked={this.state.inStock}
-              />{' '}
-              In Stock
-            </div>
-            {/* <label htmlFor="inStock">In stock</label> */}
-          </div>
+            <div id="stock-sort-pagination">
+              <div id="instockcategory">
+                <Input
+                  name="inStock"
+                  type="checkbox"
+                  onChange={this.handleInStock}
+                  checked={this.state.inStock}
+                />{' '}
+                In Stock
+              </div>
+              {/* <label htmlFor="inStock">In stock</label> */}
 
-          <select id="sort" name="sort" onChange={this.handleSort}>
-            {/* <option value="name_0" selected={this.state.sort === ''} /> */}
+              <select id="sort" name="sort" onChange={this.handleSort}>
+                {/* <option value="name_0" selected={this.state.sort === ''} /> */}
 
-            <option value="" selected={this.state.sort === ''}>
-              Sort by:
-            </option>
-            <option value="name_0" selected={this.state.sort === 'name_0'}>
-              Name (A to Z)
-            </option>
-            <option value="name_1" selected={this.state.sort === 'name_1'}>
-              Name (Z to A)
-            </option>
-            <option value="price_0" selected={this.state.sort === 'price_0'}>
-              Price (low to high)
-            </option>
-            <option value="price_1" selected={this.state.sort === 'price_1'}>
-              Price (high to low)
-            </option>
-            <option
-              value="avgrating_0"
-              selected={this.state.sort === 'avgrating_0'}
-            >
-              Avg. rating (low to high)
-            </option>
-            <option
-              value="avgrating_1"
-              selected={this.state.sort === 'avgrating_1'}
-            >
-              Avg. rating (high to low)
-            </option>
-            <option
-              value="numratings_0"
-              selected={this.state.sort === 'numratings_0'}
-            >
-              # ratings (low to high)
-            </option>
-            <option
-              value="numratings_1"
-              selected={this.state.sort === 'numratings_1'}
-            >
-              # ratings (high to low)
-            </option>
-          </select>
-          <div id="paginationHolder">
-            <div>
-              Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
-                this.state.page * this.state.numPerPage + 1,
-                this.state.numProducts
-              )}{' '}
-              of {this.state.numProducts}
+                <option value="" selected={this.state.sort === ''}>
+                  Sort by:
+                </option>
+                <option value="name_0" selected={this.state.sort === 'name_0'}>
+                  Name (A to Z)
+                </option>
+                <option value="name_1" selected={this.state.sort === 'name_1'}>
+                  Name (Z to A)
+                </option>
+                <option
+                  value="price_0"
+                  selected={this.state.sort === 'price_0'}
+                >
+                  Price (low to high)
+                </option>
+                <option
+                  value="price_1"
+                  selected={this.state.sort === 'price_1'}
+                >
+                  Price (high to low)
+                </option>
+                <option
+                  value="avgrating_0"
+                  selected={this.state.sort === 'avgrating_0'}
+                >
+                  Avg. rating (low to high)
+                </option>
+                <option
+                  value="avgrating_1"
+                  selected={this.state.sort === 'avgrating_1'}
+                >
+                  Avg. rating (high to low)
+                </option>
+                <option
+                  value="numratings_0"
+                  selected={this.state.sort === 'numratings_0'}
+                >
+                  # ratings (low to high)
+                </option>
+                <option
+                  value="numratings_1"
+                  selected={this.state.sort === 'numratings_1'}
+                >
+                  # ratings (high to low)
+                </option>
+              </select>
+              <div id="paginationHolder">
+                <div>
+                  Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
+                    this.state.page * this.state.numPerPage + 1,
+                    this.state.numProducts
+                  )}{' '}
+                  of {this.state.numProducts}
+                </div>
+                <Button
+                  size="mini"
+                  type="button"
+                  id="firstPage"
+                  onClick={this.handleClick}
+                  disabled={this.state.page === 1}
+                >
+                  {'<<'}
+                </Button>
+                <Button
+                  size="mini"
+                  type="button"
+                  id="prevPage"
+                  onClick={this.handleClick}
+                  disabled={this.state.page === 1}
+                >
+                  {'<'}
+                </Button>
+                <span>{this.state.page}</span>
+                <Button
+                  size="mini"
+                  type="button"
+                  id="nextPage"
+                  onClick={this.handleClick}
+                  disabled={this.state.page === this.state.lastPage}
+                >
+                  {'>'}
+                </Button>
+                <Button
+                  size="mini"
+                  type="button"
+                  id="lastPage"
+                  onClick={this.handleClick}
+                  disabled={this.state.page === this.state.lastPage}
+                >
+                  {'>>'}
+                </Button>
+              </div>
+              <div>
+                <label htmlFor="numPerPage"># products/page:</label>
+                <select name="numPerPage" onChange={this.handleChange}>
+                  <option selected={Number(this.state.numPerPage) === 10}>
+                    10
+                  </option>
+                  <option selected={Number(this.state.numPerPage) === 20}>
+                    20
+                  </option>
+                  <option selected={Number(this.state.numPerPage) === 50}>
+                    50
+                  </option>
+                </select>
+              </div>
             </div>
-            <Button
-              size="mini"
-              type="button"
-              id="firstPage"
-              onClick={this.handleClick}
-              disabled={this.state.page === 1}
-            >
-              {'<<'}
-            </Button>
-            <Button
-              size="mini"
-              type="button"
-              id="prevPage"
-              onClick={this.handleClick}
-              disabled={this.state.page === 1}
-            >
-              {'<'}
-            </Button>
-            <span>{this.state.page}</span>
-            <Button
-              size="mini"
-              type="button"
-              id="nextPage"
-              onClick={this.handleClick}
-              disabled={this.state.page === this.state.lastPage}
-            >
-              {'>'}
-            </Button>
-            <Button
-              size="mini"
-              type="button"
-              id="lastPage"
-              onClick={this.handleClick}
-              disabled={this.state.page === this.state.lastPage}
-            >
-              {'>>'}
-            </Button>
-          </div>
-          <div>
-            <label htmlFor="numPerPage"># products/page:</label>
-            <select name="numPerPage" onChange={this.handleChange}>
-              <option selected={Number(this.state.numPerPage) === 10}>
-                10
-              </option>
-              <option selected={Number(this.state.numPerPage) === 20}>
-                20
-              </option>
-              <option selected={Number(this.state.numPerPage) === 50}>
-                50
-              </option>
-            </select>
           </div>
         </div>
       </div>

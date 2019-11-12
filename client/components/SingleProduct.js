@@ -126,18 +126,6 @@ class SingleProduct extends React.Component {
                   ) : (
                     <div />
                   )}
-                  <Label>
-                    {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
-                  </Label>
-                  <select
-                    float="right"
-                    id="quantitysort"
-                    name="quantity"
-                    value={this.state.quantity}
-                    onChange={this.handleChange}
-                  >
-                    {quantitySelect}
-                  </select>
 
                   <Button
                     color="black"
@@ -150,6 +138,22 @@ class SingleProduct extends React.Component {
                     <Icon name="right chevron" />
                   </Button>
                 </Container>
+                <div id="add-to-cart-qty">
+                  <Label>
+                    Categories:{' '}
+                    {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
+                  </Label>
+                  <div id="qty">Qty:</div>
+                  <select
+                    float="right"
+                    id="quantitysort"
+                    name="quantity"
+                    value={this.state.quantity}
+                    onChange={this.handleChange}
+                  >
+                    {quantitySelect}
+                  </select>
+                </div>
               </Item.Extra>
             </Item.Content>
           </Item>
