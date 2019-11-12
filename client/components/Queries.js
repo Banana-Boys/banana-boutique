@@ -8,15 +8,7 @@ import {queryParser} from '../../utilFrontEnd/queryParser'
 import {queryPusher} from '../../utilFrontEnd/queryPusher'
 import {fetchCategory} from '../store/singleCategory'
 import NewCategoryForm from './NewCategoryForm'
-import {
-  Input,
-  Button,
-  Form,
-  Item,
-  Grid,
-  Container,
-  Select
-} from 'semantic-ui-react'
+import {Input, Button} from 'semantic-ui-react'
 
 import '../styles/queries.scss'
 
@@ -24,7 +16,10 @@ export class Queries extends Component {
   constructor(props) {
     super(props)
     const query = queryParser(this.props.location.search)
-    const {categories, inStock, sort, numPerPage} = query
+    let {categories, inStock, sort, numPerPage} = query
+
+    if (typeof categories === 'string') categories = [categories]
+
     this.state = {
       categories: categories || [],
       inStock: Boolean(inStock) || false,
@@ -195,7 +190,6 @@ export class Queries extends Component {
                       type="button"
                       color="blue"
                       className="categoryeditbutton"
-                      color="blue"
                     >
                       Edit
                     </Button>
@@ -334,7 +328,7 @@ export class Queries extends Component {
   }
 }
 
-const mapState = (state, props) => {
+const mapState = state => {
   return {
     user: state.user,
     products: state.products,

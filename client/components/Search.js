@@ -53,7 +53,6 @@ class Search extends React.Component {
   render() {
     return (
       <div id="search-bar">
-        <label id="searchlabel" htmlFor="search" />
         <Input
           placeholder="Search"
           type="text"
