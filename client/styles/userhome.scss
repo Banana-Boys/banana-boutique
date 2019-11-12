@@ -1,5 +1,5 @@
 #userhomeprofileimage {
-  xborder-radius: 50% !important;
+  border-radius: 50% !important;
   width: 300px;
   height: 300px;
 }
@@ -16,6 +16,10 @@
 
 #user-home-itemgroup {
   display: flex;
+}
+
+#userhomeitem {
+  justify-content: center !important;
 }
 
 #userhomeitemcontent {

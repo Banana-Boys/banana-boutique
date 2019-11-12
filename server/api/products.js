@@ -169,7 +169,7 @@ router.post('/:id/reviews', isUser(), async (req, res, next) => {
     await review.setUser(req.user.id)
     await review.setProduct(req.params.id)
     review = await Review.findByPk(review.id, {
-      include: [{model: User, attributes: ['id', 'name']}]
+      include: [{model: User, attributes: ['id', 'name', 'imageUrl']}]
     })
     const product = await Product.findByPk(req.params.id)
     await product.update({
@@ -201,7 +201,7 @@ router.get('/:productId/reviews', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.productId)
     const reviews = await product.getReviews({
-      include: [{model: User, attributes: ['name', 'id']}],
+      include: [{model: User, attributes: ['name', 'id', 'imageUrl']}],
       order: [['createdAt', 'DESC']]
     })
     res.status(201).json(reviews)
