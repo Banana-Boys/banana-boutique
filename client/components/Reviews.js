@@ -12,7 +12,6 @@ export class Reviews extends Component {
 
   render() {
     const reviews = this.props.reviews || []
-    //console.log(reviews)
     return (
       <Container>
         <Container>
@@ -33,7 +32,7 @@ export class Reviews extends Component {
         {this.props.user.id ? (
           <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
             <Button size="mini" color="yellow" type="button">
-              +Add Review
+              {reviews.length ? '+Add Review' : 'Leave the first review'}
             </Button>
           </Link>
         ) : (

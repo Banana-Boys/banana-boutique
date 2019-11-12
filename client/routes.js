@@ -20,6 +20,7 @@ import Checkout from './components/Checkout'
 import SingleOrder from './components/SingleOrder'
 import AdminBoard from './components/AdminBoard'
 import resetForm from './components/reset-form'
+import NewWishlistForm from './components/NewWishlistForm'
 
 /**
  * COMPONENT
@@ -75,6 +76,9 @@ class Routes extends Component {
         ) : null}
         {isLoggedIn ? (
           <Route path="/passwordReset" component={resetForm} />
+        ) : null}
+        {isLoggedIn ? (
+          <Route path="/wishlists/new" component={NewWishlistForm} />
         ) : null}
 
         {/* Routes placed here are available to all visitors */}

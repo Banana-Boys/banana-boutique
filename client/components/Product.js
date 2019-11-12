@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {Grid, Image, Container, Item, Card, Label} from 'semantic-ui-react'
 import priceConvert from '../../utilFrontEnd/priceConvert'
+import '../styles/product.scss'
 
 const Product = props => {
   let product = props.product

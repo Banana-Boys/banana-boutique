@@ -23,6 +23,7 @@ import {
   Label
 } from 'semantic-ui-react'
 import {Login} from './auth-form'
+import '../styles/userhome.scss'
 
 /**
  * COMPONENT
