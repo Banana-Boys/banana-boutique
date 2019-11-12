@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {editUser} from '../store/user'
+import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 class EditUserForm extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class EditUserForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id="new-edit-x-form">
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
@@ -84,7 +85,14 @@ class EditUserForm extends React.Component {
         </div>
 
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <Button
+            size="mini"
+            type="submit"
+            color="blue"
+            disabled={!this.state.email.length}
+          >
+            Submit
+          </Button>
         </div>
       </form>
     )

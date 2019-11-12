@@ -4,7 +4,7 @@ const {isAdmin} = require('../middleware')
 //GET
 router.get('/', async (req, res, next) => {
   try {
-    const categories = await Category.findAll()
+    const categories = await Category.findAll({order: ['name']})
     res.json(categories)
   } catch (error) {
     console.log(error)

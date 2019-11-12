@@ -56,9 +56,9 @@ export class Reviews extends Component {
     reviews = search.length
       ? reviews.filter(
           review =>
-            review.title.includes(search) ||
-            review.body.includes(search) ||
-            review.user.name.includes(search)
+            review.title.includes(search.toLowerCase()) ||
+            review.body.includes(search.toLowerCase()) ||
+            review.user.name.includes(search.toLowerCase())
         )
       : reviews
     return (
