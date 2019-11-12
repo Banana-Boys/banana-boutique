@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-statements */
 'use strict'
 const faker = require('faker')
@@ -178,6 +179,7 @@ async function seed() {
       productIndex < allProducts.length;
       productIndex++
     ) {
+      if (Math.random() < 0.5) continue
       let rating = Math.random() * 5
       rating = Math.ceil(rating)
 

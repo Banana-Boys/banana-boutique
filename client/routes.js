@@ -21,6 +21,7 @@ import SingleOrder from './components/SingleOrder'
 import AdminBoard from './components/AdminBoard'
 import resetForm from './components/reset-form'
 import NewWishlistForm from './components/NewWishlistForm'
+import Landing from './components/Landing'
 
 /**
  * COMPONENT
@@ -91,7 +92,8 @@ class Routes extends Component {
         <Route path="/products" component={AllProducts} />
 
         {/* Fallback route */}
-        <Route component={Login} />
+        <Route path="/" component={Landing} />
+        <Route component={Landing} />
       </Switch>
     )
   }

@@ -63,9 +63,6 @@
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
   transition: all 0.1s ease-in-out;
 }
 
@@ -78,7 +75,6 @@
   display: inline-block;
   border: none;
   outline: none;
-  xtext-decoration: none;
 }
 
 .dropdown-content {
@@ -150,4 +146,7 @@
 
 #addressinfoholder {
   display: inline flex;
+}
+.username {
+  margin-bottom: 3.5% !important;
 }

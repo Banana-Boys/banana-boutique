@@ -1,7 +1,23 @@
-const {checkGuest, isAdmin, isUser} = require('./UserAuthentication')
+const {
+  checkGuest,
+  isAdmin,
+  isUser,
+  canEditReview,
+  ownsAddress,
+  ownsOrder,
+  canViewOrders,
+  ownsProfile
+} = require('./UserAuthentication')
+const {passwordReset} = require('./ActionCheck')
 
 module.exports = {
   checkGuest,
   isAdmin,
-  isUser
+  isUser,
+  passwordReset,
+  canEditReview,
+  ownsAddress,
+  ownsOrder,
+  canViewOrders,
+  ownsProfile
 }
