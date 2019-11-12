@@ -1,7 +1,8 @@
 #userhomeprofileimage {
-  xborder-radius: 50% !important;
+  border-radius: 50% !important;
   width: 300px;
   height: 300px;
+  margin-right: 5%;
 }
 
 #userhomewelcomname {
@@ -10,12 +11,20 @@
 }
 
 #user-home {
-  margin: 6%;
+  margin-top: 7%;
   display: fixed;
 }
 
 #user-home-itemgroup {
   display: flex;
+}
+
+#userhomeitem {
+  margin-top: 2%;
+  margin-bottom: 6%;
+  margin-left: 20% !important;
+  margin-right: 20% !important;
+  display: fixed;
 }
 
 #userhomeitemcontent {
@@ -38,6 +47,30 @@
   transition: all 0.1s ease-in-out;
   border: none;
   outline: none;
+}
+
+.drp {
+  width: 90%;
+  margin-top: 5%;
+  display: inline-block;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: all 0.1s ease-in-out;
+}
+
+.drp:hover {
+  transform: scale(1.1);
 }
 
 .dropdown {
@@ -86,6 +119,7 @@
   border: none;
   outline: none;
   text-decoration: none;
+  font-size: 16px;
 }
 
 #addresstablerow {
@@ -104,4 +138,16 @@
 
 #tablerowaddress {
   border-color: black !important;
+}
+
+#userhomebuttons {
+  width: 70%;
+}
+
+#nonozone {
+  display: inline flex;
+}
+
+#addressinfoholder {
+  display: inline flex;
 }

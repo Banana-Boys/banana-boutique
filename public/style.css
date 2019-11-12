@@ -36,13 +36,12 @@ body,
 #edit-category-form,
 #edit-product-form,
 #cart,
-#single-product,
 #checkout,
 #account-form,
 #admin-board,
-#form-page {
+#single-product #form-page {
   top: 0;
-  margin-top: 55px;
+  margin-top: 4%;
 }
 
 /* TEXT STYLES */
@@ -59,4 +58,49 @@ nav {
 a {
   color: rgba(0, 0, 0, 0.95) !important;
   text-decoration: none;
+}
+
+/* put into scss */
+
+.bananarating {
+  height: 20px;
+  width: 10px;
+}
+
+.reviewbuttonsanddata {
+  float: right;
+  text-align: right;
+}
+
+.userhomedetailholder {
+  margin: 5%;
+}
+
+#userreviewuserprofilepage {
+  display: inline;
+  margin: 5%;
+}
+
+#reviewcontainer {
+  margin-bottom: 3%;
+}
+
+#reivewmetadataholder {
+  display: inline;
+}
+
+#reviewbuttons {
+  float: right;
+}
+
+#reviewtitle {
+  margin-bottom: 0%;
+}
+
+button {
+  transition: all 0.1s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.1);
 }

@@ -17,7 +17,10 @@ import {
   Accordion,
   Table,
   Dropdown,
-  TableBody
+  TableBody,
+  Header,
+  Comment,
+  Label
 } from 'semantic-ui-react'
 import {Login} from './auth-form'
 import '../styles/userhome.scss'
@@ -43,173 +46,201 @@ class UserHome extends React.Component {
 
   render() {
     const {id, name, email, phone, imageUrl, role} = this.props.user
+    console.log(this.props)
     const isUser = id === Number(this.props.match.params.id) || role === 'admin'
     const propsId = this.props.match.params.id
     return (
       <Container id="user-home">
-        <div id="userhomewelcomname">
-          {isUser ? (
-            <h1>Welcome, {name}</h1>
-          ) : (
-            <div>
-              <div>
-                <h1>You are not the correct user</h1>
-              </div>
-              <Login />
-            </div>
-          )}
-        </div>
-        <Item.Group>
-          <Item id="user-home-itemgroup">
-            {!imageUrl ? (
-              <img
-                id="userhomeprofileimage"
-                src="http://simpleicon.com/wp-content/uploads/user1.svg"
-              />
-            ) : (
-              <Item.Image id="userhomeprofileimage" src={imageUrl} />
-            )}
+        <Container id="userhomeitem">
+          <Item.Group>
+            <Item>
+              {!imageUrl ? (
+                <img
+                  id="userhomeprofileimage"
+                  src="http://simpleicon.com/wp-content/uploads/user1.svg"
+                />
+              ) : (
+                <img id="userhomeprofileimage" src={imageUrl} />
+              )}
 
-            <Item.Content id="userhomeitemcontent">
-              <Item.Description>
-                <div id="userhomeitemcontent">
-                  {this.props.user.role === 'admin' ? (
-                    <Link to="/adminboard">
-                      <Button>Admin Board</Button>
-                    </Link>
-                  ) : (
-                    <div />
-                  )}
-                  <h5>Email: {email}</h5>
-                  <h5>Phone #: {phone}</h5>
+              <Item.Content id="userhomeitemcontent">
+                <Item.Description>
+                  <div>
+                    {isUser ? (
+                      <h5>Name: {name}</h5>
+                    ) : (
+                      <div>
+                        <div>
+                          <h5>You are not the correct user</h5>
+                        </div>
+                        <Login />
+                      </div>
+                    )}
+                  </div>
+                  <div id="userhomeitemcontent">
+                    {this.props.user.role === 'admin' ? (
+                      <Link to="/adminboard">
+                        <Button>Admin Board</Button>
+                      </Link>
+                    ) : (
+                      <div />
+                    )}
+                    <h5>Email: {email}</h5>
+                    <h5>Phone #: {phone}</h5>
 
-                  <div
-                    role="listbox"
-                    aria-expanded="false"
-                    className="dropdown"
-                    tabIndex="0"
-                  >
-                    <div className="dropbtn">
-                      <h5 id="dropdowntext">
-                        Your Addresses:{' '}
-                        <i aria-hidden="true" className="dropdown icon" />
-                      </h5>
-                    </div>
+                    <div id="addressinfoholder">
+                      <div
+                        role="listbox"
+                        aria-expanded="false"
+                        className="dropdown"
+                        tabIndex="0"
+                      >
+                        <div className="drp">
+                          <h5 id="dropdowntext">
+                            Addresses:{' '}
+                            {/* <i aria-hidden="true" className="dropdown icon" /> */}
+                          </h5>
+                        </div>
 
-                    <div className="dropdown-content">
-                      {this.props.addresses.map(address => {
-                        const {
-                          id,
-                          address1,
-                          address2,
-                          city,
-                          state,
-                          country,
-                          zip
-                        } = address
-                        return (
-                          <Container key={id}>
-                            <Table>
-                              <Table.Body>
-                                <Table.Row id="tablerowaddress">
-                                  <div id="addresstablerow">
-                                    <p>{address1}</p>
-                                    {address2 ? <p>{address2}</p> : null}
-                                    <p>
-                                      <span>{city}</span>,{' '}
-                                      {state ? <span>{state},</span> : null}{' '}
-                                      <span>{country}</span> <span>{zip}</span>
-                                    </p>
-                                  </div>
-                                  <Table.Cell floated="left">
-                                    <div id="addressbuttonstablerow">
-                                      <div className="buttonpositioningaddress">
-                                        <Link to={`/addresses/${id}/edit`}>
-                                          <Button
-                                            size="mini"
-                                            type="button"
-                                            color="blue"
-                                          >
-                                            Edit Address
-                                          </Button>
-                                        </Link>
+                        <div className="dropdown-content">
+                          {this.props.addresses.map(address => {
+                            const {
+                              id,
+                              address1,
+                              address2,
+                              city,
+                              state,
+                              country,
+                              zip
+                            } = address
+                            return (
+                              <Container key={id}>
+                                <Table>
+                                  <Table.Body>
+                                    <Table.Row id="tablerowaddress">
+                                      <div id="addresstablerow">
+                                        <p>{address1}</p>
+                                        {address2 ? <p>{address2}</p> : null}
+                                        <p>
+                                          <span>{city}</span>,{' '}
+                                          {state ? <span>{state},</span> : null}{' '}
+                                          <span>{country}</span>{' '}
+                                          <span>{zip}</span>
+                                        </p>
                                       </div>
-                                      <div className="buttonpositioningaddress">
-                                        <Button
-                                          size="mini"
-                                          type="button"
-                                          color="red"
-                                          onClick={() => {
-                                            this.props.deleteAddress(id)
-                                          }}
-                                        >
-                                          Delete Address
-                                        </Button>
-                                      </div>
-                                    </div>
-                                  </Table.Cell>
-                                </Table.Row>
-                              </Table.Body>
-                            </Table>
-                          </Container>
-                        )
-                      })}
+                                      <Table.Cell floated="left">
+                                        <div id="addressbuttonstablerow">
+                                          <div className="buttonpositioningaddress">
+                                            <Link to={`/addresses/${id}/edit`}>
+                                              <Button
+                                                size="mini"
+                                                type="button"
+                                                color="blue"
+                                              >
+                                                Edit Address
+                                              </Button>
+                                            </Link>
+                                          </div>
+                                          <div className="buttonpositioningaddress">
+                                            <Button
+                                              size="mini"
+                                              type="button"
+                                              color="red"
+                                              onClick={() => {
+                                                this.props.deleteAddress(id)
+                                              }}
+                                            >
+                                              Delete Address
+                                            </Button>
+                                          </div>
+                                        </div>
+                                      </Table.Cell>
+                                    </Table.Row>
+                                  </Table.Body>
+                                </Table>
+                              </Container>
+                            )
+                          })}
+                        </div>
+                      </div>
+                      <Link to="/addresses/new">
+                        <Button size="mini" type="button" color="black">
+                          +Add Address
+                        </Button>
+                      </Link>
                     </div>
                   </div>
-                  <Link to="/addresses/new">
-                    <Button size="mini" type="button" color="olive">
-                      +Add Address
-                    </Button>
-                  </Link>
-                </div>
-              </Item.Description>
-            </Item.Content>
-          </Item>
-        </Item.Group>
+                </Item.Description>
+              </Item.Content>
+            </Item>
+          </Item.Group>
 
-        <h5>
-          Your Orders:{' '}
-          {this.props.orders.map(order => (
-            <UserOrder key={order.id} order={order} />
-          ))}
-        </h5>
+          <Container>
+            <Container className="userhomedetailholder">
+              <Comment.Group>
+                <Header as="h3" dividing>
+                  YOUR ORDERS
+                </Header>
+                {this.props.orders.map(order => (
+                  <UserOrder key={order.id} order={order} />
+                ))}
+              </Comment.Group>
+            </Container>
 
-        <h5>
-          Your Reviews:{' '}
-          {this.props.reviews.map(rev => (
-            <Review
-              key={rev.id}
-              destroyReview={this.props.destroyReview}
-              review={rev}
-              //fetchUser={this.props.fetchUser}
-            />
-          ))}
-        </h5>
+            <Container className="userhomedetailholder">
+              <Comment.Group>
+                <Header as="h3" dividing>
+                  YOUR REVIEWS
+                </Header>
+                {this.props.reviews.map(rev => (
+                  <div id="userreviewuserprofilepage" key={rev.id}>
+                    <div id="userreview">
+                      <Review
+                        destroyReview={this.props.destroyReview}
+                        review={rev}
+                      />
+                    </div>
+                    {/* <div id="userreviewproduct">{<Label />}</div> */}
+                  </div>
+                ))}
+              </Comment.Group>
+            </Container>
+          </Container>
 
-        <Button
-          size="mini"
-          type="button"
-          onClick={() => {
-            this.props.history.push('/passwordReset')
-          }}
-        >
-          Reset Password
-        </Button>
-        <Link to={`/users/${this.props.match.params.id}/edit`}>
-          <Button size="mini" type="button" color="blue">
-            Edit Profile
-          </Button>
-        </Link>
-        <Button
-          size="mini"
-          type="button"
-          color="red"
-          onClick={() => {
-            this.props.deleteUser(this.props.match.params.id)
-          }}
-        >
-          Delete Profile
-        </Button>
+          <Container id="nonozone">
+            <Comment.Group>
+              <Header as="h3" dividing>
+                MISC
+              </Header>
+            </Comment.Group>
+            <Container id="userhomebuttons">
+              <Button
+                size="mini"
+                type="button"
+                onClick={() => {
+                  this.props.history.push('/passwordReset')
+                }}
+              >
+                Reset Password
+              </Button>
+              <Link to={`/users/${this.props.match.params.id}/edit`}>
+                <Button size="mini" type="button" color="blue">
+                  Edit Profile
+                </Button>
+              </Link>
+              <Button
+                size="mini"
+                type="button"
+                color="red"
+                onClick={() => {
+                  this.props.deleteUser(this.props.match.params.id)
+                }}
+              >
+                Delete Profile
+              </Button>
+            </Container>
+          </Container>
+        </Container>
       </Container>
     )
   }

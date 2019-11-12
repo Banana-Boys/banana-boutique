@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createReview, destroyReview, editReview} from '../store/reviews'
 import Review from './Review'
 import {Link, withRouter} from 'react-router-dom'
-import {Button, Container, Grid} from 'semantic-ui-react'
+import {Button, Container, Grid, Comment, Header} from 'semantic-ui-react'
 
 export class Reviews extends Component {
   constructor(props) {
@@ -14,6 +14,24 @@ export class Reviews extends Component {
     const reviews = this.props.reviews || []
     return (
       <Container>
+        <Container>
+          <Comment.Group>
+            <Header as="h3" dividing>
+              REVIEWS
+            </Header>
+            {reviews.map(
+              rev =>
+                rev.user ? (
+                  <Review
+                    key={rev.id}
+                    destroyReview={this.props.destroyReview}
+                    review={rev}
+                    //fetchUser={this.props.fetchUser}
+                  />
+                ) : null
+            )}
+          </Comment.Group>
+        </Container>
         {this.props.user.id ? (
           <Link to={`/products/${this.props.match.params.id}/reviews/new`}>
             <Button size="mini" color="yellow" type="button">
@@ -27,16 +45,6 @@ export class Reviews extends Component {
             </Button>
           </Link>
         )}
-        <Container>
-          {reviews.map(rev => (
-            <Review
-              key={rev.id}
-              destroyReview={this.props.destroyReview}
-              review={rev}
-              //fetchUser={this.props.fetchUser}
-            />
-          ))}
-        </Container>
       </Container>
     )
   }
