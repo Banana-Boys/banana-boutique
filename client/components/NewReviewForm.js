@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createReview} from '../store/reviews'
+import {withRouter} from 'react-router-dom'
 
 class NewReviewForm extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class NewReviewForm extends React.Component {
       this.state,
       this.props.history
     )
+    this.props.hideAddReview()
   }
 
   render() {
@@ -65,4 +67,4 @@ class NewReviewForm extends React.Component {
 
 const mapDispatchToProps = {createReview}
 
-export default connect(null, mapDispatchToProps)(NewReviewForm)
+export default withRouter(connect(null, mapDispatchToProps)(NewReviewForm))
