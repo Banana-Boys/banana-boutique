@@ -8,13 +8,17 @@ import {createOrder} from '../store/singleOrder'
 import StripeCheckout from 'react-stripe-checkout'
 import {Button} from 'semantic-ui-react'
 
+import '../styles/checkout.scss'
+
 import CheckoutLogin from './checkout/CheckoutLogin'
 import ShippingInfo from './checkout/ShippingInfo'
 import CartReview from './checkout/CartReview'
+import EmailInfo from './checkout/EmailInfo'
 class Checkout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      formOnDisplay: this.props.user.id ? 1 : 0,
       showUserOptions: {
         login: false,
         signup: false,
@@ -37,6 +41,7 @@ class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.createOrder = this.createOrder.bind(this)
+    this.handleBack = this.handleBack.bind(this)
   }
 
   componentDidMount() {
@@ -46,8 +51,17 @@ class Checkout extends React.Component {
   componentWillReceiveProps(newProps) {
     if (newProps.user.id !== this.state.user.id) {
       this.props.fetchAddresses()
+      this.setState({
+        cart: newProps.cart,
+        user: newProps.user,
+        formOnDisplay: 1
+      })
+    } else {
+      this.setState({
+        cart: newProps.cart,
+        user: newProps.user
+      })
     }
-    this.setState({cart: newProps.cart, user: newProps.user})
   }
 
   createOrder(token, addresses) {
@@ -103,10 +117,33 @@ class Checkout extends React.Component {
     }
   }
 
+  handleBack() {
+    this.setState(state => {
+      const {formOnDisplay, user} = state
+      let newState
+      if (formOnDisplay)
+        if (formOnDisplay === 2) {
+          newState = {user, formOnDisplay: 1, shippingAddress: ''}
+        } else if (!user.id && formOnDisplay === 1) {
+          newState = {
+            user: {},
+            showUserOptions: {
+              login: false,
+              signup: false,
+              continueAsGuest: false
+            },
+            formOnDisplay: 0
+          }
+        }
+
+      return newState
+    })
+  }
+
   async handleSubmit(e) {
     e.preventDefault()
     if (e.target.id === 'guestEmailForm') {
-      this.setState({user: {email: e.target.email.value}})
+      this.setState({user: {email: e.target.email.value}, formOnDisplay: 1})
     } else if (e.target.id === 'shippingAddressForm') {
       let shippingAddress
       if (e.target.shippingAddress) {
@@ -122,57 +159,73 @@ class Checkout extends React.Component {
       }
       const distance = await this.props.fetchDistance(shippingAddress.zip)
       const shippingTax = Math.ceil(distance * 1) // 1 cent per mile
-      this.setState({shippingAddress, shippingTax})
+      this.setState({shippingAddress, shippingTax, formOnDisplay: 2})
     }
   }
 
   render() {
     const cart = this.props.cart
-    let {showUserOptions} = this.state
+    let {showUserOptions, formOnDisplay, user} = this.state
 
     return (
       <div id="checkout">
         {/* Ask for Login */}
-        <CheckoutLogin
-          showUserOptions={showUserOptions}
-          user={this.state.user}
-          handleUserOptions={this.handleUserOptions}
-          handleSubmit={this.handleSubmit}
-        />
+        {user.email && formOnDisplay > 0 && <EmailInfo user={user} />}
+        {formOnDisplay === 0 && (
+          <CheckoutLogin
+            showUserOptions={showUserOptions}
+            user={user}
+            handleUserOptions={this.handleUserOptions}
+            handleSubmit={this.handleSubmit}
+          />
+        )}
 
         {/* Get Shipping Information */}
-        <ShippingInfo
-          shippingAddress={this.state.shippingAddress}
-          newShippingAddress={this.state.newShippingAddress}
-          user={this.state.user}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          addresses={this.props.addresses}
-        />
+        {formOnDisplay === 1 && (
+          <ShippingInfo
+            shippingAddress={this.state.shippingAddress}
+            newShippingAddress={this.state.newShippingAddress}
+            user={user}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            addresses={this.props.addresses}
+          />
+        )}
 
         {/* Review Cart Items */}
-        <CartReview cart={cart} shippingTax={this.state.shippingTax} />
+        {formOnDisplay === 2 && (
+          <CartReview cart={cart} shippingTax={this.state.shippingTax} />
+        )}
 
         {/* Stripe checkout */}
-        {cart.length ? (
-          <StripeCheckout
-            stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
-            token={this.createOrder}
-            billingAddress
-            amount={cart.reduce(
-              (sum, item) => item.quantity * item.product.price + sum,
-              this.state.shippingTax
-            )}
-            disabled={
-              typeof this.state.shippingAddress !== 'object' ||
-              !this.state.user.email
-            }
-          />
+        {formOnDisplay === 2 ? (
+          cart.length ? (
+            <StripeCheckout
+              stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
+              token={this.createOrder}
+              billingAddress
+              amount={cart.reduce(
+                (sum, item) => item.quantity * item.product.price + sum,
+                this.state.shippingTax
+              )}
+              disabled={
+                typeof this.state.shippingAddress !== 'object' || !user.email
+              }
+            />
+          ) : (
+            <Button type="button" disabled>
+              Nothing in cart
+            </Button>
+          )
         ) : (
-          <Button type="button" disabled>
-            Nothing in cart
-          </Button>
+          ''
         )}
+        {(formOnDisplay > 0 && !user.id) ||
+          (formOnDisplay > 1 && (
+            <Button type="button " onClick={this.handleBack}>
+              Back
+            </Button>
+          ))}
       </div>
     )
   }

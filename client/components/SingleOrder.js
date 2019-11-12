@@ -12,7 +12,9 @@ export class SingleOrder extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchOrder(this.props.match.params.id)
+    if (+this.props.singleOrder.id !== +this.props.match.params.id) {
+      this.props.fetchOrder(this.props.match.params.id)
+    }
   }
 
   render() {

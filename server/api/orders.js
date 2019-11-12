@@ -220,7 +220,10 @@ router.post('/', checkGuest, async (req, res, next) => {
     // Returns Order
     res.json(
       await Order.findByPk(order.id, {
-        include: [{model: OrderLineItem}, {model: Address, as: 'shipping'}]
+        include: [
+          {model: OrderLineItem, include: {model: Product}},
+          {model: Address, as: 'shipping'}
+        ]
       })
     )
   } catch (err) {
