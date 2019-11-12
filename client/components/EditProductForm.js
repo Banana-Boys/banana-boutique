@@ -92,7 +92,7 @@ class EditProductForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} id="edit-product-form">
+      <form onSubmit={this.handleSubmit} id="new-edit-x-form">
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input

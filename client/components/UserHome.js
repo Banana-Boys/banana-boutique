@@ -46,7 +46,7 @@ class UserHome extends React.Component {
 
   render() {
     const {id, name, email, phone, imageUrl, role} = this.props.user
-    console.log(this.props)
+
     const isUser = id === Number(this.props.match.params.id) || role === 'admin'
     const propsId = this.props.match.params.id
     return (
@@ -67,24 +67,19 @@ class UserHome extends React.Component {
                 <Item.Description>
                   <div>
                     {isUser ? (
-                      <h5>Name: {name}</h5>
+                      <h5 className="username">Name: {name}</h5>
                     ) : (
                       <div>
                         <div>
-                          <h5>You are not the correct user</h5>
+                          <h5 className="username">
+                            You are not the correct user
+                          </h5>
                         </div>
                         <Login />
                       </div>
                     )}
                   </div>
                   <div id="userhomeitemcontent">
-                    {this.props.user.role === 'admin' ? (
-                      <Link to="/adminboard">
-                        <Button>Admin Board</Button>
-                      </Link>
-                    ) : (
-                      <div />
-                    )}
                     <h5>Email: {email}</h5>
                     <h5>Phone #: {phone}</h5>
 
@@ -181,9 +176,11 @@ class UserHome extends React.Component {
                 <Header as="h3" dividing>
                   YOUR ORDERS
                 </Header>
-                {this.props.orders.map(order => (
-                  <UserOrder key={order.id} order={order} />
-                ))}
+                <Item.Group>
+                  {this.props.orders.map(order => (
+                    <UserOrder key={order.id} order={order} />
+                  ))}
+                </Item.Group>
               </Comment.Group>
             </Container>
 

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {editReview} from '../store/reviews'
 import {fetchReview} from '../store/review'
 import {Login} from './auth-form'
+import {Input, Button, Form, Item, Grid} from 'semantic-ui-react'
 
 class EditReviewForm extends React.Component {
   constructor(props) {
@@ -40,10 +41,10 @@ class EditReviewForm extends React.Component {
   render() {
     return this.props.user.id === this.props.review.userId ||
       this.props.user.role === 'admin' ? (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id="new-edit-x-form">
         <div className="form-group">
           <label htmlFor="rating">Rating:</label>
-          <select name="rating" onChange={this.handleChange}>
+          <select name="rating" onChange={this.handleChange} required>
             <option selected={this.state.rating === ''}> </option>
             <option selected={this.state.rating === '1'}>1</option>
             <option selected={this.state.rating === '2'}>2</option>
@@ -51,9 +52,9 @@ class EditReviewForm extends React.Component {
             <option selected={this.state.rating === '4'}>4</option>
             <option selected={this.state.rating === '5'}>5</option>
           </select>
-          {this.state.rating.length > 0 ? null : (
+          {/* {this.state.rating.length > 0 ? null : (
             <div>Please rate the product</div>
-          )}
+          )} */}
         </div>
 
         <div className="form-group">
@@ -63,6 +64,7 @@ class EditReviewForm extends React.Component {
             name="title"
             value={this.state.title}
             onChange={this.handleChange}
+            required
           />
         </div>
 
@@ -72,11 +74,23 @@ class EditReviewForm extends React.Component {
             name="body"
             value={this.state.body}
             onChange={this.handleChange}
+            required
           />
         </div>
 
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <Button
+            size="mini"
+            type="submit"
+            color="blue"
+            disabled={
+              !this.state.title.length ||
+              !this.state.body.length ||
+              !this.state.rating.toString().length
+            }
+          >
+            Submit
+          </Button>
         </div>
       </form>
     ) : (

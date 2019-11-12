@@ -24,3 +24,10 @@
   -moz-appearance: none;
   appearance: none;
 }
+
+#add-to-cart-qty {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
