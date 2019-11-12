@@ -101,53 +101,55 @@ class SingleProduct extends React.Component {
                 <RatingsDistribution reviews={this.props.reviews} />
               </Item.Description>
               <Item.Extra>
-                {user.role === 'admin' ? (
-                  <div>
-                    <Button
-                      color="red"
-                      floated="right"
-                      size="mini"
-                      type="button"
-                      onClick={this.handleDelete}
-                    >
-                      Delete Product
-                    </Button>
-                    <Button
-                      primary
-                      floated="right"
-                      size="mini"
-                      type="button"
-                      onClick={this.handleEdit}
-                    >
-                      Edit Product
-                    </Button>
-                  </div>
-                ) : (
-                  <div />
-                )}
-                <Label>
-                  {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
-                </Label>
-                <select
-                  float="right"
-                  id="quantitysort"
-                  name="quantity"
-                  value={this.state.quantity}
-                  onChange={this.handleChange}
-                >
-                  {quantitySelect}
-                </select>
+                <Container>
+                  {user.role === 'admin' ? (
+                    <div>
+                      <Button
+                        color="red"
+                        floated="right"
+                        size="mini"
+                        type="button"
+                        onClick={this.handleDelete}
+                      >
+                        Delete Product
+                      </Button>
+                      <Button
+                        primary
+                        floated="right"
+                        size="mini"
+                        type="button"
+                        onClick={this.handleEdit}
+                      >
+                        Edit Product
+                      </Button>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
+                  <Label>
+                    {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
+                  </Label>
+                  <select
+                    float="right"
+                    id="quantitysort"
+                    name="quantity"
+                    value={this.state.quantity}
+                    onChange={this.handleChange}
+                  >
+                    {quantitySelect}
+                  </select>
 
-                <Button
-                  color="black"
-                  floated="right"
-                  size="mini"
-                  disabled={!product.inventory}
-                  onClick={this.handleAddToCart}
-                >
-                  {product.inventory ? 'Add Product to Cart' : 'Out of Stock'}
-                  <Icon name="right chevron" />
-                </Button>
+                  <Button
+                    color="black"
+                    floated="right"
+                    size="mini"
+                    disabled={!product.inventory}
+                    onClick={this.handleAddToCart}
+                  >
+                    {product.inventory ? 'Add Product to Cart' : 'Out of Stock'}
+                    <Icon name="right chevron" />
+                  </Button>
+                </Container>
               </Item.Extra>
             </Item.Content>
           </Item>

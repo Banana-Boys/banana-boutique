@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {fetchOrder} from '../store/singleOrder'
 import OrderLineItem from './OrderLineItem'
 import priceConvert from '../../utilFrontEnd/priceConvert'
+import dateFormat from '../../utilFrontEnd/dateformat'
 
 export class SingleOrder extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ export class SingleOrder extends Component {
             <Table.Row>
               <Table.HeaderCell singleLine>
                 Order Number : {order.id} <br /> Date Placed :{' '}
-                {order.datePlaced} <br />
+                {dateFormat(order.datePlaced)} <br />
                 Order Total: ${priceConvert(total)}
               </Table.HeaderCell>
             </Table.Row>
