@@ -1,30 +1,46 @@
 import React from 'react'
-import {Table, Button, TableBody, Card, Image} from 'semantic-ui-react'
+import {
+  Table,
+  Button,
+  TableBody,
+  Card,
+  Image,
+  Item,
+  ItemMeta,
+  Container
+} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 
 const OrderLineItem = props => {
   const product = props.order.product || {}
   return (
-    <Table>
-      <Link to={`/products/${product.id}`}>
-        <Card>
-          <Table.Header>
-            <Table.HeaderCell singleLine>
-              Product Name: {product.name}
-              <Image src={product.imageUrl} />
-            </Table.HeaderCell>
-          </Table.Header>
-          <TableBody>
-            <Table.Row>
-              <Table.Cell>Price: ${priceConvert(product.price)}</Table.Cell>
-              <Table.Cell>Description: {product.description}</Table.Cell>
-              <Table.Cell>Qty: {props.order.quantity}</Table.Cell>
-            </Table.Row>
-          </TableBody>
-        </Card>
-      </Link>
-    </Table>
+    <div>
+      <Item.Group>
+        <Item>
+          <Item.Image
+            id="productimageuserhome"
+            size="tiny"
+            src={product.imageUrl}
+          />
+
+          <Item.Content>
+            <Item.Header className="productname" as="a">
+              <Link to={`/products/${product.id}`}>{product.name} </Link>
+            </Item.Header>
+            <Item.Meta>
+              Description: {product.description} <br />
+            </Item.Meta>
+            <Item.Extra>Qty: {props.order.quantity}</Item.Extra>
+            <div id="linedetail">
+              <Item.Description>
+                ${priceConvert(product.price)}{' '}
+              </Item.Description>
+            </div>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+    </div>
   )
 }
 

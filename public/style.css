@@ -38,7 +38,7 @@ body,
 #cart,
 #checkout,
 #account-form,
-#admin-board,
+#singleorder,
 #single-product #form-page {
   top: 0;
   margin-top: 4%;
@@ -61,6 +61,29 @@ a {
 }
 
 /* put into scss */
+#admin-board {
+  margin: 6%;
+}
+
+#adminboard-orderfilters {
+  float: left;
+  margin-bottom: 1%;
+}
+
+#order-filters {
+  width: 10%;
+  display: inline-block;
+  height: calc(1.5em + 0.75rem + 2px);
+  xpadding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
 
 .bananarating {
   height: 20px;
@@ -102,5 +125,72 @@ button {
 }
 
 button:hover {
+  transform: scale(1.1);
+}
+
+#linedetail {
+  display: flex !important;
+
+  float: right;
+}
+
+#productimageuserhome {
+  border-radius: 10% !important;
+}
+
+#containuserhomeproduct {
+  margin: 2%;
+}
+
+.userhomeorderholder {
+  border-color: lightgrey;
+  opacity: 50%;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 3%;
+  padding: 2%;
+  border: 1px solid rgba(161, 161, 161, 0.185);
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+}
+
+#orderstatus {
+  width: 10%;
+  display: inline-block;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+#allusersbuttons {
+  display: inline-flex;
+  float: right;
+}
+
+#alluserstext {
+  display: inline-flex;
+  float: left;
+}
+
+#singleproductgateway {
+  transition: all 0.1s ease-in-out;
+}
+
+#singleproductgateway:hover {
+  transform: scaley(1.1);
+}
+
+.productname {
+  transition: all 0.1s ease-in-out;
+}
+
+.productname:hover {
   transform: scale(1.1);
 }
