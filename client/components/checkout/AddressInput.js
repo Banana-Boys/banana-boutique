@@ -19,9 +19,9 @@ const AddressInput = props => {
       <div className="form-group">
         <label htmlFor="address1">Street Address:</label>
         <input type="text" name="address1" onChange={handleChange} />
-        {newShippingAddress.address1.length > 0 ? null : (
+        {/* {newShippingAddress.address1.length > 0 ? null : (
           <div>Street address cannot be empty</div>
-        )}
+        )} */}
       </div>
 
       <div className="form-group">
@@ -32,9 +32,9 @@ const AddressInput = props => {
       <div className="form-group">
         <label htmlFor="city">City:</label>
         <input type="text" name="city" onChange={handleChange} />
-        {newShippingAddress.city.length > 0 ? null : (
+        {/* {newShippingAddress.city.length > 0 ? null : (
           <div>City cannot be empty</div>
-        )}
+        )} */}
       </div>
 
       <div className="form-group">
@@ -57,17 +57,17 @@ const AddressInput = props => {
             </option>
           ))}
         </select>
-        {newShippingAddress.country.length > 0 ? null : (
+        {/* {newShippingAddress.country.length > 0 ? null : (
           <div>Please choose a country</div>
-        )}
+        )} */}
       </div>
 
       <div className="form-group">
         <label htmlFor="zip">Zip Code:</label>
         <input type="text" name="zip" onChange={handleChange} />
-        {newShippingAddress.zip.length > 0 ? null : (
+        {/* {newShippingAddress.zip.length > 0 ? null : (
           <div>Zip code cannot be empty</div>
-        )}
+        )} */}
       </div>
     </div>
   )
