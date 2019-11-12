@@ -71,7 +71,7 @@ export class Cart extends Component {
                     className="delete-button"
                     onClick={() => this.handleRemove(item.product.id)}
                   >
-                    X
+                    <Button type="button">x</Button>
                   </div>
                 </div>
               </div>
@@ -86,11 +86,11 @@ export class Cart extends Component {
               <Link to="/checkout">
                 <Button type="button">Checkout</Button>
               </Link>
-              {this.props.user.id ? (
+              {/* {this.props.user.id ? (
                 <Link to="wishlists/new">
                   <Button type="button">Create Wishlist</Button>
                 </Link>
-              ) : null}
+              ) : null} */}
             </div>
           ) : (
             <Button type="button" disabled>

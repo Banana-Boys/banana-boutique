@@ -3,6 +3,17 @@ import React from 'react'
 
 import AddressOption from './AddressOption'
 import AddressInput from './AddressInput'
+import {
+  Input,
+  Button,
+  Form,
+  Item,
+  Grid,
+  Container,
+  Select
+} from 'semantic-ui-react'
+
+import '../../styles/checkout.scss'
 
 const ShippingInfo = props => {
   const {
@@ -34,19 +45,27 @@ const ShippingInfo = props => {
               handleChange={handleChange}
               userId={user.id}
             />
-            <button
-              type="submit"
-              disabled={
-                !shippingAddress.length ||
-                (shippingAddress === 'new' &&
-                  (!newShippingAddress.address1.length ||
-                    !newShippingAddress.city.length ||
-                    !newShippingAddress.country.length ||
-                    !newShippingAddress.zip.length))
-              }
-            >
-              Submit
-            </button>
+            <div className="form-group">
+              <Button size="mini" className="adressbutton">
+                Back
+              </Button>
+              <Button
+                type="submit"
+                disabled={
+                  !shippingAddress.length ||
+                  (shippingAddress === 'new' &&
+                    (!newShippingAddress.address1.length ||
+                      !newShippingAddress.city.length ||
+                      !newShippingAddress.country.length ||
+                      !newShippingAddress.zip.toString().length))
+                }
+                size="mini"
+                color="blue"
+                className="adressbutton"
+              >
+                Next
+              </Button>
+            </div>
           </form>
         ) : (
           <form id="shippingAddressForm" onSubmit={handleSubmit}>
@@ -55,17 +74,22 @@ const ShippingInfo = props => {
               handleChange={handleChange}
               userId={user.id}
             />
-            <button
-              type="submit"
-              disabled={
-                !newShippingAddress.address1.length ||
-                !newShippingAddress.city.length ||
-                !newShippingAddress.country.length ||
-                !newShippingAddress.zip.length
-              }
-            >
-              Submit
-            </button>
+            <div className="form-group">
+              <Button size="mini" className="adressbutton">
+                Back
+              </Button>
+              <Button
+                type="submit"
+                disabled={
+                  !newShippingAddress.address1.length ||
+                  !newShippingAddress.city.length ||
+                  !newShippingAddress.country.length ||
+                  !newShippingAddress.zip.toString().length
+                }
+              >
+                Next
+              </Button>
+            </div>
           </form>
         )
       ) : (
