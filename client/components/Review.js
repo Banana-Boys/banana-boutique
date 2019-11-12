@@ -1,6 +1,13 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom'
-import {Table, Button, Container, TableBody, Comment} from 'semantic-ui-react'
+import {
+  Table,
+  Button,
+  Container,
+  TableBody,
+  Comment,
+  Header
+} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import dateformat from '../../utilFrontEnd/dateformat'
 import ratingconverter from '../../utilFrontEnd/ratingcoverter.js'
@@ -35,6 +42,7 @@ const Review = props => {
                 />
               ))}
             </div>
+
             <Comment.Text id="reivewmetadataholder">
               <div id="reviewbuttons">
                 {props.user.role === 'admin' ||
@@ -68,7 +76,8 @@ const Review = props => {
           </Comment.Metadata>
           <Comment.Text>
             <div>
-              <div>{review.body}</div>
+              <h5 id="reviewtitle">{review.title}</h5>
+              <p>{review.body}</p>
               <div className="reviewbuttonsanddata">
                 <Comment.Metadata>
                   {dateformat(review.createdAt)}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {withRouter} from 'react-router-dom'
 
-import '../styles/auth-from.scss'
+import '../styles/auth-form.scss'
 /**
  * COMPONENT
  */
@@ -13,26 +13,54 @@ const AuthForm = props => {
 
   return (
     <div id="account-form">
+      <div id="auth-form-logo">
+        <img
+          src="https://nanas-image-store.s3.us-east-2.amazonaws.com/animation-lux.gif"
+          alt="Nanas sysmbol"
+          height="225"
+          width="400"
+          id="logo-image"
+        />
+      </div>
       <div id="form-container">
         <form onSubmit={handleSubmit} name={name}>
-          <div>
-            <label htmlFor="email">
-              <small>Email</small>
-            </label>
-            <input name="email" type="text" placeholder="E-mail" />
-          </div>
-          <div>
-            <label htmlFor="password">
-              <small>Password</small>
-            </label>
-            <input name="password" type="password" placeholder="Password" />
-          </div>
-          <div>
-            <button type="submit">{displayName}</button>
+          <div id="nana-login-signup-container">
+            <div id="input-fields">
+              <div>
+                <label htmlFor="email">
+                  <small>Email</small>
+                </label>
+                <input name="email" type="text" />
+              </div>
+              <div>
+                <label htmlFor="password">
+                  <small>Password</small>
+                </label>
+                <input name="password" type="password" />
+              </div>
+            </div>
+            <div>
+              <button type="submit" id="nana-login-button">
+                <img
+                  src="https://nanas-image-store.s3.us-east-2.amazonaws.com/nana-symbol.jpg"
+                  alt="Nanas sysmbol"
+                  height="24"
+                  width="24"
+                />
+                {displayName}{' '}
+              </button>
+            </div>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
-        <a href="/auth/google">{displayName} with Google</a>
+        <a href="/auth/google">
+          {' '}
+          <img
+            src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+            height="46"
+            width="191"
+          />
+        </a>
       </div>
     </div>
   )
@@ -48,7 +76,7 @@ const AuthForm = props => {
 const mapLogin = state => {
   return {
     name: 'login',
-    displayName: 'Login',
+    displayName: 'Sign in with Nana account',
     error: state.user.error
   }
 }
