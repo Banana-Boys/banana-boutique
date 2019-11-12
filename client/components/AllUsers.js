@@ -1,6 +1,5 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import UserView from './UserView'
 import {Table, TableBody, Container, Button} from 'semantic-ui-react'
 
 const AllUsers = props => {
@@ -62,7 +61,7 @@ const AllUsers = props => {
             ) : (
               <div />
             )}
-            <Table.Cell>
+            {/* <Table.Cell>
               <Button
                 size="mini"
                 floated="right"
@@ -74,7 +73,7 @@ const AllUsers = props => {
               >
                 Prompt Password
               </Button>
-            </Table.Cell>
+            </Table.Cell> */}
             <Table.Cell>
               <Button
                 size="mini"
