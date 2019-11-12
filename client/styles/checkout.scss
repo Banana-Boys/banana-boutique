@@ -1,7 +1,47 @@
 #checkout {
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffeecf;
+  height: 100%;
+  margin-top: 55px;
+  // margin: 20px auto;
+  padding: 20px;
+}
+
+#shippingAddressForm {
   height: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  background-color: white;
+}
+
+#email-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: white;
+  border-top: 1px solid #000000af;
+  padding: 20px;
+}
+
+#addressOption {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #ffeecf;
+  background-color: green;
+}
+
+#checkout-shipping-info {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  background-color: white;
+  margin: 20px auto;
+  padding: 20px;
 }

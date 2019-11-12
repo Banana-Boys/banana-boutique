@@ -170,27 +170,29 @@ class Checkout extends React.Component {
     return (
       <div id="checkout">
         {/* Ask for Login */}
-        {user.email && formOnDisplay > 0 && <EmailInfo user={user} />}
-        {formOnDisplay === 0 && (
-          <CheckoutLogin
-            showUserOptions={showUserOptions}
-            user={user}
-            handleUserOptions={this.handleUserOptions}
-            handleSubmit={this.handleSubmit}
-          />
-        )}
-
-        {/* Get Shipping Information */}
-        {formOnDisplay === 1 && (
-          <ShippingInfo
-            shippingAddress={this.state.shippingAddress}
-            newShippingAddress={this.state.newShippingAddress}
-            user={user}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-            addresses={this.props.addresses}
-          />
-        )}
+        <div id="checkout-shipping-info">
+          {user.email && formOnDisplay > 0 && <EmailInfo user={user} />}
+          {formOnDisplay === 0 && (
+            <CheckoutLogin
+              showUserOptions={showUserOptions}
+              user={user}
+              handleUserOptions={this.handleUserOptions}
+              handleSubmit={this.handleSubmit}
+            />
+          )}
+          <h1>Shipping Address</h1>
+          {/* Get Shipping Information */}
+          {formOnDisplay === 1 && (
+            <ShippingInfo
+              shippingAddress={this.state.shippingAddress}
+              newShippingAddress={this.state.newShippingAddress}
+              user={user}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+              addresses={this.props.addresses}
+            />
+          )}
+        </div>
 
         {/* Review Cart Items */}
         {formOnDisplay === 2 && (

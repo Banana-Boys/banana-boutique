@@ -34,10 +34,15 @@ class NewAddressForm extends React.Component {
       <form onSubmit={this.handleSubmit} id="new-edit-x-form">
         <div className="form-group">
           <label htmlFor="address1">Street Address:</label>
-          <input type="text" name="address1" onChange={this.handleChange} />
-          {this.state.address1.length > 0 ? null : (
+          <input
+            type="text"
+            name="address1"
+            onChange={this.handleChange}
+            required
+          />
+          {/* {this.state.address1.length > 0 ? null : (
             <div>Street address cannot be empty</div>
-          )}
+          )} */}
         </div>
 
         <div className="form-group">
@@ -47,13 +52,18 @@ class NewAddressForm extends React.Component {
 
         <div className="form-group">
           <label htmlFor="city">City:</label>
-          <input type="text" name="city" onChange={this.handleChange} />
-          {this.state.city.length > 0 ? null : <div>City cannot be empty</div>}
+          <input
+            type="text"
+            name="city"
+            onChange={this.handleChange}
+            required
+          />
+          {/* {this.state.city.length > 0 ? null : <div>City cannot be empty</div>} */}
         </div>
 
         <div className="form-group">
           <label htmlFor="state">State:</label>
-          <select name="state" onChange={this.handleChange}>
+          <select name="state" onChange={this.handleChange} required>
             {states.map(state => (
               <option key={state} value={state}>
                 {state}
@@ -64,24 +74,24 @@ class NewAddressForm extends React.Component {
 
         <div className="form-group">
           <label htmlFor="country">Country:</label>
-          <select name="country" onChange={this.handleChange}>
+          <select name="country" onChange={this.handleChange} required>
             {countries.map(country => (
               <option key={country} value={country}>
                 {country}
               </option>
             ))}
           </select>
-          {this.state.country.length > 0 ? null : (
+          {/* {this.state.country.length > 0 ? null : (
             <div>Please choose a country</div>
-          )}
+          )} */}
         </div>
 
         <div className="form-group">
           <label htmlFor="zip">Zip Code:</label>
-          <input type="text" name="zip" onChange={this.handleChange} />
-          {this.state.zip.length > 0 ? null : (
+          <input type="text" name="zip" onChange={this.handleChange} required />
+          {/* {this.state.zip.length > 0 ? null : (
             <div>Zip code cannot be empty</div>
-          )}
+          )} */}
         </div>
 
         <div className="form-group">
@@ -93,7 +103,7 @@ class NewAddressForm extends React.Component {
               !this.state.address1.length ||
               !this.state.city.length ||
               !this.state.country.length ||
-              !this.state.zip.length
+              !this.state.zip.toString().length
             }
           >
             Submit
