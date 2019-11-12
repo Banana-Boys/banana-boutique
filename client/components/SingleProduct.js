@@ -98,7 +98,9 @@ class SingleProduct extends React.Component {
                         Number(product.numratings) > 1 ? 'ratings' : 'rating'
                       })`}
                 </h4>
-                <RatingsDistribution reviews={this.props.reviews} />
+                <Container>
+                  <RatingsDistribution reviews={this.props.reviews} />
+                </Container>
               </Item.Description>
               <Item.Extra>
                 <Container>
@@ -140,7 +142,7 @@ class SingleProduct extends React.Component {
                 </Container>
                 <div id="add-to-cart-qty">
                   <Label>
-                    Categories:{' '}
+                    {/* Categories:{' '} */}
                     {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
                   </Label>
                   <div id="qty">Qty:</div>

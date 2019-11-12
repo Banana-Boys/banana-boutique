@@ -172,7 +172,7 @@ export class Queries extends Component {
             />
           </div>
           <label id="categorylabel" htmlFor="categories">
-            Categories:{' '}
+            <h3>Categories: </h3>
           </label>
           <div id="categories">
             {categories.map(category => (
@@ -269,54 +269,69 @@ export class Queries extends Component {
                 </option>
               </select>
               <div id="paginationHolder">
-                <div>
-                  Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
-                    this.state.page * this.state.numPerPage + 1,
-                    this.state.numProducts
-                  )}{' '}
-                  of {this.state.numProducts}
+                <div id="pageshowing">
+                  <h3>
+                    Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
+                      this.state.page * this.state.numPerPage + 1,
+                      this.state.numProducts
+                    )}{' '}
+                    of {this.state.numProducts}
+                  </h3>
                 </div>
-                <Button
-                  size="mini"
-                  type="button"
-                  id="firstPage"
-                  onClick={this.handleClick}
-                  disabled={this.state.page === 1}
-                >
-                  {'<<'}
-                </Button>
-                <Button
-                  size="mini"
-                  type="button"
-                  id="prevPage"
-                  onClick={this.handleClick}
-                  disabled={this.state.page === 1}
-                >
-                  {'<'}
-                </Button>
-                <span>{this.state.page}</span>
-                <Button
-                  size="mini"
-                  type="button"
-                  id="nextPage"
-                  onClick={this.handleClick}
-                  disabled={this.state.page === this.state.lastPage}
-                >
-                  {'>'}
-                </Button>
-                <Button
-                  size="mini"
-                  type="button"
-                  id="lastPage"
-                  onClick={this.handleClick}
-                  disabled={this.state.page === this.state.lastPage}
-                >
-                  {'>>'}
-                </Button>
+                <div className="paginationbuttontext">
+                  <Button
+                    size="mini"
+                    type="button"
+                    id="firstPage"
+                    className="paginationbutton"
+                    onClick={this.handleClick}
+                    disabled={this.state.page === 1}
+                  >
+                    {'<<'}
+                  </Button>
+                  <Button
+                    size="mini"
+                    type="button"
+                    id="prevPage"
+                    className="paginationbutton"
+                    onClick={this.handleClick}
+                    disabled={this.state.page === 1}
+                  >
+                    {'<'}
+                  </Button>
+
+                  <span>{this.state.page}</span>
+                  <Button
+                    size="mini"
+                    type="button"
+                    id="nextPage"
+                    className="paginationbutton"
+                    onClick={this.handleClick}
+                    disabled={this.state.page === this.state.lastPage}
+                  >
+                    {'>'}
+                  </Button>
+                  <Button
+                    size="mini"
+                    type="button"
+                    id="lastPage"
+                    className="paginationbutton"
+                    onClick={this.handleClick}
+                    disabled={this.state.page === this.state.lastPage}
+                  >
+                    {'>>'}
+                  </Button>
+                </div>
               </div>
-              <div>
-                <label htmlFor="numPerPage"># products/page:</label>
-                <select name="numPerPage" onChange={this.handleChange}>
+              <div id="productperpagepagination">
+                <label htmlFor="numPerPage">
+                  <h4># products/page: </h4>{' '}
+                </label>
+                <select
+                  id="selectpagination"
+                  name="numPerPage"
+                  onChange={this.handleChange}
+                >
                   <option selected={Number(this.state.numPerPage) === 10}>
                     10
                   </option>
