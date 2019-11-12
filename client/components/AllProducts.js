@@ -1,21 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchProducts} from '../store/products'
 import Product from './Product'
 import Queries from './Queries'
-import {Link} from 'react-router-dom'
-import {Grid, Image, Container, Card} from 'semantic-ui-react'
+import {Grid, Container} from 'semantic-ui-react'
 
 import '../styles/allproducts.scss'
 
 export class AllProducts extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidMount() {
-    this.props.loadProducts()
-  }
+  async componentDidMount() {}
 
   render() {
     const products = this.props.products
@@ -39,8 +31,4 @@ const mapStateToProps = state => ({
   products: state.products
 })
 
-const mapDispatchToProps = dispatch => ({
-  loadProducts: () => dispatch(fetchProducts())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+export default connect(mapStateToProps, null)(AllProducts)

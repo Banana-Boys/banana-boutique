@@ -8,15 +8,7 @@ import {queryParser} from '../../utilFrontEnd/queryParser'
 import {queryPusher} from '../../utilFrontEnd/queryPusher'
 import {fetchCategory} from '../store/singleCategory'
 import NewCategoryForm from './NewCategoryForm'
-import {
-  Input,
-  Button,
-  Form,
-  Item,
-  Grid,
-  Container,
-  Select
-} from 'semantic-ui-react'
+import {Input, Button} from 'semantic-ui-react'
 
 import '../styles/queries.scss'
 
@@ -24,10 +16,12 @@ export class Queries extends Component {
   constructor(props) {
     super(props)
     const query = queryParser(this.props.location.search)
-    const {categories, search, inStock, sort, numPerPage} = query
+    let {categories, inStock, sort, numPerPage} = query
+
+    if (typeof categories === 'string') categories = [categories]
+
     this.state = {
       categories: categories || [],
-      search: search || '',
       inStock: Boolean(inStock) || false,
       sort: sort || '',
       editCategory: {},
@@ -39,7 +33,6 @@ export class Queries extends Component {
     }
     this.handleEdit = this.handleEdit.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
-    this.handleSearch = this.handleSearch.bind(this)
     this.handleInStock = this.handleInStock.bind(this)
     this.handleSort = this.handleSort.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -48,7 +41,11 @@ export class Queries extends Component {
 
   async componentDidMount() {
     this.props.fetchAllCategories()
-    const {lastPage, numProducts} = await this.props.fetchProducts(this.state)
+    const {search} = queryParser(this.props.location.search)
+    const {lastPage, numProducts} = await this.props.fetchProducts({
+      ...this.state,
+      search: search || ''
+    })
     this.setState({lastPage, numProducts})
   }
 
@@ -70,21 +67,21 @@ export class Queries extends Component {
       }
       this.setState(newState)
     }
+
+    const {search} = queryParser(this.props.location.search)
+    newState = {...newState, search: search || ''}
     const {lastPage, numProducts} = await this.props.fetchProducts(newState)
     this.setState({lastPage, numProducts})
     queryPusher(newState, this.props)
   }
 
-  async handleSearch(e) {
-    const newState = {...this.state, search: e.target.value}
-    this.setState(newState)
-    const lastPage = await this.props.fetchProducts(newState)
-    queryPusher(newState, this.props)
-    this.setState(lastPage)
-  }
-
   async handleInStock() {
-    const newState = {...this.state, inStock: !this.state.inStock}
+    const {search} = queryParser(this.props.location.search)
+    const newState = {
+      ...this.state,
+      inStock: !this.state.inStock,
+      search: search || ''
+    }
     this.setState(newState)
     const {lastPage, numProducts} = await this.props.fetchProducts(newState)
     queryPusher(newState, this.props)
@@ -92,9 +89,11 @@ export class Queries extends Component {
   }
 
   handleSort(e) {
+    const {search} = queryParser(this.props.location.search)
     const newState = {
       ...this.state,
-      sort: [...e.target.options].filter(option => option.selected)[0].value
+      sort: [...e.target.options].filter(option => option.selected)[0].value,
+      search: search || ''
     }
     this.setState(newState)
     this.props.fetchProducts(newState)
@@ -128,7 +127,12 @@ export class Queries extends Component {
 
   async handleChange(e) {
     e.persist()
-    const newState = {...this.state, numPerPage: e.target.value}
+    const {search} = queryParser(this.props.location.search)
+    const newState = {
+      ...this.state,
+      numPerPage: e.target.value,
+      search: search || ''
+    }
     const {lastPage, numProducts} = await this.props.fetchProducts(newState)
     this.setState({...newState, lastPage, numProducts})
     queryPusher(newState, this.props)
@@ -160,17 +164,6 @@ export class Queries extends Component {
           </div>
         ) : null}
         <div id="filters">
-          <div id="search-bar">
-            <label id="searchlabel" htmlFor="search">
-              Search:{' '}
-            </label>
-            <Input
-              type="text"
-              id="search"
-              value={this.state.search}
-              onChange={this.handleSearch}
-            />
-          </div>
           <label id="categorylabel" htmlFor="categories">
             Categories:{' '}
           </label>
@@ -197,7 +190,6 @@ export class Queries extends Component {
                       type="button"
                       color="blue"
                       className="categoryeditbutton"
-                      color="blue"
                     >
                       Edit
                     </Button>
@@ -336,7 +328,7 @@ export class Queries extends Component {
   }
 }
 
-const mapState = (state, props) => {
+const mapState = state => {
   return {
     user: state.user,
     products: state.products,
