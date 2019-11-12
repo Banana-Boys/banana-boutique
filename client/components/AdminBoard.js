@@ -9,6 +9,19 @@ import {
   demoteUserBoard,
   sendTriggerReset
 } from '../store/users'
+import {
+  Button,
+  Container,
+  Item,
+  Image,
+  Accordion,
+  Table,
+  Dropdown,
+  TableBody,
+  Header,
+  Comment,
+  Label
+} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
@@ -43,7 +56,7 @@ export class AdminBoard extends Component {
     const orders = this.props.orders || []
     const users = this.props.users || []
     return (
-      <div id="admin-board">
+      <Container id="admin-board">
         <div id="order-filters">
           <select onChange={this.onFilter}>
             <option value="all">All</option>
@@ -54,7 +67,7 @@ export class AdminBoard extends Component {
           </select>
         </div>
         <h5>
-          All Orders:{' '}
+          <Header as="h5">All Orders:</Header>
           {orders.map(order => (
             <AllOrders
               key={order.id}
@@ -65,7 +78,7 @@ export class AdminBoard extends Component {
         </h5>
 
         <h5>
-          All Users:{' '}
+          <Header as="h5">All Users:</Header>
           {!users.length ? (
             <div>No users in database</div>
           ) : (
@@ -81,7 +94,7 @@ export class AdminBoard extends Component {
             ))
           )}
         </h5>
-      </div>
+      </Container>
     )
   }
 }

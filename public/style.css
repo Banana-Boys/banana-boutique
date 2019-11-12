@@ -76,11 +76,6 @@ a {
   margin: 5%;
 }
 
-#nonozone {
-  margin: 20%;
-  display: inline;
-}
-
 #userreviewuserprofilepage {
   display: inline;
   margin: 5%;
@@ -96,4 +91,16 @@ a {
 
 #reviewbuttons {
   float: right;
+}
+
+#reviewtitle {
+  margin-bottom: 0%;
+}
+
+button {
+  transition: all 0.1s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.1);
 }
