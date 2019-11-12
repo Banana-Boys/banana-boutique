@@ -229,3 +229,7 @@ button:hover {
   border-color: lightgrey 2px;
   border-radius: 5px;
 }
+
+.checkoutitemmeta {
+  float: right;
+}
