@@ -51,9 +51,8 @@
 
 .drp {
   width: 90%;
-  margin-top: 5%;
   display: inline-block;
-  height: calc(1.5em + 0.75rem + 2px);
+  height: 100%;
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -71,8 +70,7 @@
 }
 
 .dropdown {
-  position: relative;
-  display: inline-block;
+  display: inline-flex;
   border: none;
   outline: none;
 }
@@ -128,12 +126,17 @@
   display: flex;
 }
 
-.buttonpositioningaddress {
-  text-align: left;
+#addressbuttons {
+  display: inline-flex;
 }
+
+// .buttonpositioningaddress {
+//   text-align: left;
+// }
 
 #tablerowaddress {
   border-color: black !important;
+  width: 50% !important;
 }
 
 #userhomebuttons {
@@ -145,8 +148,19 @@
 }
 
 #addressinfoholder {
-  display: inline flex;
+  xdisplay: inline flex;
+  margin-top: 3%;
 }
 .username {
   margin-bottom: 3.5% !important;
+}
+
+#addressbutton {
+  height: 31px;
+  text-align: center;
+  margin-top: -5% !important;
+}
+
+.addressdropdowncontainer {
+  width: 60% !important;
 }

@@ -108,7 +108,10 @@ class UserHome extends React.Component {
                               zip
                             } = address
                             return (
-                              <Container key={id}>
+                              <Container
+                                className="addressdropdowncontainer"
+                                key={id}
+                              >
                                 <Table>
                                   <Table.Body>
                                     <Table.Row id="tablerowaddress">
@@ -123,19 +126,20 @@ class UserHome extends React.Component {
                                         </p>
                                       </div>
                                       <Table.Cell floated="left">
-                                        <div id="addressbuttonstablerow">
-                                          <div className="buttonpositioningaddress">
-                                            <Link to={`/addresses/${id}/edit`}>
-                                              <Button
-                                                size="mini"
-                                                type="button"
-                                                color="blue"
+                                        <div id="addressbuttons">
+                                          <div id="addressbuttonstablerow">
+                                            <Button
+                                              size="mini"
+                                              type="button"
+                                              color="blue"
+                                            >
+                                              <Link
+                                                to={`/addresses/${id}/edit`}
                                               >
                                                 Edit Address
-                                              </Button>
-                                            </Link>
-                                          </div>
-                                          <div className="buttonpositioningaddress">
+                                              </Link>
+                                            </Button>
+
                                             <Button
                                               size="mini"
                                               type="button"
@@ -157,8 +161,14 @@ class UserHome extends React.Component {
                           })}
                         </div>
                       </div>
+
                       <Link to="/addresses/new">
-                        <Button size="mini" type="button" color="black">
+                        <Button
+                          id="addressbutton"
+                          size="mini"
+                          type="button"
+                          color="black"
+                        >
                           +Add Address
                         </Button>
                       </Link>
