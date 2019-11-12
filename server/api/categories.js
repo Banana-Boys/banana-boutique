@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const Category = require('../db/models/Category')
-
+const {isAdmin} = require('../middleware')
 //GET
 router.get('/', async (req, res, next) => {
   try {
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 //UPDATE categories by id
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isAdmin, async (req, res, next) => {
   try {
     const {name} = req.body
     const category = await Category.findByPk(req.params.id)
@@ -38,7 +38,7 @@ router.put('/:id', async (req, res, next) => {
 })
 
 //CREATE category
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const category = Category.build(req.body)
     await category.save()
