@@ -122,7 +122,7 @@ class UserHome extends React.Component {
                         <div id="addressbuttons">
                           <div id="addressbuttonstablerow">
                             <Button size="mini" type="button" color="blue">
-                              <Link to={`/addresses/${id}/edit`}>
+                              <Link to={`/addresses/${address.id}/edit`}>
                                 Edit Address
                               </Link>
                             </Button>
@@ -131,7 +131,7 @@ class UserHome extends React.Component {
                               type="button"
                               color="red"
                               onClick={() => {
-                                this.props.deleteAddress(id)
+                                this.props.deleteAddress(address.id)
                               }}
                             >
                               Delete Address
