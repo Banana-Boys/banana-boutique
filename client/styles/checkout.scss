@@ -12,19 +12,29 @@
 }
 
 #modal {
+  xheight: fit-content;
   margin-top: 55px;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 5%;
+  margin-right: 5%;
+
   display: flex;
   flex-direction: column;
-  align-items: bottom;
-  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  #guestEmailForm {
+    display: flex;
+    flex-direction: column;
+  }
+  .login-page-button-close {
+    // margin-bottom: 20px;
+    // margin-right: 20px;
+  }
 }
 
-#modal-close-button {
-  display: flex;
-  align-self: baseline flex-end right;
-}
+// #modal-close-button {
+//   display: flex;
+//   align-self: baseline flex-end;
+// }
 
 // .login-page-button {
 //   display: flex;
@@ -33,15 +43,20 @@
 
 #checkout-login {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  xjustify-content: baseline;
+
+  align-content: space-between;
   align-items: center;
   background-color: white;
   width: 50vw;
-  height: 50vh;
+  height: 60vh;
   button {
-    width: 20vw;
-    justify-self: center;
+    // width: 20vw;
+    // justify-self: baseline;
+    #submit-checkout-unauthorized {
+      width: 10vw !important;
+    }
   }
 }
 
@@ -54,9 +69,6 @@
 //   // height: 50vh;
 //   // background: #fff;
 // }
-
-#checkout-login button {
-}
 
 #modal-div {
   display: flex;

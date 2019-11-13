@@ -5,7 +5,6 @@ import '../../styles/checkout.scss'
 
 const EnteredShippingInfo = props => {
   const enteredShippingInfo = props.shippingAddress
-  console.log('test:', enteredShippingInfo)
   return (
     <div id="entered-shipping-info">
       <div className="shippingitemsholder">

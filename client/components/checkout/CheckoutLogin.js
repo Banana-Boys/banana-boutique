@@ -8,16 +8,7 @@ import '../../styles/checkout.scss'
 
 const customStyles = {
   content: {
-    // marginTop: '44px',
-    height: '80%',
-    width: '60%'
-
-    // top: '44px',
-    // // left: '50%',
-    // right: 'auto',
-    // bottom: 'auto'
-    // marginRight: '-50%',
-    // transform: 'translate(-50%, -50%)'
+    height: '50%'
   }
 }
 
@@ -65,65 +56,51 @@ export default class CheckoutLogin extends React.Component {
           contentLabel="Login Options"
           id="modal"
         >
-          {/* <h3
-            ref={subtitle => {
-              this.subtitle = subtitle
-              return this.subtitle
-            }}
-          >
-            Select an option to continue
-          </h3> */}
+          {/* <div id="modal-div"> */}
+          <div id="checkout-login">
+            <Button type="button" name="login" onClick={handleUserOptions}>
+              {/* {login ? 'Back' : 'Login'} */}
+              Login
+            </Button>
 
-          {/* <div>I am a modal</div> */}
-          {/* <form>
-            <input />
-            <button type="submit">Login</button>
-            <button type="submit">Sign Up</button>
-            <button type="submit">Continue as Guest</button>
-            <button type="submit">the modal</button>
-          </form> */}
-          <div id="modal-div">
-            <div id="checkout-login">
-              <div className="login-page-button">
-                <Button type="button" name="login" onClick={handleUserOptions}>
-                  {/* {login ? 'Hide' : 'Login'} */}
-                  Login
-                </Button>
-              </div>
-              <div className="login-page-button">
-                {login ? <Login /> : null}
-                <Button type="button" name="signup" onClick={handleUserOptions}>
-                  {/* {signup ? 'Hide' : 'Signup'} */}
-                  Signup
-                </Button>
-              </div>
-              <div className="login-page-button">
-                {signup ? <Signup /> : null}
+            <div>{login ? <Login /> : null}</div>
+
+            <Button type="button" name="signup" onClick={handleUserOptions}>
+              {/* {signup ? <Signup /> : 'Signup'} */}
+              Signup
+            </Button>
+
+            <div>{signup ? <Signup /> : null}</div>
+
+            <Button
+              type="button"
+              name="continueAsGuest"
+              onClick={handleUserOptions}
+            >
+              {/* {continueAsGuest ? 'Back' : 'Continue as Guest'} */}
+              Continue as Guest
+            </Button>
+
+            {continueAsGuest ? (
+              <form id="guestEmailForm" onSubmit={handleSubmit}>
+                <label htmlFor="email">Email:</label>
+                <input type="email" name="email" />
                 <Button
-                  type="button"
-                  name="continueAsGuest"
-                  onClick={handleUserOptions}
+                  type="submit"
+                  id="submit-checkout-unauthorized"
+                  color="blue"
                 >
-                  {/* {continueAsGuest ? 'Hide' : 'Continue as Guest'} */}
-                  Continue as Guest
+                  Submit
                 </Button>
-              </div>
-              <div className="login-page-button">
-                {continueAsGuest ? (
-                  <form id="guestEmailForm" onSubmit={handleSubmit}>
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" name="email" />
-                    <Button type="submit">Submit</Button>
-                  </form>
-                ) : null}
-              </div>
-              <div id="modal-close-button">
-                <Button type="submit" onClick={this.closeModal}>
-                  close
-                </Button>
-              </div>
-            </div>
+              </form>
+            ) : null}
+
+            {/* <div id="modal-close-button"> */}
+            <Button type="submit" onClick={this.closeModal}>
+              Close
+            </Button>
           </div>
+          {/* </div> */}
         </Modal>
       </div>
     )
