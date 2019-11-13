@@ -11,6 +11,72 @@
   padding: 20px;
 }
 
+#modal {
+  xheight: fit-content;
+  margin-top: 55px;
+  margin-left: 5%;
+  margin-right: 5%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  #guestEmailForm {
+    display: flex;
+    flex-direction: column;
+  }
+  .login-page-button-close {
+    // margin-bottom: 20px;
+    // margin-right: 20px;
+  }
+}
+
+// #modal-close-button {
+//   display: flex;
+//   align-self: baseline flex-end;
+// }
+
+// .login-page-button {
+//   display: flex;
+//   align-self: baseline flex-end;
+// }
+
+#checkout-login {
+  display: flex;
+  flex-direction: row;
+  xjustify-content: baseline;
+
+  align-content: space-between;
+  align-items: center;
+  background-color: white;
+  width: 50vw;
+  height: 60vh;
+  button {
+    // width: 20vw;
+    // justify-self: baseline;
+    #submit-checkout-unauthorized {
+      width: 10vw !important;
+    }
+  }
+}
+
+// #checkout-login {
+//   // margin-top: -70px;
+//   // display: flex;
+//   // flex-direction: column;
+//   // align-items: center;
+//   // width: 50vw;
+//   // height: 50vh;
+//   // background: #fff;
+// }
+
+#modal-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+}
+
 #shippingAddressForm {
   height: 100%;
   display: flex;
