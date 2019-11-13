@@ -168,7 +168,6 @@ class Checkout extends React.Component {
   render() {
     const cart = this.props.cart
     let {showUserOptions, formOnDisplay, user} = this.state
-    console.log('cart', cart)
     return (
       <div id="checkout">
         {/* Ask for Login */}
@@ -183,7 +182,7 @@ class Checkout extends React.Component {
               handleSubmit={this.handleSubmit}
             />
           )}
-          <Header as="h2" dividing>
+          <Header id="shippingaddressheader" as="h2" dividing>
             Shipping Address
           </Header>
           {/* Get Shipping Information */}
@@ -202,7 +201,7 @@ class Checkout extends React.Component {
 
           {formOnDisplay === 2 && (
             <div>
-              <div>
+              <div id="shippingcontainer">
                 <EnteredShippingInfo
                   shippingAddress={this.state.shippingAddress}
                 />

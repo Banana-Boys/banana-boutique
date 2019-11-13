@@ -233,3 +233,9 @@ button:hover {
 .checkoutitemmeta {
   float: right;
 }
+
+#cartitemaddressheader {
+  padding-bottom: 1.5%;
+  margin-top: 3%;
+  border-bottom: 1px solid #000000af;
+}
