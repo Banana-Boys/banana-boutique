@@ -12,10 +12,10 @@ export class Reviews extends Component {
   constructor(props) {
     super(props)
     const query = queryParser(this.props.location.search)
-    const {rating, search, myReviews} = query
+    const {rating, reviewSearch, myReviews} = query
     this.state = {
       rating: rating || '',
-      search: search || '',
+      reviewSearch: reviewSearch || '',
       myReviews: myReviews || false,
       showAddReview: false
     }
@@ -48,13 +48,13 @@ export class Reviews extends Component {
   }
 
   queryPusher(state) {
-    const {rating, search, myReviews} = state
+    const {rating, reviewSearch, myReviews} = state
     let queryPush = []
     if (Number(rating)) {
       queryPush.push(`rating=${rating}`)
     }
-    if (search.length) {
-      queryPush.push(`search=${search}`)
+    if (reviewSearch.length) {
+      queryPush.push(`reviewSearch=${reviewSearch}`)
     }
     if (myReviews) {
       queryPush.push(`myReviews=${myReviews}`)
@@ -66,17 +66,18 @@ export class Reviews extends Component {
   }
 
   render() {
-    let reviews = this.props.reviews || []
-    const {rating, search} = this.state
+    let reviews = [...this.props.reviews] || []
+    const {rating, reviewSearch} = this.state
     reviews = rating.length
       ? reviews.filter(review => review.rating === rating)
       : reviews
-    reviews = search.length
+    reviews = reviewSearch.length
       ? reviews.filter(
           review =>
-            review.title.includes(search.toLowerCase()) ||
-            review.body.includes(search.toLowerCase()) ||
-            review.user.name.includes(search.toLowerCase())
+            review.title.includes(reviewSearch.toLowerCase()) ||
+            review.body.includes(reviewSearch.toLowerCase())
+          // ||
+          // review.user.name.includes(reviewSearch.toLowerCase())
         )
       : reviews
     reviews = this.state.myReviews
@@ -110,7 +111,7 @@ export class Reviews extends Component {
                   >
                     {this.state.showAddReview
                       ? 'Hide review form'
-                      : reviews.length
+                      : this.props.reviews.length
                         ? '+Add Review'
                         : 'Leave the first review'}
                   </Button>
@@ -170,10 +171,10 @@ export class Reviews extends Component {
                   {/* <label htmlFor="search">Search reviews:</label> */}
                   <input
                     id="ratingsearch"
-                    name="search"
+                    name="reviewSearch"
                     placeholder="Search Reviews..."
                     onChange={this.handleChange}
-                    value={this.state.search}
+                    value={this.state.reviewSearch}
                   />
                 </div>
 
