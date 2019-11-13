@@ -11,6 +11,7 @@ import {
 import {connect} from 'react-redux'
 import dateformat from '../../utilFrontEnd/dateformat'
 import ratingconverter from '../../utilFrontEnd/ratingcoverter.js'
+import '../styles/singleproduct.scss'
 
 const UsersReview = props => {
   const review = props.review
@@ -19,7 +20,7 @@ const UsersReview = props => {
   const product = props.review.product || {}
   return (
     <Link to={`/products/${product.id}`}>
-      <Container id="reviewcontainer">
+      <Container className="review-container">
         <Comment>
           <Comment.Avatar id="user-home-profilepic" src={product.imageUrl} />
           <Comment.Content>

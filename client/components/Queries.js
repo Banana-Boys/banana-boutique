@@ -25,7 +25,6 @@ export class Queries extends Component {
       inStock: Boolean(inStock) || false,
       sort: sort || '',
       editCategory: {},
-      isAdmin: '',
       page: Number(this.props.location.hash.slice(1)) || 1,
       numPerPage: numPerPage || 10,
       lastPage: 1,
@@ -163,6 +162,7 @@ export class Queries extends Component {
             </div>
           </div>
         ) : null}
+
         <div id="filters">
           <label id="categorylabel" htmlFor="categories">
             <h3>Categories: </h3>
@@ -267,13 +267,13 @@ export class Queries extends Component {
               </select>
               <div id="paginationHolder">
                 <div id="pageshowing">
-                  <h3>
+                  <div>
                     Showing {(this.state.page - 1) * this.state.numPerPage + 1}-{Math.min(
                       this.state.page * this.state.numPerPage + 1,
                       this.state.numProducts
                     )}{' '}
                     of {this.state.numProducts}
-                  </h3>
+                  </div>
                 </div>
                 <div
                   className="paginationbuttontext"
@@ -345,13 +345,14 @@ export class Queries extends Component {
               </div>
               <div id="productperpagepagination">
                 <label htmlFor="numPerPage">
-                  <h4>#products/page: </h4>
+                  <div>items per page: </div>
                   {'  '}
                 </label>
                 <select
                   id="selectpagination"
                   name="numPerPage"
                   onChange={this.handleChange}
+                  style={{width: '40px'}}
                 >
                   <option selected={Number(this.state.numPerPage) === 10}>
                     10

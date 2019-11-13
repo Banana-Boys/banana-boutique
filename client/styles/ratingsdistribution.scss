@@ -1,0 +1,15 @@
+.rating-bar:hover {
+  box-shadow: 5px 5px 10px gray;
+}
+
+#ratings-distribution {
+  width: 80%;
+  max-width: 300px;
+  margin: 10px 0;
+}
+
+.rating-line {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

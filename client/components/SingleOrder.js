@@ -33,7 +33,8 @@ export class SingleOrder extends Component {
               <Table.HeaderCell singleLine>
                 Order Number : {order.id} <br /> Date Placed :{' '}
                 {dateFormat(order.datePlaced)} <br />
-                Order Total: ${priceConvert(total)}
+                Total: ${priceConvert(total)} <br />
+                Status: {order.status}
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>

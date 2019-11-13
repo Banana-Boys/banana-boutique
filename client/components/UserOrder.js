@@ -26,7 +26,7 @@ const UserOrder = props => {
         <Header as="a" singleLine>
           Order Number : {order.id} <br /> Date Placed :{' '}
           {dateFormat(order.datePlaced)} <br />
-          Order Total: ${priceConvert(total)}
+          Order Total: ${priceConvert(total)} <br /> Status: {order.status}
         </Header>
       </Link>
       <Container id="containuserhomeproduct">
