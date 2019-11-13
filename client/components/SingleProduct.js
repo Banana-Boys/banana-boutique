@@ -6,6 +6,7 @@ import {sendAddCartLineItem} from '../store/cart'
 import Reviews from './Reviews'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import {fetchProductReviews} from '../store/reviews'
+import {Link} from 'react-router-dom'
 import {
   Button,
   Container,
@@ -81,7 +82,16 @@ class SingleProduct extends React.Component {
       <Container id="single-product">
         <Item.Group id="singleproduct-itemgroup">
           <Item style={{alignItems: 'center'}}>
-            <Item.Image size="large" src={product.imageUrl} />
+            <Item.Image
+              size="large"
+              id="product-image"
+              src={product.imageUrl}
+              style={{
+                border: '4px solid #ffeecf',
+                borderRadius: '20px',
+                overflow: 'hidden'
+              }}
+            />
             <Item.Content>
               <Item.Header as="h1">{product.name}</Item.Header>
               <Item.Meta>
@@ -91,47 +101,116 @@ class SingleProduct extends React.Component {
               </Item.Meta>
               <Item.Description>
                 <h4>{product.description}</h4>
-                <h4>In Stock: {product.inventory}</h4>
-                <h4>
+                <p>
+                  In Stock: <strong>{product.inventory}</strong>
+                </p>
+                <p>
                   Avg Rating:
-                  {isNaN(product.sumratings / product.numratings)
-                    ? ' No ratings'
-                    : ` ${(product.sumratings / product.numratings).toFixed(
-                        1
-                      )} (${product.numratings} ${
-                        Number(product.numratings) > 1 ? 'ratings' : 'rating'
-                      })`}
-                </h4>
+                  {isNaN(product.sumratings / product.numratings) ? (
+                    <strong> No ratings</strong>
+                  ) : (
+                    <span>
+                      <strong>
+                        {' '}
+                        {(product.sumratings / product.numratings).toFixed(1)}
+                      </strong>{' '}
+                      <em>
+                        ({product.numratings}{' '}
+                        {Number(product.numratings) > 1 ? 'ratings' : 'rating'})
+                      </em>
+                    </span>
+                  )}
+                </p>
                 <Container>
                   <RatingsDistribution reviews={this.props.reviews} />
                 </Container>
               </Item.Description>
-              <Item.Extra>
-                <Container>
-                  {user.role === 'admin' ? (
-                    <div>
-                      <Button
-                        color="red"
-                        floated="right"
-                        size="mini"
-                        type="button"
-                        onClick={this.handleDelete}
+
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '80%',
+                  maxWidth: '300px',
+                  alignItems: 'center'
+                }}
+              >
+                <Button
+                  className="left labeled"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '100%',
+                    alignItems: 'center',
+                    margin: '10px 0'
+                  }}
+                >
+                  <Label className="basic right">Categories: </Label>
+                  <Button>
+                    {categories.map(category => (
+                      <Link
+                        className="categoryLink"
+                        key={category.id}
+                        style={{margin: '0 3px'}}
+                        to={`/products?categories=${category.id}`}
                       >
-                        Delete Product
-                      </Button>
-                      <Button
-                        primary
-                        floated="right"
-                        size="mini"
-                        type="button"
-                        onClick={this.handleEdit}
-                      >
-                        Edit Product
-                      </Button>
-                    </div>
-                  ) : (
-                    <div />
-                  )}
+                        {category.name}
+                      </Link>
+                    ))}
+                  </Button>
+                </Button>
+
+                {user.role === 'admin' ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-evenly',
+                      width: '100%',
+                      alignItems: 'center',
+                      margin: '10px 0'
+                    }}
+                  >
+                    <Button
+                      primary
+                      size="mini"
+                      type="button"
+                      onClick={this.handleEdit}
+                    >
+                      Edit Product
+                    </Button>
+                    <Button
+                      color="red"
+                      size="mini"
+                      type="button"
+                      onClick={this.handleDelete}
+                    >
+                      Delete Product
+                    </Button>
+                  </div>
+                ) : null}
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-evenly',
+                    width: '100%',
+                    alignItems: 'center',
+                    margin: '10px 0'
+                  }}
+                >
+                  <div id="add-to-cart-qty">
+                    <label htmlFor="qty">Qty:</label>
+                    <select
+                      float="right"
+                      id="quantitysort"
+                      name="quantity"
+                      value={this.state.quantity}
+                      onChange={this.handleChange}
+                      style={{width: '40px', padding: '5px'}}
+                    >
+                      {quantitySelect}
+                    </select>
+                  </div>
 
                   <Button
                     color="black"
@@ -139,29 +218,13 @@ class SingleProduct extends React.Component {
                     size="mini"
                     disabled={!product.inventory}
                     onClick={this.handleAddToCart}
+                    style={{marginLeft: '10px'}}
                   >
                     {product.inventory ? 'Add Product to Cart' : 'Out of Stock'}
                     <Icon name="right chevron" />
                   </Button>
-                </Container>
-                <div id="add-to-cart-qty">
-                  <Label>
-                    {/* Categories:{' '} */}
-                    {categories.reduce((str, ele) => str + ' ' + ele.name, '')}
-                  </Label>
-                  <div id="qty">Qty:</div>
-                  <select
-                    float="right"
-                    id="quantitysort"
-                    name="quantity"
-                    value={this.state.quantity}
-                    onChange={this.handleChange}
-                    style={{width: '70px', padding: '2px'}}
-                  >
-                    {quantitySelect}
-                  </select>
                 </div>
-              </Item.Extra>
+              </div>
             </Item.Content>
           </Item>
         </Item.Group>

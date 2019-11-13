@@ -44,7 +44,6 @@ class Search extends React.Component {
   }
 
   handleEnter(e) {
-    console.log(this.props.location.pathname)
     if (e.key === 'Enter' && this.props.location.pathname !== '/products') {
       this.props.history.push(`/products?search=${this.state.search}`)
     }
