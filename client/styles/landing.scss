@@ -1,4 +1,40 @@
 #landing {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .row-header {
+    margin: 60px 0px;
+  }
+}
+
+#categories-landing {
+  display: flex;
   justify-content: center;
+  width: 100%;
+  .cat-card {
+    cursor: pointer;
+    margin: 0px 3vw;
+    text-align: center;
+  }
+
+  img {
+    width: 30vw;
+  }
+}
+
+#topProducts {
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  .product-card {
+    margin: 20px;
+    width: 30vw;
+    .content {
+      width: 100%;
+    }
+  }
+  img {
+    width: 30vw;
+  }
 }
