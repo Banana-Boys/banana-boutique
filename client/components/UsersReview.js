@@ -69,17 +69,19 @@ const UsersReview = props => {
               </div>
             </Comment.Text>
           </Comment.Metadata>
-          <Comment.Text>
-            <div>
-              <h5 id="reviewtitle">{review.title}</h5>
-              <p>{review.body}</p>
-              <div className="reviewbuttonsanddata">
-                <Comment.Metadata>
-                  {dateformat(review.createdAt)}
-                </Comment.Metadata>
+          <Link to={`/products/${product.id}`}>
+            <Comment.Text>
+              <div>
+                <h5 id="reviewtitle">{review.title}</h5>
+                <p>{review.body}</p>
+                <div className="reviewbuttonsanddata">
+                  <Comment.Metadata>
+                    {dateformat(review.createdAt)}
+                  </Comment.Metadata>
+                </div>
               </div>
-            </div>
-          </Comment.Text>
+            </Comment.Text>
+          </Link>
         </Comment.Content>
       </Comment>
     </Container>
