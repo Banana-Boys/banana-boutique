@@ -33,31 +33,33 @@ const Product = props => {
             <h2>${priceConvert(product.price)}</h2>
           </Item.Header>
           <Item.Description>
-            <Button
-              className="left labeled"
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                width: '100%',
-                alignItems: 'center'
-              }}
-            >
-              <Label className="basic right categories-button">
-                Categories:{' '}
-              </Label>
-              <Button className="categories-button">
-                {product.categories.map(category => (
-                  <span
-                    className="categoryLink"
-                    key={category.id}
-                    style={{margin: '0 3px'}}
-                    to={`/products?categories=${category.id}`}
-                  >
-                    {category.name}
-                  </span>
-                ))}
+            {product.categories ? (
+              <Button
+                className="left labeled"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100%',
+                  alignItems: 'center'
+                }}
+              >
+                <Label className="basic right categories-button">
+                  Categories:{' '}
+                </Label>
+                <Button className="categories-button">
+                  {product.categories.map(category => (
+                    <span
+                      className="categoryLink"
+                      key={category.id}
+                      style={{margin: '0 3px'}}
+                      to={`/products?categories=${category.id}`}
+                    >
+                      {category.name}
+                    </span>
+                  ))}
+                </Button>
               </Button>
-            </Button>
+            ) : null}
             <div className="product-info">
               Avg Rating:
               {isNaN(product.sumratings / product.numratings) ? (

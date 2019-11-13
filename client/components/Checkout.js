@@ -226,6 +226,7 @@ class Checkout extends React.Component {
                 disabled={
                   typeof this.state.shippingAddress !== 'object' || !user.email
                 }
+                style={{width: '200px', margin: '10px auto'}}
               />
             ) : (
               <Button type="button" size="small" disabled>
@@ -237,7 +238,12 @@ class Checkout extends React.Component {
           )}
           {(formOnDisplay > 0 && !user.id) ||
             (formOnDisplay > 1 && (
-              <Button type="button" size="small" onClick={this.handleBack}>
+              <Button
+                type="button"
+                size="small"
+                onClick={this.handleBack}
+                style={{width: '200px', margin: '10px auto'}}
+              >
                 Back
               </Button>
             ))}

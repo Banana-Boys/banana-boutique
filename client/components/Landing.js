@@ -3,8 +3,10 @@ import {Link} from 'react-router-dom'
 import {Item} from 'semantic-ui-react'
 import axios from 'axios'
 import priceConvert from '../../utilFrontEnd/priceConvert'
-
+import {connect} from 'react-redux'
 import '../styles/landing.scss'
+import '../styles/product.scss'
+import Product from './Product'
 
 class Landing extends React.Component {
   constructor() {
@@ -24,20 +26,45 @@ class Landing extends React.Component {
 
   render() {
     const products = this.state.topProducts || []
+    const yellowCategory = this.props.categories.find(
+      category => category.name === 'Yellow'
+    )
+    const greenCategory = this.props.categories.find(
+      category => category.name === 'Green'
+    )
+    const yellowUrl = yellowCategory
+      ? `/products?categories=${
+          this.props.categories.find(category => category.name === 'Yellow').id
+        }`
+      : ''
+    const greenUrl = greenCategory
+      ? `/products?categories=${
+          this.props.categories.find(category => category.name === 'Green').id
+        }`
+      : ''
     return (
       <div id="landing">
-        <img src="https://nanas-image-store.s3.us-east-2.amazonaws.com/banner-1.jpg" />
+        <img
+          id="banner"
+          src="https://nanas-image-store.s3.us-east-2.amazonaws.com/banner-1.jpg"
+        />
         <h1 className="row-header">Top Categories</h1>
         <div id="categories-landing">
-          <Link to="/products?categories=3">
+          <Link to={yellowUrl}>
             <div className="cat-card yellow">
-              <img src="https://nanas-image-store.s3.us-east-2.amazonaws.com/cat-nana-yellow.jpg" />
+              <img
+                className="catImage"
+                src="https://nanas-image-store.s3.us-east-2.amazonaws.com/cat-nana-yellow.jpg"
+              />
               <h2>Yellow Nanas</h2>
             </div>
           </Link>
-          <Link to="/products?categories=2">
+          <Link to={greenUrl}>
             <div className="cat-card green">
-              <img src="https://nanas-image-store.s3.us-east-2.amazonaws.com/cat-nana-green.jpg" />
+              <img
+                className="catImage"
+                src="https://nanas-image-store.s3.us-east-2.amazonaws.com/cat-nana-green.jpg"
+              />
               <h2>Green Nanas</h2>
             </div>
           </Link>
@@ -45,43 +72,13 @@ class Landing extends React.Component {
         <h1 className="row-header">Most Rated</h1>
         <div id="topProducts">
           {products.map(product => {
-            return (
-              <Link key={product.id} to={`products/${product.id}`}>
-                <div className="product-card">
-                  <img src={product.imageUrl} />
-                  <Item.Content>
-                    <Item.Header className="header">
-                      <h1>{product.name}</h1>
-                      <h2>${priceConvert(product.price)}</h2>
-                    </Item.Header>
-                    <Item.Description className="description">
-                      {/* <h2>{product.description}</h2> */}
-                      <h6>
-                        Avg Rating:
-                        {isNaN(product.sumratings / product.numratings)
-                          ? ' No ratings'
-                          : ` ${(
-                              product.sumratings / product.numratings
-                            ).toFixed(1)} (${product.numratings} ${
-                              Number(product.numratings) > 1
-                                ? 'ratings'
-                                : 'rating'
-                            })`}
-                      </h6>
-                      {!product.inventory ? (
-                        <h6>OUT OF STOCK</h6>
-                      ) : (
-                        <h6>In Stock: {product.inventory}</h6>
-                      )}
-                    </Item.Description>
-                  </Item.Content>
-                </div>
-              </Link>
-            )
+            return <Product key={product.id} product={product} />
           })}
         </div>
       </div>
     )
   }
 }
-export default Landing
+
+const mapStateToProps = ({categories}) => ({categories})
+export default connect(mapStateToProps)(Landing)
