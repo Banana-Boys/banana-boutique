@@ -1,10 +1,15 @@
 import React from 'react'
 import CartItem from './CartItem'
+import {Button, Header} from 'semantic-ui-react'
+
 const CartReview = props => {
   const {cart, shippingTax} = props
 
   return (
     <div id="cartReview">
+      <Header id="cartitemaddressheader" as="h2">
+        Your Order
+      </Header>
       {cart.map(item => {
         return <CartItem key={item.id} item={item} />
       })}

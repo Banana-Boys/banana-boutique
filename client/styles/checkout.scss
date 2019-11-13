@@ -98,4 +98,19 @@
   background-color: white;
   margin: 20px auto;
   padding: 20px;
+  width: 100%;
+}
+
+#shippingcontainer {
+  width: 50%;
+  padding: 20px;
+}
+
+.shippingitems {
+  margin-left: 2%;
+}
+
+.shippingitemsholder {
+  width: 100%;
+  display: inline-flex;
 }
