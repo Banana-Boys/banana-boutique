@@ -23,6 +23,14 @@ export class Reviews extends Component {
     this.hideAddReview = this.hideAddReview.bind(this)
   }
 
+  componentWillReceiveProps(newProps) {
+    const query = queryParser(newProps.location.search)
+    const {rating} = query
+    if (rating && this.state.rating !== rating) {
+      this.setState({rating})
+    }
+  }
+
   handleChange(e) {
     e.persist()
     let newState
@@ -84,12 +92,11 @@ export class Reviews extends Component {
             <Container
               id="reviewsmisc"
               style={{
-                alignItems: this.state.showAddReview ? null : 'center',
-                flexDirection: this.state.showAddReview ? 'column' : null
+                flexDirection: 'column'
               }}
             >
               {this.props.user.id ? (
-                <div className="reviewmiscitem">
+                <div className="reviewmiscitem" style={{margin: '10px 0'}}>
                   <Button
                     size="mini"
                     color="yellow"
@@ -112,76 +119,84 @@ export class Reviews extends Component {
                   ) : null}
                 </div>
               ) : (
-                <Link to="/login">
-                  <div className="reviewmiscitem" />
+                <Link to="/login" style={{margin: '10px 0'}}>
                   <Button size="mini" color="yellow" type="button">
                     You must be logged in to leave a review
                   </Button>
-                  <div className="reviewmiscitem" />
                 </Link>
               )}
+
               <div
-                className="reviewmiscitem form-group"
-                style={
-                  this.state.showAddReview
-                    ? {margin: '10px', width: '150px'}
-                    : null
-                }
+                style={{
+                  margin: '10px 0',
+                  display: 'flex',
+                  flexDirection: 'row'
+                }}
               >
-                {/* <label htmlFor="rating">Filter by rating:</label> */}
-                <select
-                  id="ratingselect"
-                  name="rating"
-                  onChange={this.handleChange}
-                >
-                  <option value="">Filter by rating</option>
-                  {[1, 2, 3, 4, 5].map(r => (
-                    <option
-                      key={r}
-                      value={r}
-                      selected={r === Number(this.state.rating)}
-                    >
-                      {r}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div
-                className="reviewmiscitem form-group"
-                style={
-                  this.state.showAddReview
-                    ? {margin: '10px', width: '150px'}
-                    : null
-                }
-              >
-                {/* <label htmlFor="search">Search reviews:</label> */}
-                <input
-                  id="ratingsearch"
-                  name="search"
-                  placeholder="Search Reviews..."
-                  onChange={this.handleChange}
-                  value={this.state.search}
-                />
-              </div>
-              {this.props.user.id ? (
                 <div
                   className="reviewmiscitem form-group"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    margin: this.state.showAddReview ? '10px' : null,
-                    width: this.state.showAddReview ? '150px' : null
-                  }}
+                  style={
+                    this.state.showAddReview
+                      ? {margin: '10px', width: '150px'}
+                      : null
+                  }
                 >
-                  <input
-                    type="checkbox"
-                    name="myReviews"
+                  {/* <label htmlFor="rating">Filter by rating:</label> */}
+                  <select
+                    id="ratingselect"
+                    name="rating"
                     onChange={this.handleChange}
-                    checked={this.state.myReviews}
-                  />
-                  <label htmlFor="myReviews">My reviews</label>
+                  >
+                    <option value="">Filter by rating</option>
+                    {[1, 2, 3, 4, 5].map(r => (
+                      <option
+                        key={r}
+                        value={r}
+                        selected={r === Number(this.state.rating)}
+                      >
+                        {r}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              ) : null}
+                <div
+                  className="reviewmiscitem form-group"
+                  style={
+                    this.state.showAddReview
+                      ? {margin: '10px', width: '150px'}
+                      : null
+                  }
+                >
+                  {/* <label htmlFor="search">Search reviews:</label> */}
+                  <input
+                    id="ratingsearch"
+                    name="search"
+                    placeholder="Search Reviews..."
+                    onChange={this.handleChange}
+                    value={this.state.search}
+                  />
+                </div>
+
+                {this.props.user.id ? (
+                  <div
+                    className="reviewmiscitem form-group"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      margin: this.state.showAddReview ? '10px' : null,
+                      width: this.state.showAddReview ? '150px' : null
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      name="myReviews"
+                      onChange={this.handleChange}
+                      checked={this.state.myReviews}
+                    />
+                    <label htmlFor="myReviews">My reviews</label>
+                  </div>
+                ) : null}
+              </div>
             </Container>
             {reviews.map(
               rev =>

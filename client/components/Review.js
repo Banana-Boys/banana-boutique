@@ -18,7 +18,7 @@ const Review = props => {
 
   const user = props.review.user || {}
   return (
-    <Container id="reviewcontainer">
+    <Container className="review-container">
       <Comment>
         {!user.imageUrl ? (
           <Comment.Avatar

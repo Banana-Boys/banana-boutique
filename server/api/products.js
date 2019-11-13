@@ -34,78 +34,34 @@ router.post('/', isAdmin, async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
+    const {categories, search, inStock, sort} = req.query
     let products = await Product.findAll({include: [Category]})
-    if (req.query.categories) {
+    if (categories) {
       products = products.filter(product => {
         return overlap(
-          req.query.categories,
+          categories,
           product.categories.map(category => category.id)
         )
       })
     }
-    if (req.query.search) {
+    if (search) {
       products = products.filter(product =>
-        product.name.toLowerCase().includes(req.query.search.toLowerCase())
+        product.name.toLowerCase().includes(search.toLowerCase())
       )
     }
-    if (req.query.inStock === 'true') {
+    if (inStock === 'true') {
       products = products.filter(product => product.inventory)
     }
-    if (req.query.sort) {
-      products.sort(sorter(req.query.sort))
+    if (sort) {
+      products.sort(sorter(sort))
     }
+
     const numPerPage = req.query.numPerPage ? req.query.numPerPage : 10
     const page = req.query.page ? req.query.page : 1
     const lastPage = Math.ceil(products.length / numPerPage)
     const numProducts = products.length
     products = products.slice((page - 1) * numPerPage, page * numPerPage)
-    // if (req.query.categories) {
-    //   req.query.categories.forEach(async categoryId => {
-    //     const category = await Category.findByPk(categoryId)
-    //     const categoryProducts = await category.getProducts()
-    //     products = [...products, ...categoryProducts]
-    //   })
-    // } else {
-    //   products = await Product.findAll()
-    // }
-    // console.log(products)
 
-    // let products = []
-    // if (!req.query.categoryIds && !req.query.searchTerms) {
-    //   if (req.query.itemIds) {
-    //     products = await Promise.all(
-    //       req.query.itemIds.map(id => {
-    //         return Product.findByPk(id)
-    //       })
-    //     )
-    //   } else {
-    //     products = await Product.findAll({
-    //       include: [Category]
-    //     })
-    //   }
-    // } else if (req.query.categoryIds && !req.query.searchTerms) {
-    //   products = await Product.findAll({
-    //     include: [Category]
-    //   })
-    // } else {
-    //   products = await Product.findAll({
-    //     where: {
-    //       name: {
-    //         [Op.or]: req.query.searchTerms
-    //       }
-    //     },
-    //     include: [
-    //       {
-    //         model: Product,
-    //         where: {
-    //           id: {
-    //             [Op.or]: req.query.categoryIds
-    //           }
-    //         }
-    //       }
-    //     ]
-    //   })
-    // }
     res.json({products, lastPage, numProducts})
   } catch (error) {
     next(error)
