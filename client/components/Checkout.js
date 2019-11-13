@@ -6,7 +6,7 @@ import {fetchAddresses, fetchDistance} from '../store/addresses'
 import {createOrder} from '../store/singleOrder'
 
 import StripeCheckout from 'react-stripe-checkout'
-import {Button} from 'semantic-ui-react'
+import {Button, Header} from 'semantic-ui-react'
 
 import '../styles/checkout.scss'
 
@@ -168,12 +168,11 @@ class Checkout extends React.Component {
   render() {
     const cart = this.props.cart
     let {showUserOptions, formOnDisplay, user} = this.state
-
     return (
       <div id="checkout">
         {/* Ask for Login */}
         <div id="checkout-shipping-info">
-          <h1>Shipping Address</h1>
+          <Header as="h2">User Info</Header>
           {user.email && formOnDisplay > 0 && <EmailInfo user={user} />}
           {formOnDisplay === 0 && (
             <CheckoutLogin
@@ -183,7 +182,9 @@ class Checkout extends React.Component {
               handleSubmit={this.handleSubmit}
             />
           )}
-
+          <Header id="shippingaddressheader" as="h2" dividing>
+            Shipping Address
+          </Header>
           {/* Get Shipping Information */}
           {formOnDisplay === 1 && (
             <ShippingInfo
@@ -195,51 +196,52 @@ class Checkout extends React.Component {
               addresses={this.props.addresses}
             />
           )}
-        </div>
 
-        {/* Review Cart Items */}
-        {formOnDisplay === 2 && (
-          <div>
+          {/* Review Cart Items */}
+
+          {formOnDisplay === 2 && (
             <div>
-              <EnteredShippingInfo
-                shippingAddress={this.state.shippingAddress}
+              <div id="shippingcontainer">
+                <EnteredShippingInfo
+                  shippingAddress={this.state.shippingAddress}
+                />
+              </div>
+              <div>
+                <CartReview cart={cart} shippingTax={this.state.shippingTax} />
+              </div>
+            </div>
+          )}
+
+          {/* Stripe checkout */}
+          {formOnDisplay === 2 ? (
+            cart.length ? (
+              <StripeCheckout
+                stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
+                token={this.createOrder}
+                billingAddress
+                amount={cart.reduce(
+                  (sum, item) => item.quantity * item.product.price + sum,
+                  this.state.shippingTax
+                )}
+                disabled={
+                  typeof this.state.shippingAddress !== 'object' || !user.email
+                }
               />
-            </div>
-            <div>
-              <CartReview cart={cart} shippingTax={this.state.shippingTax} />
-            </div>
-          </div>
-        )}
-
-        {/* Stripe checkout */}
-        {formOnDisplay === 2 ? (
-          cart.length ? (
-            <StripeCheckout
-              stripeKey="pk_test_GCRGm17fMoutB11ghvbPWDG000YXox6gCY"
-              token={this.createOrder}
-              billingAddress
-              amount={cart.reduce(
-                (sum, item) => item.quantity * item.product.price + sum,
-                this.state.shippingTax
-              )}
-              disabled={
-                typeof this.state.shippingAddress !== 'object' || !user.email
-              }
-            />
+            ) : (
+              <Button type="button" size="small" disabled>
+                Nothing in cart
+              </Button>
+            )
           ) : (
-            <Button type="button" disabled>
-              Nothing in cart
-            </Button>
-          )
-        ) : (
-          ''
-        )}
-        {(formOnDisplay > 0 && !user.id) ||
-          (formOnDisplay > 1 && (
-            <Button type="button " onClick={this.handleBack}>
-              Back
-            </Button>
-          ))}
+            ''
+          )}
+          {(formOnDisplay > 0 && !user.id) ||
+            (formOnDisplay > 1 && (
+              <Button type="button" size="small" onClick={this.handleBack}>
+                Back
+              </Button>
+            ))}
+        </div>
       </div>
     )
   }
