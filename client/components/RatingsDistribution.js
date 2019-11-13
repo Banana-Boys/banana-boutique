@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React from 'react'
+import {Link} from 'react-router-dom'
+import '../styles/ratingsdistribution.scss'
 
 export const RatingsDistribution = props => {
   const {reviews} = props
@@ -18,16 +20,9 @@ export const RatingsDistribution = props => {
   )
 
   return (
-    <div style={{width: '80%', maxWidth: '250px'}}>
+    <div id="ratings-distribution">
       {ratingsDistribution.map((percent, i) => (
-        <div
-          key={i}
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between'
-          }}
-        >
+        <div key={i} className="rating-line">
           <span
             style={{
               display: 'flex',
@@ -36,14 +31,15 @@ export const RatingsDistribution = props => {
             }}
           >
             <div>{bananas[i]}</div>
-            <div
+            <Link
+              to={{search: `?rating=${i + 1}`}}
               className="rating-bar"
               style={{
                 display: 'flex',
+                flexDirection: 'row',
                 height: '20px',
                 width: '65%',
-                flexDirection: 'row',
-                border: '1px solid black',
+                border: '1px solid gray',
                 borderRadius: '5px',
                 overflow: 'hidden',
                 margin: '3px 0'
@@ -58,10 +54,10 @@ export const RatingsDistribution = props => {
                 }}
               />
               <div
-                className="level-empty"
+                className="rating-empty"
                 style={{width: `${100 - percent}%`, height: '100%'}}
               />
-            </div>
+            </Link>
           </span>
           <span>{percent.toFixed(0)}%</span>
         </div>
