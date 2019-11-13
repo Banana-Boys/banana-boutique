@@ -6,9 +6,7 @@
 
 .product-card {
   color: #000;
-  border-radius: 20px;
-  // border: 1px solid gray;
-  background-color: #ffeecf;
+  border-radius: 10px;
   overflow: hidden;
   padding: 10px;
 }
@@ -21,10 +19,6 @@
   width: 100%;
   border-radius: 10px;
   // border: 1px solid gray;
-}
-
-.product-card .image img:hover {
-  box-shadow: 5px 5px 10px gray;
 }
 
 .product-card .content {
@@ -42,31 +36,18 @@
 h1 {
   font-size: 1.5rem;
   margin: 5px;
-  &:hover {
-    text-shadow: 2px 2px 10px gray;
-  }
 }
 
 h2 {
   font-size: 1.3rem;
   margin: 5px;
-  &:hover {
-    text-shadow: 2px 2px 10px gray;
-  }
 }
 
 .product-info {
   font-size: 14px;
   margin: 5px;
-  &:hover {
-    text-shadow: 2px 2px 10px gray;
-  }
 }
 
 .description {
   flex-direction: column;
-}
-
-.categories-button:hover {
-  box-shadow: 5px 5px 10px gray !important;
 }
