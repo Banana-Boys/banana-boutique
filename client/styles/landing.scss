@@ -38,6 +38,12 @@
 
 .catImage {
   border-radius: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.catImage:hover {
+  box-shadow: 2px 2px 2px lightgrey;
+  transition: scale(1.1);
 }
 
 #banner {
