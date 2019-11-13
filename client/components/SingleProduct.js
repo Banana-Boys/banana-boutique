@@ -83,13 +83,14 @@ class SingleProduct extends React.Component {
         <Item.Group id="singleproduct-itemgroup">
           <Item style={{alignItems: 'center'}}>
             <Item.Image
-              size="large"
+              size="mega"
               id="product-image"
               src={product.imageUrl}
               style={{
-                border: '4px solid #ffeecf',
-                borderRadius: '20px',
+                borderRadius: '10px',
                 overflow: 'hidden'
+
+                // border: '4px solid #ffeecf',
               }}
             />
             <Item.Content>
