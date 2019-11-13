@@ -15,6 +15,7 @@ import '../styles/queries.scss'
 export class Queries extends Component {
   constructor(props) {
     super(props)
+    // this.state =this.buildState(props)
     const query = queryParser(this.props.location.search)
     let {categories, inStock, sort, numPerPage} = query
 
@@ -36,6 +37,24 @@ export class Queries extends Component {
     this.handleSort = this.handleSort.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  buildState(props) {
+    const query = queryParser(props.location.search)
+    let {categories, inStock, sort, numPerPage} = query
+
+    if (typeof categories === 'string') categories = [categories]
+
+    return {
+      categories: categories || [],
+      inStock: Boolean(inStock) || false,
+      sort: sort || '',
+      editCategory: {},
+      page: Number(this.props.location.hash.slice(1)) || 1,
+      numPerPage: numPerPage || 10,
+      lastPage: 1,
+      numProducts: 0
+    }
   }
 
   async componentDidMount() {
@@ -170,16 +189,18 @@ export class Queries extends Component {
           <div id="categories">
             {categories.map(category => (
               <div key={category.id} className="category">
-                <Input
-                  name="category-selected"
-                  type="checkbox"
-                  value={category.id}
-                  checked={this.state.categories.includes(
-                    category.id.toString()
-                  )}
-                  onChange={this.updateCategorySelected}
-                />{' '}
-                {category.name}
+                <span>
+                  <Input
+                    name="category-selected"
+                    type="checkbox"
+                    value={category.id}
+                    checked={this.state.categories.includes(
+                      category.id.toString()
+                    )}
+                    onChange={this.updateCategorySelected}
+                  />{' '}
+                  <span>{category.name}</span>
+                </span>
                 {this.props.user.role === 'admin' ? (
                   <Link
                     to={`/categories/${category.id}/edit`}
@@ -199,26 +220,22 @@ export class Queries extends Component {
                 )}
               </div>
             ))}
+            <span className="category" style={{justifyContent: 'flex-start'}}>
+              <Input
+                name="inStock"
+                type="checkbox"
+                onChange={this.handleInStock}
+                checked={this.state.inStock}
+              />{' '}
+              <span>In Stock</span>
+            </span>
             <div id="stock-sort-pagination">
-              <div id="instockcategory">
-                <Input
-                  name="inStock"
-                  type="checkbox"
-                  onChange={this.handleInStock}
-                  checked={this.state.inStock}
-                />{' '}
-                In Stock
-              </div>
-              {/* <label htmlFor="inStock">In stock</label> */}
-
               <select
                 id="sort"
                 name="sort"
                 onChange={this.handleSort}
                 style={{width: '90%', margin: '0'}}
               >
-                {/* <option value="name_0" selected={this.state.sort === ''} /> */}
-
                 <option value="" selected={this.state.sort === ''}>
                   Sort by:
                 </option>

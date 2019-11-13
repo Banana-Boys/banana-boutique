@@ -38,6 +38,7 @@ class EditCategoryForm extends React.Component {
         this.props.match.params.id,
         this.state.formValues
       )
+      this.props.history.push('/products')
     } catch (err) {
       console.log(err)
     }

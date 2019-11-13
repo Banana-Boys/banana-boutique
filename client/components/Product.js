@@ -1,6 +1,14 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {Grid, Image, Container, Item, Card, Label} from 'semantic-ui-react'
+import {
+  Grid,
+  Image,
+  Container,
+  Item,
+  Card,
+  Label,
+  Button
+} from 'semantic-ui-react'
 import priceConvert from '../../utilFrontEnd/priceConvert'
 import '../styles/product.scss'
 
@@ -9,11 +17,14 @@ const Product = props => {
   //console.log(product)
   // console.log('product in Product.js:', product)
   if (!product) {
-    return <div>NO PRODUCT FOUND!</div>
+    return <div>No products found</div>
   }
 
   return (
-    <Item className="product-card">
+    <Item
+      className="product-card"
+      style={{opacity: product.inventory ? null : 0.6}}
+    >
       <Link to={`/products/${product.id}`}>
         <Item.Image src={product.imageUrl} />
         <Item.Content>
@@ -22,27 +33,55 @@ const Product = props => {
             <h2>${priceConvert(product.price)}</h2>
           </Item.Header>
           <Item.Description>
-            {/* <h2>{product.description}</h2> */}
-            <h6>
-              Avg Rating:
-              {isNaN(product.sumratings / product.numratings)
-                ? ' No ratings'
-                : ` ${(product.sumratings / product.numratings).toFixed(1)} (${
-                    product.numratings
-                  } ${Number(product.numratings) > 1 ? 'ratings' : 'rating'})`}
-            </h6>
-            {!product.inventory ? (
-              <h6>OUT OF STOCK</h6>
-            ) : (
-              <h6>In Stock: {product.inventory}</h6>
-            )}
-            <h6>
-              Categories:<ul>
+            <Button
+              className="left labeled"
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                width: '100%',
+                alignItems: 'center'
+              }}
+            >
+              <Label className="basic right categories-button">
+                Categories:{' '}
+              </Label>
+              <Button className="categories-button">
                 {product.categories.map(category => (
-                  <li key={category.id}>{category.name}</li>
+                  <span
+                    className="categoryLink"
+                    key={category.id}
+                    style={{margin: '0 3px'}}
+                    to={`/products?categories=${category.id}`}
+                  >
+                    {category.name}
+                  </span>
                 ))}
-              </ul>
-            </h6>
+              </Button>
+            </Button>
+            <div className="product-info">
+              Avg Rating:
+              {isNaN(product.sumratings / product.numratings) ? (
+                <em> No ratings</em>
+              ) : (
+                <span>
+                  {' '}
+                  <strong>
+                    {(product.sumratings / product.numratings).toFixed(1)}
+                  </strong>{' '}
+                  <em>
+                    ({product.numratings}{' '}
+                    {Number(product.numratings) > 1 ? 'ratings' : 'rating'})
+                  </em>
+                </span>
+              )}
+            </div>
+            {!product.inventory ? (
+              <div className="product-info">OUT OF STOCK</div>
+            ) : (
+              <div className="product-info">
+                In Stock: <strong>{product.inventory}</strong>
+              </div>
+            )}
           </Item.Description>
         </Item.Content>
       </Link>
