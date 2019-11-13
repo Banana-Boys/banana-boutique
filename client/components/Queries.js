@@ -211,7 +211,12 @@ export class Queries extends Component {
               </div>
               {/* <label htmlFor="inStock">In stock</label> */}
 
-              <select id="sort" name="sort" onChange={this.handleSort}>
+              <select
+                id="sort"
+                name="sort"
+                onChange={this.handleSort}
+                style={{width: '90%', margin: '0'}}
+              >
                 {/* <option value="name_0" selected={this.state.sort === ''} /> */}
 
                 <option value="" selected={this.state.sort === ''}>
@@ -270,7 +275,10 @@ export class Queries extends Component {
                     of {this.state.numProducts}
                   </h3>
                 </div>
-                <div className="paginationbuttontext">
+                <div
+                  className="paginationbuttontext"
+                  style={{display: 'flex', justifyContent: 'space-evenly'}}
+                >
                   <Button
                     size="mini"
                     type="button"
@@ -278,6 +286,11 @@ export class Queries extends Component {
                     className="paginationbutton"
                     onClick={this.handleClick}
                     disabled={this.state.page === 1}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      padding: '0'
+                    }}
                   >
                     {'<<'}
                   </Button>
@@ -288,6 +301,11 @@ export class Queries extends Component {
                     className="paginationbutton"
                     onClick={this.handleClick}
                     disabled={this.state.page === 1}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      padding: '0'
+                    }}
                   >
                     {'<'}
                   </Button>
@@ -300,6 +318,11 @@ export class Queries extends Component {
                     className="paginationbutton"
                     onClick={this.handleClick}
                     disabled={this.state.page === this.state.lastPage}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      padding: '0'
+                    }}
                   >
                     {'>'}
                   </Button>
@@ -310,6 +333,11 @@ export class Queries extends Component {
                     className="paginationbutton"
                     onClick={this.handleClick}
                     disabled={this.state.page === this.state.lastPage}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      padding: '0'
+                    }}
                   >
                     {'>>'}
                   </Button>

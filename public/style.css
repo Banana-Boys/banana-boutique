@@ -229,3 +229,13 @@ button:hover {
   border-color: lightgrey 2px;
   border-radius: 5px;
 }
+
+.checkoutitemmeta {
+  float: right;
+}
+
+#cartitemaddressheader {
+  padding-bottom: 1.5%;
+  margin-top: 3%;
+  border-bottom: 1px solid #000000af;
+}

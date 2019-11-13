@@ -80,7 +80,7 @@ class SingleProduct extends React.Component {
     return (
       <Container id="single-product">
         <Item.Group id="singleproduct-itemgroup">
-          <Item>
+          <Item style={{alignItems: 'center'}}>
             <Item.Image size="large" src={product.imageUrl} />
             <Item.Content>
               <Item.Header as="h1">{product.name}</Item.Header>
@@ -156,7 +156,7 @@ class SingleProduct extends React.Component {
                     name="quantity"
                     value={this.state.quantity}
                     onChange={this.handleChange}
-                    style={{width: '70px'}}
+                    style={{width: '70px', padding: '2px'}}
                   >
                     {quantitySelect}
                   </select>
