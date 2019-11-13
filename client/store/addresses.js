@@ -59,6 +59,7 @@ export const createAddress = (
 
 export const deleteAddress = addressId => async dispatch => {
   try {
+    console.log(addressId)
     await axios.delete(`/api/addresses/${addressId}`)
     dispatch(removeAddress(addressId))
   } catch (error) {

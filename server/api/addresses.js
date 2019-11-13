@@ -29,8 +29,7 @@ router.post('/', isUser, async (req, res, next) => {
         address = {...address, [key]: req.body[key]}
       }
     }
-    const newAddress = await Address.create(address)
-    await newAddress.setUser(req.user.id)
+    const newAddress = await Address.create({...address, userId: req.user.id})
     res.status(200).json(newAddress)
   } catch (error) {
     next(error)
@@ -40,6 +39,7 @@ router.post('/', isUser, async (req, res, next) => {
 router.delete('/:id', ownsAddress, async (req, res, next) => {
   try {
     const address = await Address.findByPk(req.params.id)
+
     await address.destroy()
     res.sendStatus(200)
   } catch (error) {
