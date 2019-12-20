@@ -19,6 +19,19 @@ class Search extends React.Component {
       search: search || ''
     }
   }
+
+  // clears search bar when navigating away from a page
+  componentDidUpdate(prevProps) {
+    const {search} = queryParser(this.props.location.search)
+    if (
+      search === undefined &&
+      this.state.search !== '' &&
+      this.props.location.search !== prevProps.location.search
+    ) {
+      this.setState({search: ''})
+    }
+  }
+
   async handleSearch(e) {
     this.setState({search: e.target.value})
     if (this.props.location.pathname === '/products') {
